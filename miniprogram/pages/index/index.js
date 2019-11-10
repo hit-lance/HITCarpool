@@ -2,14 +2,19 @@
 var date = new Date();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
-
+const location= ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场']
+const num=['1人', '2人', '3人']
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
-    multiArray: [[], [], []],
+    multiArray: [
+      [],
+      [],
+      []
+    ],
     num: ['1人', '2人', '3人'],
     wechat: '',
     qq: '',
@@ -24,7 +29,7 @@ Page({
     index3: 0,
   },
 
-  pickerTap: function () {
+  pickerTap: function() {
     date = new Date();
 
     var monthDay = ['今天', '明天'];
@@ -64,7 +69,7 @@ Page({
     this.setData(data);
   },
 
-  bindMultiPickerColumnChange: function (e) {
+  bindMultiPickerColumnChange: function(e) {
     date = new Date();
     var that = this;
     var monthDay = ['今天', '明天'];
@@ -131,7 +136,7 @@ Page({
     this.setData(data);
   },
 
-  loadData: function (hours, minute) {
+  loadData: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -150,7 +155,7 @@ Page({
     if (minuteIndex == 60) {
       // 时
       for (var i = currentHours + 1; i < 24; i++) {
-        if (i>=6)
+        if (i >= 6)
           hours.push(i + "点");
       }
       // 分
@@ -170,7 +175,7 @@ Page({
     }
   },
 
-  loadHoursMinute: function (hours, minute) {
+  loadHoursMinute: function(hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
       if (i >= 6)
@@ -182,7 +187,7 @@ Page({
     }
   },
 
-  loadMinute: function (hours, minute) {
+  loadMinute: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -218,7 +223,7 @@ Page({
     }
   },
 
-  bindStartMultiPickerChange: function (e) {
+  bindStartMultiPickerChange: function(e) {
     var that = this;
     var monthDay = that.data.multiArray[0][e.detail.value[0]];
     var hours = that.data.multiArray[1][e.detail.value[1]];
@@ -245,50 +250,104 @@ Page({
     })
   },
 
-  bindTimeChange: function (e) {
-    this.setData({
-      time: e.detail.value
-    })
-  },
-
-  bindPickerChange1: function (e) {
+  bindPickerChange1: function(e) {
     this.setData({
       index1: e.detail.value,
       default_src: this.data.location[e.detail.value]
     })
   },
 
-  bindPickerChange2: function (e) {
+  bindPickerChange2: function(e) {
     this.setData({
       index2: e.detail.value,
       default_dst: this.data.location[e.detail.value]
     })
   },
 
-  bindPickerChange3: function (e) {
+  bindPickerChange3: function(e) {
     this.setData({
       index3: e.detail.value,
-      default_num: this.data.location[e.detail.value]
+      default_num: this.data.num[e.detail.value]
     })
   },
 
   // 以下三个函数好像不能把用户的输入变为字符串
-  handleWechatInput: function (e) {
+  handleWechatInput: function(e) {
     this.setData({
       wechat: e.detail.value
     })
   },
 
-  handleQQInput: function (e) {
+  handleQQInput: function(e) {
     this.setData({
       qq: e.detail.value
     })
   },
 
-  handleCellphoneInput: function (e) {
-    console.log('用户输入手机号:', e) 
+  handleCellphoneInput: function(e) {
+    console.log('用户输入手机号:', e)
     this.setData({
       cellphone: e.detail.value
     })
+  },
+  formSubmit: function(e) {
+
+    if ((e.detail.value.qq == "") && (e.detail.value.wechat == "") && (e.detail.value.cellphone == "")) {
+      wx.showToast({
+        title: '请输入联系方式',
+      })
+      console.log('[数据库] [新增记录] 失败：')
+    } else if ((e.detail.value.src === 0) || (e.detail.value.dst === 0) || (e.detail.value.number === 0)) {
+      wx.showToast({
+        title: '请填写需求',
+      })
+    } else {
+      console.log('form发生了submit事件，携带数据为：', e.detail.value)
+      const db = wx.cloud.database()
+
+      db.collection('man').add({
+        data: {
+          connect: e.detail.value,
+          StartPoint: location[Number(e.detail.value.src)],
+          Destination:location[Number(e.detail.value.dst)],
+          PeopleNumber:num[Number(e.detail.value.number)],
+          WeChatNumber:e.detail.value.wechat,
+          QQNumber:e.detail.value.qq,
+          Tel:e.detail.value.cellphone
+        },
+        success: res => {
+          // 在返回结果中会包含新创建的记录的 _id
+          this.setData({
+            counterId: res._id,
+            connect: e.detail.value
+          })
+          wx.showToast({
+            title: '新增记录成功',
+          })
+          console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '新增记录失败'
+          })
+          console.error('[数据库] [新增记录] 失败：', err)
+        }
+      })
+      this.setData({
+
+        allValue: e.detail.value
+
+
+
+      })
+
+      wx.navigateTo({
+        url: '../match/match',
+        success: function(res) {
+          console.log(res)
+        }
+      })
+    }
   }
 })

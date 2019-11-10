@@ -4,45 +4,46 @@
 <view class="container">
   <button class='btn1' size="{{primarySize}}" plain="{{plain}}" bindtap="历史发布" display>历史发布</button>
 </view> -->
+<form class="page__bd" bindsubmit="formSubmit" bindreset="formReset">
+  <!--设置拼车信息-->
+  <view class="carpool_info">
+    <!-- 设置出发地 -->
+    <picker name="src" bindchange="bindPickerChange1" value="{{index1}}" range="{{location}}">
+      <view class="{{default_src == '从哪儿出发'?'default':'selected'}}">
+        {{default_src}}
+      </view>
+    </picker>
 
-<!--设置拼车信息-->
-<view class="carpool_info">
-  <!-- 设置出发地 -->
-  <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{location}}">
-    <view class = "{{default_src == '从哪儿出发'?'default':'selected'}}">
-      {{default_src}}
-    </view>
-  </picker>
+    <!-- 设置目的地 -->
+    <picker name="dst" bindchange="bindPickerChange2" value="{{index2}}" range="{{location}}">
+      <view class="{{default_dst == '您要去哪儿'?'default':'selected'}}">
+        {{default_dst}}
+      </view>
+    </picker>
 
-  <!-- 设置目的地 -->
-  <picker bindchange="bindPickerChange2" value="{{index2}}" range="{{location}}">
-    <view class = "{{default_dst == '您要去哪儿'?'default':'selected'}}">
-      {{default_dst}}
-    </view>
-  </picker>
+    <!-- 设置出发时间 -->
+    <picker name="time" class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+      <view class="{{default_date == '出发时间'?'default':'selected'}}">
+        {{default_date}}
+      </view>
+    </picker>
 
-  <!-- 设置出发时间 -->
-  <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-  <view class = "{{default_date == '出发时间'?'default':'selected'}}">
-    {{default_date}}
+    <!-- 设置出发人数 -->
+    <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{num}}">
+      <view class="{{default_num == '出发人数'?'default':'selected'}}">
+        {{default_num}}
+      </view>
+    </picker>
+
+    <!-- 设置联系方式 -->
+    <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]" />
+    <input class="input" name="qq" placeholder="请输入您的QQ号" placeholder-style="color:#7c7c7c" bindinput="handleQQInput" type="number" />
+    <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput="handleCellphoneInput" type="number" maxlength="11" />
   </view>
-  </picker>
 
-  <!-- 设置出发人数 -->
-  <picker bindchange="bindPickerChange3" value="{{index3}}" range="{{num}}">
-    <view class = "{{default_num == '出发人数'?'default':'selected'}}"> 
-      {{default_num}}
-    </view>
-  </picker>
-
-  <!-- 设置联系方式 -->
-  <input class="input" name="user" placeholder="请输入您的微信号"  placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]"/>
-  <input class="input" name="user" placeholder="请输入您的QQ号" placeholder-style="color:#7c7c7c"  bindinput="handleQQInput" type="number"/>
-  <input class="input" name="user" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput="handleCellphoneInput" type="number"/> 
-</view>
-
-<!-- 提交按钮 -->
-<view>
-  <button class='send' plain="{{plain}}" bindtap="提交">提交
-  </button>
-</view>
+  <!-- 提交按钮 -->
+  <view>
+    <button class='formSubmit' plain="{{plain}}" form-type="submit">提交
+    </button>
+  </view>
+</form>
