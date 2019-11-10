@@ -1,0 +1,55 @@
+<!--index.wxml-->
+
+<!-- 前往历史发布页 -->
+<view class="container">
+  <button class='btn1' size="{{primarySize}}" plain="{{plain}}" bindtap="历史发布" display>历史发布</button>
+</view>
+
+<!--拼车信息-->
+<view class="carpool_info">
+  <!-- 出发地 -->
+  <picker bindchange="bindPickerChange1" value="{{index1}}" range="{{location}}">
+    <view class="picker">
+      当前选择：{{default}}
+    </view>
+
+  </picker>
+
+  <picker bindchange="bindPickerChange2" value="{{index2}}" range="{{location}}">
+  
+      <view class="picker">
+        目的地：{{location[index2]}}
+      </view>
+
+  </picker>
+
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{value1}}" range="{{multiArray}}">
+    <view class="picker">
+      当前选择: {{multiArray[0][value1[0]]}},{{multiArray[1][value1[1]]}},{{multiArray[2][value1[2]]}}
+    </view>
+  </picker>
+
+    <picker bindchange="bindPickerChange3" value="{{index3}}" range="{{num}}">
+    <view class="picker">
+      拼车人数：{{num[index3]}}
+    </view>
+  </picker>
+</view>
+
+
+<view class="wechat">微信
+  <input class="input" name="user" auto-focus placeholder="请输入微信号" bindinput="userNameInput" type="text">
+  </input>
+</view>
+<view class="qq">QQ
+  <input class="input" name="user" auto-focus placeholder="请输入QQ号" bindinput="userNameInput" type="number">
+  </input>
+</view>
+<view class="phone">手机
+  <input class="input" name="user" auto-focus placeholder="请输入手机号" bindinput="userNameInput" type="number">
+  </input>
+</view>
+<view>
+  <button class='send' plain="{{plain}}" bindtap="提交">提交
+  </button>
+</view>
