@@ -6,14 +6,12 @@ class Util {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-
     let hour = date.getHours();
     let minute = date.getMinutes();
     let second = date.getSeconds();
-
-
-    return [month,day]
+    return [month, day, hour, minute]
   };
+
   static formatNumber(n) {
     n = n.toString();
     return n[1] ? n : '0' + n;
