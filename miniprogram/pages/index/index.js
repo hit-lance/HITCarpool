@@ -142,9 +142,7 @@ Page({
     if (e.detail.column === 0) {
       // 如果第一列滚动到第一行
       if (e.detail.value === 0) {
-
         that.loadData(hours, minute);
-
       } else {
         that.loadHoursMinute(hours, minute);
       }
