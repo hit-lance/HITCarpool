@@ -10,11 +10,7 @@ Page({
    */
   data: {
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
-    multiArray: [
-      [],
-      [],
-      []
-    ],
+    multiArray: [[''], [0], [0]],
     num: ['1人', '2人', '3人'],
     wechat: '',
     qq: '',
@@ -27,6 +23,62 @@ Page({
     index2: 0,
     multiIndex: [0, 0, 0],
     index3: 0,
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   },
 
   pickerTap: function() {
@@ -290,8 +342,8 @@ Page({
       cellphone: e.detail.value
     })
   },
-  formSubmit: function(e) {
 
+  formSubmit: function(e) {
     if ((e.detail.value.qq == "") && (e.detail.value.wechat == "") && (e.detail.value.cellphone == "")) {
       wx.showToast({
         title: '请输入联系方式',
@@ -335,11 +387,7 @@ Page({
         }
       })
       this.setData({
-
         allValue: e.detail.value
-
-
-
       })
 
       wx.navigateTo({
