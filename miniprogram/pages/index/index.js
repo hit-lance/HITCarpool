@@ -1,37 +1,78 @@
-// pages/mine/mine.js
+const app = getApp()
 var date = new Date();
+var currentMonth = date.getMonth();
+var currentDay = date.getDay();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
-const location= ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场']
-const num=['1人', '2人', '3人']
+var util = require('../../util/util.js')
+
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    userInfo: {},
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
     multiArray: [[''], [0], [0]],
     num: ['1人', '2人', '3人'],
+    index1: 0,
+    index2: 0,
+    index3: 0,
+    multiIndex: [0, 0, 0],
+    src: '从哪儿出发',
+    dst: '您要去哪儿',
+    time: '出发时间',
+    peopleNum: '出发人数',
     wechat: '',
     qq: '',
     cellphone: '',
-    default_src: '从哪儿出发',
-    default_dst: '您要去哪儿',
-    default_date: '出发时间',
-    default_num: '出发人数',
-    index1: 0,
-    index2: 0,
-    multiIndex: [0, 0, 0],
-    index3: 0,
+    nickName: '',
+    gender: 0,
+    avatarUrl: ''
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onLoad: function () {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    } else if (this.data.canIUse) {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    }
   },
 
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true,
+      nickName: e.detail.userInfo.nickName,
+      gender: e.detail.userInfo.gender,
+      avatarUrl: e.detail.userInfo.avatarUrl
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -81,18 +122,13 @@ Page({
 
   },
 
-  pickerTap: function() {
-    date = new Date();
-
+  pickerTap: function () {
     var monthDay = ['今天', '明天'];
     var hours = [];
     var minute = [];
 
-    currentHours = date.getHours();
-    currentMinute = date.getMinutes();
-
     // 月-日
-    for (var i = 2; i <= 14; i++) {
+    for (var i = 2; i <= 124; i++) {
       var date1 = new Date(date);
       date1.setDate(date.getDate() + i);
       var md = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
@@ -121,15 +157,11 @@ Page({
     this.setData(data);
   },
 
-  bindMultiPickerColumnChange: function(e) {
-    date = new Date();
+  bindMultiPickerColumnChange: function (e) {
     var that = this;
     var monthDay = ['今天', '明天'];
     var hours = [];
     var minute = [];
-
-    currentHours = date.getHours();
-    currentMinute = date.getMinutes();
 
     var data = {
       multiArray: this.data.multiArray,
@@ -186,7 +218,7 @@ Page({
     this.setData(data);
   },
 
-  loadData: function(hours, minute) {
+  loadData: function (hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -225,7 +257,7 @@ Page({
     }
   },
 
-  loadHoursMinute: function(hours, minute) {
+  loadHoursMinute: function (hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
       if (i >= 6)
@@ -237,7 +269,7 @@ Page({
     }
   },
 
-  loadMinute: function(hours, minute) {
+  loadMinute: function (hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -273,18 +305,11 @@ Page({
     }
   },
 
-  bindStartMultiPickerChange: function(e) {
+  bindMultiPickerChange: function (e) {
     var that = this;
     var monthDay = that.data.multiArray[0][e.detail.value[0]];
     var hours = that.data.multiArray[1][e.detail.value[1]];
     var minute = that.data.multiArray[2][e.detail.value[2]];
-
-    if (monthDay != "今天" && monthDay != "明天") {
-      var month = monthDay.split("月")[0]; // 返回月
-      var day = monthDay.split("月")[1].split("日")[0]; // 返回日
-      monthDay = month + "月" + day + "日";
-    }
-
 
     hours = hours.substr(0, hours.length - 1);
     if (hours < 10)
@@ -294,82 +319,98 @@ Page({
     if (minute === "0")
       minute = "00"
 
-    var default_date = monthDay + " " + hours + ":" + minute;
     that.setData({
-      default_date: default_date
+      time: monthDay + " " + hours + ":" + minute
     })
   },
 
-  bindPickerChange1: function(e) {
+  bindPickerChange1: function (e) {
     this.setData({
       index1: e.detail.value,
-      default_src: this.data.location[e.detail.value]
+      src: this.data.location[e.detail.value]
     })
   },
 
-  bindPickerChange2: function(e) {
+  bindPickerChange2: function (e) {
     this.setData({
       index2: e.detail.value,
-      default_dst: this.data.location[e.detail.value]
+      dst: this.data.location[e.detail.value]
     })
   },
 
-  bindPickerChange3: function(e) {
+  bindPickerChange3: function (e) {
     this.setData({
       index3: e.detail.value,
-      default_num: this.data.num[e.detail.value]
+      peopleNum: this.data.num[e.detail.value]
     })
   },
 
-  // 以下三个函数好像不能把用户的输入变为字符串
-  handleWechatInput: function(e) {
+  handleWechatInput: function (e) {
     this.setData({
       wechat: e.detail.value
     })
   },
 
-  handleQQInput: function(e) {
+  handleQQInput: function (e) {
     this.setData({
       qq: e.detail.value
     })
   },
 
-  handleCellphoneInput: function(e) {
-    console.log('用户输入手机号:', e)
+  handleCellphoneInput: function (e) {
     this.setData({
       cellphone: e.detail.value
     })
   },
 
-  formSubmit: function(e) {
-    if ((e.detail.value.qq == "") && (e.detail.value.wechat == "") && (e.detail.value.cellphone == "")) {
+  formSubmit: function (e) {
+    if (this.data.src === 0) {
       wx.showToast({
-        title: '请输入联系方式',
+        title: '请选择出发地',
+      })
+    }
+
+    else if (this.data.dst === 0) {
+      wx.showToast({
+        title: '请选择目的地',
+      })
+    }
+
+    else if (this.data.peopleNum === 0) {
+      wx.showToast({
+        title: '请选择人数',
+      })
+    }
+
+    else if ((this.data.qq == "") && (this.data.wechat == "") && (this.data.cellphone == "")) {
+      wx.showToast({
+        title: '请填联系方式',
       })
       console.log('[数据库] [新增记录] 失败：')
-    } else if ((e.detail.value.src === 0) || (e.detail.value.dst === 0) || (e.detail.value.number === 0)) {
-      wx.showToast({
-        title: '请填写需求',
-      })
-    } else {
-      console.log('form发生了submit事件，携带数据为：', e.detail.value)
-      const db = wx.cloud.database()
+    }
 
+    else {
+
+      const db = wx.cloud.database()
+      console.log(e.detail)
       db.collection('man').add({
         data: {
-          connect: e.detail.value,
-          StartPoint: location[Number(e.detail.value.src)],
-          Destination:location[Number(e.detail.value.dst)],
-          PeopleNumber:num[Number(e.detail.value.number)],
-          WeChatNumber:e.detail.value.wechat,
-          QQNumber:e.detail.value.qq,
-          Tel:e.detail.value.cellphone
+          source: this.data.src,
+          destination: this.data.dst,
+          time: util.formatTime(this.data.time, date),
+          peopleNumber: Number(this.data.peopleNum.split("人")[0]),
+          wechat: this.data.wechat,
+          qq: this.data.qq,
+          cellphone: this.data.cellphone,
+          nickName: this.data.nickName,
+          gender: this.data.gender,
+          avatarUrl: this.data.avatarUrl,
+          isDone: false
         },
         success: res => {
           // 在返回结果中会包含新创建的记录的 _id
           this.setData({
             counterId: res._id,
-            connect: e.detail.value
           })
           wx.showToast({
             title: '新增记录成功',
@@ -388,12 +429,13 @@ Page({
         allValue: e.detail.value
       })
 
-      wx.navigateTo({
-        url: '../match/match',
-        success: function(res) {
-          console.log(res)
-        }
-      })
+      //跳到匹配结果页
+      // wx.navigateTo({
+      //   url: '../match/match',
+      //   success: function (res) {
+      //     console.log(res)
+      //   }
+      // })
     }
   }
 })

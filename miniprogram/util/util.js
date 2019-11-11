@@ -2,19 +2,17 @@
  * 工具类 util.js
  */
 class Util {
-  static formatTime(date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let second = date.getSeconds();
-    return [month, day, hour, minute]
-  };
+  static formatTime(time, now) {
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    var day = now.getDay();
 
-  static formatNumber(n) {
-    n = n.toString();
-    return n[1] ? n : '0' + n;
+    let date = time.split(" ")[0];
+    if (date != "今天" && date != "明天") {
+      month = date.split("月")[0]; // 返回月
+      day = date.split("月")[1].split("日")[0]; // 返回日
+    }
+    return year + " " + month + "/" + day + " " + time.split(" ")[1]
   };
 };
 
