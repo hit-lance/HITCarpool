@@ -1,4 +1,5 @@
 // pages/match/match.js
+const app = getApp()
 var distanceBetweenTime = [];
 Page({
 
@@ -9,8 +10,7 @@ Page({
     list: "",
     userTime: "",
     userSrc: "",
-    userDst: "",
-    userOpenId: ""
+    userDst: ""
   },
 
   /**
@@ -19,19 +19,28 @@ Page({
 
   getData() {
     const db = wx.cloud.database();
+    const userOpenId = app.globalData.openId;
+    const _ = db.command;
+    console.log("userOpenId =", userOpenId);
     db.collection('man').where({
+      // _openid: _.neq(userOpenId),
       destination: this.data.userDst,
       source: this.data.userSrc
     }).get().then((res) => {
-      console.log("succuss, res = ", res);
-      let data = res.data;
-      for (var idx1 in data) {
-        console.log("str =", data[idx1]['time']);
-        console.log("number =", new Date(data[idx1]['time']).getTime());
+      console.log("succuss, res =", res);
+      const userTime = (new Date(this.data.userTime).getTime());
+      if (res.data) {
+        res.data.sort(function (a, b) {
+          var ta = Math.abs((new Date(a.time).getTime()) - userTime);
+          var tb = Math.abs((new Date(b.time).getTime()) - userTime);
+          return ta - tb;
+        });
+        console.log("after sort res =", res);
+        let data = res.data;
+        this.setData({
+          list: data
+        });
       }
-      this.setData({
-        list: data
-      });
     }).catch(e => {
       console.error(e);
       wx.showToast({
@@ -56,8 +65,7 @@ Page({
     this.setData({
       userTime: e.userTime,
       userSrc: e.userSrc,
-      userDst: e.userDst,
-      userOpenId: e.userOpenId
+      userDst: e.userDst
     })
   },
 

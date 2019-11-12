@@ -441,13 +441,5 @@ Page({
         }
       })
     }
-  },
-  GotoNxtPage() {
-    wx.navigateTo({
-      url: '../match/match',
-      success: function (res) {
-        console.log(res)
-      }
-    })
   }
 })
