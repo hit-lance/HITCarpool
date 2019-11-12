@@ -367,18 +367,21 @@ Page({
     if (this.data.src === 0) {
       wx.showToast({
         title: '请选择出发地',
+        icon: 'none'
       })
     }
 
     else if (this.data.dst === 0) {
       wx.showToast({
         title: '请选择目的地',
+        icon: 'none'
       })
     }
 
     else if (this.data.peopleNum === 0) {
       wx.showToast({
         title: '请选择人数',
+        icon: 'none'
       })
     }
 
