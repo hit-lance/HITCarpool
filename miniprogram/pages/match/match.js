@@ -17,7 +17,10 @@ Page({
     db.collection('man').get().then((res) => {
       console.log("succuss, res = ", res);
       let data = res.data;
-      for (var mY in data)
+      for (var index in data) {
+        console.log(data[index]);
+        console.log(index);
+      }
       this.setData({
         list: data
       });

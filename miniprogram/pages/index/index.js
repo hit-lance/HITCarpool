@@ -385,6 +385,7 @@ Page({
     else if ((this.data.qq == "") && (this.data.wechat == "") && (this.data.cellphone == "")) {
       wx.showToast({
         title: '请填联系方式',
+        icon: 'none'
       })
       console.log('[数据库] [新增记录] 失败：')
     }
