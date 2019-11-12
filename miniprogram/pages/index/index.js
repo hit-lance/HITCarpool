@@ -430,12 +430,14 @@ Page({
       })
 
       //跳到匹配结果页
-      // wx.navigateTo({
-      //   url: '../match/match',
-      //   success: function (res) {
-      //     console.log(res)
-      //   }
-      // })
     }
+  },
+  GotoNxtPage() {
+    wx.navigateTo({
+      url: '../match/match',
+      success: function (res) {
+        console.log(res)
+      }
+    })
   }
 })

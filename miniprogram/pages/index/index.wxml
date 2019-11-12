@@ -52,4 +52,8 @@
   发布行程
   </button>
   </view>
+
+  <view class="btn-area">
+    <button bindtap="GotoNxtPage">GoTo</button>
+  </view> 
 </form>

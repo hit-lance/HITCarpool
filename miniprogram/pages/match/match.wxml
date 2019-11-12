@@ -1,0 +1,17 @@
+<view class="container"> 
+  <view wx:for="{{list}}" wx:key="this"> 
+    <view class="imgs">
+      <image src="{{item.avatarUrl}}"></image>
+    </view>
+    <view>  
+        <view class="content">昵称：{{item.nickName}} </view>   
+        <view class="content">微信：{{item.wechat}} </view>         
+        <view class="content">QQ：{{item.qq}} </view> 
+        <view class="content">手机：{{item.cellphone}} </view>  
+        <view class="content">几人拼车：{{item.peopleNumber}} </view>  
+        <view class="content">时间：{{item.time}} </view>  
+        <view class="content">出发地：{{item.source}} </view>  
+        <view class="content">到达地：{{item.destination}} </view>  
+    </view> 
+  </view>
+</view>
