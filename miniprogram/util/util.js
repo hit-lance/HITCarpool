@@ -12,8 +12,9 @@ class Util {
       month = date.split("月")[0]; // 返回月
       day = date.split("月")[1].split("日")[0]; // 返回日
     }
-    return year + " " + month + "/" + day + " " + time.split(" ")[1]
+    return year + "/" + month + "/" + day + " " + time.split(" ")[1]
   };
+
 };
 
 module.exports = Util;
