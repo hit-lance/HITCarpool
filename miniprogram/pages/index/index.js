@@ -257,20 +257,7 @@ Page({
   },
 
   loadMinute: function (hours, minute) {
-    var minuteIndex;
-    if (currentMinute > 0 && currentMinute <= 10) {
-      minuteIndex = 10;
-    } else if (currentMinute > 10 && currentMinute <= 20) {
-      minuteIndex = 20;
-    } else if (currentMinute > 20 && currentMinute <= 30) {
-      minuteIndex = 30;
-    } else if (currentMinute > 30 && currentMinute <= 40) {
-      minuteIndex = 40;
-    } else if (currentMinute > 40 && currentMinute <= 50) {
-      minuteIndex = 50;
-    } else {
-      minuteIndex = 60;
-    }
+    var minuteIndex = Math.trunc((currentMinute-1)/10)*10+10
 
     if (minuteIndex == 60) {
       // 时
@@ -351,21 +338,28 @@ Page({
   },
 
   formSubmit: function (e) {
-    if (this.data.src === 0) {
+    if (this.data.src === "从哪儿出发") {
       wx.showToast({
-        title: '请选择出发地',
+        title: '请选出发地',
         icon: 'none'
       })
     }
 
-    else if (this.data.dst === 0) {
+    else if (this.data.dst === "您要去哪儿") {
       wx.showToast({
-        title: '请选择目的地',
+        title: '请选目的地',
         icon: 'none'
       })
     }
 
-    else if (this.data.peopleNum === 0) {
+    else if (this.data.time === "出发时间") {
+      wx.showToast({
+        title: '请选出发时间',
+        icon: 'none'
+      })
+    }
+
+    else if (this.data.peopleNum === "出发人数") {
       wx.showToast({
         title: '请选择人数',
         icon: 'none'
@@ -380,8 +374,14 @@ Page({
       console.log('[数据库] [新增记录] 失败：')
     }
 
-    else {
+    else if (this.data.src === this.data.dst) {
+      wx.showToast({
+        title: '起终点相同！',
+        icon: 'none'
+      })
+    }
 
+    else {
       const db = wx.cloud.database()
       console.log(e.detail)
       db.collection('man').add({
