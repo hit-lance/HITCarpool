@@ -80,55 +80,13 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   pickerTap: function () {
     var monthDay = ['今天', '明天'];
     var hours = [];
     var minute = [];
 
     // 月-日
-    for (var i = 2; i <= 124; i++) {
+    for (var i = 2; i <= 14; i++) {
       var date1 = new Date(date);
       date1.setDate(date.getDate() + i);
       var md = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
@@ -178,7 +136,6 @@ Page({
       } else {
         that.loadHoursMinute(hours, minute);
       }
-
       data.multiIndex[1] = 0;
       data.multiIndex[2] = 0;
 
@@ -192,11 +149,11 @@ Page({
         } else {
           that.loadMinute(hours, minute);
         }
+        data.multiIndex[2] = 0;
         // 第一列不为今天
       } else {
         that.loadHoursMinute(hours, minute);
       }
-      data.multiIndex[2] = 0;
 
       // 如果是第3列改变
     } else {
@@ -224,7 +181,6 @@ Page({
     if (minuteIndex == 60) {
       // 时
       for (var i = currentHours + 1; i < 24; i++) {
-        if (i >= 6)
           hours.push(i + "点");
       }
       // 分
@@ -234,7 +190,6 @@ Page({
     } else {
       // 时
       for (var i = currentHours; i < 24; i++) {
-        if (i >= 6)
           hours.push(i + "点");
       }
       // 分
@@ -247,7 +202,6 @@ Page({
   loadHoursMinute: function (hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
-      if (i >= 6)
         hours.push(i + "点");
     }
     // 分
@@ -262,14 +216,11 @@ Page({
     if (minuteIndex == 60) {
       // 时
       for (var i = currentHours + 1; i < 24; i++) {
-        if (i >= 6)
-          if (i >= 6)
             hours.push(i + "点");
       }
     } else {
       // 时
       for (var i = currentHours; i < 24; i++) {
-        if (i >= 6)
           hours.push(i + "点");
       }
     }

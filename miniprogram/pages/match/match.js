@@ -1,6 +1,5 @@
 // pages/match/match.js
 const app = getApp()
-var distanceBetweenTime = [];
 Page({
 
   /**
