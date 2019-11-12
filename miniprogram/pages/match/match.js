@@ -1,11 +1,16 @@
 // pages/match/match.js
+var distanceBetweenTime = [];
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list: ""
+    list: "",
+    userTime: "",
+    userSrc: "",
+    userDst: "",
+    userOpenId: ""
   },
 
   /**
@@ -14,17 +19,21 @@ Page({
 
   getData() {
     const db = wx.cloud.database();
-    db.collection('man').get().then((res) => {
+    db.collection('man').where({
+      destination: this.data.userDst,
+      source: this.data.userSrc
+    }).get().then((res) => {
       console.log("succuss, res = ", res);
       let data = res.data;
-      for (var index in data) {
-        console.log(data[index]);
-        console.log(index);
+      for (var idx1 in data) {
+        console.log("str =", data[idx1]['time']);
+        console.log("number =", new Date(data[idx1]['time']).getTime());
       }
       this.setData({
         list: data
       });
     }).catch(e => {
+      console.error(e);
       wx.showToast({
         title: 'db fail',
         icon: 'none'
@@ -40,17 +49,16 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面卸载
+   * 生命周期函数--监听页面安装
    */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  onLoad: function (e) {
+    console.log(e);
+    this.setData({
+      userTime: e.userTime,
+      userSrc: e.userSrc,
+      userDst: e.userDst,
+      userOpenId: e.userOpenId
+    })
   },
 
 })

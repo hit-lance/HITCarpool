@@ -63,7 +63,7 @@ Page({
   },
 
   getUserInfo: function (e) {
-    console.log(e)
+    console.log("getUserInfo:", e);
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -434,6 +434,12 @@ Page({
       })
 
       //跳到匹配结果页
+      wx.navigateTo({
+        url: '../match/match?userTime=' + util.formatTime(this.data.time, date) + '&userSrc='+this.data.src + '&userDst='+this.data.dst,
+        success: function (res) {
+          console.log(res)
+        }
+      })
     }
   },
   GotoNxtPage() {
