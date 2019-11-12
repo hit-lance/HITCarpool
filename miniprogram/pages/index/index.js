@@ -219,20 +219,7 @@ Page({
   },
 
   loadData: function (hours, minute) {
-    var minuteIndex;
-    if (currentMinute > 0 && currentMinute <= 10) {
-      minuteIndex = 10;
-    } else if (currentMinute > 10 && currentMinute <= 20) {
-      minuteIndex = 20;
-    } else if (currentMinute > 20 && currentMinute <= 30) {
-      minuteIndex = 30;
-    } else if (currentMinute > 30 && currentMinute <= 40) {
-      minuteIndex = 40;
-    } else if (currentMinute > 40 && currentMinute <= 50) {
-      minuteIndex = 50;
-    } else {
-      minuteIndex = 60;
-    }
+    var minuteIndex = Math.trunc((currentMinute-1)/10)*10+10;
 
     if (minuteIndex == 60) {
       // 时

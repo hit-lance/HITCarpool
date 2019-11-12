@@ -23,11 +23,12 @@ Page({
     const _ = db.command;
     console.log("userOpenId =", userOpenId);
     db.collection('man').where({
-      // _openid: _.neq(userOpenId),
+      _openid: _.neq(userOpenId),
       destination: this.data.userDst,
       source: this.data.userSrc
     }).get().then((res) => {
       console.log("succuss, res =", res);
+      console.log("res.data[0]._openid =", res.data[0]._openid);
       const userTime = (new Date(this.data.userTime).getTime());
       if (res.data) {
         res.data.sort(function (a, b) {
