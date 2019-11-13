@@ -10,20 +10,27 @@
   <!--设置拼车信息-->
   <view class="carpool_info">
     <!-- 设置出发地 -->
+    <view class="src">
+    <image src="{{bluepointUrl}}" style="width:40rpx;height:40rpx;"></image>
     <picker name="src" bindchange="bindPickerChange1" value="{{index1}}" range="{{location}}">
       <view class="{{src == '从哪儿出发'?'default':'selected'}}">
         {{src}}
       </view>
     </picker>
-
+  </view>
     <!-- 设置目的地 -->
+    <view class="dst">
+    <image src="{{greenpointUrl}}" style="width:40rpx;height:40rpx;"></image>
     <picker name="dst" bindchange="bindPickerChange2" value="{{index2}}" range="{{location}}">
       <view class="{{dst == '您要去哪儿'?'default':'selected'}}">
         {{dst}}
       </view>
     </picker>
+    </view>
 
     <!-- 设置出发时间 -->
+    <view class="timePeople">
+     <image src="{{timeUrl}}" style="width:40rpx;height:40rpx;"></image>
     <picker name="time" class='time-picker' mode="multiSelector" bindchange="bindMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
       <view class="{{time == '出发时间'?'default':'selected'}}">
         {{time}}
@@ -31,26 +38,47 @@
     </picker>
 
     <!-- 设置出发人数 -->
+    <view class="people">
+     <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
     <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{num}}">
       <view class="{{peopleNum == '出发人数'?'default':'selected'}}">
         {{peopleNum}}
       </view>
     </picker>
-
+    </view>
+</view>
+</view>
+<view class="connect">
+<text class='Toast'style="color:{{color}};">请留下至少一种联系方式</text>
     <!-- 设置联系方式 -->
-    <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]" />
-    <input class="input" name="qq" placeholder="请输入您的QQ号" placeholder-style="color:#7c7c7c" bindinput="handleQQInput" type="number" />
+    <view class='wx'>
+      <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
+      <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]" />
+    </view>
+    <view class='qq'>
+      <image src="{{qqimgurl}}" style="width:40rpx;height:40rpx;"></image>
+      <input class="input" name="qq" placeholder="请输入您的QQ号" placeholder-style="color:#7c7c7c" bindinput="handleQQInput" type="number" />
+    </view>
+    <view class='ph'>
+    <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
     <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput="handleCellphoneInput" type="number" maxlength="11" />
+    </view>
   </view>
 
   <!-- 提交按钮 v1-->
+  <!-- <view class="btn-area{{needMessage?'active':''}}"bindtap="regist">发布行程
+  </view> -->
   <view class="btn-area">
-  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
+  <button type="primary" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" > 
   发布行程 
   </button>
-  <button wx:else formType="submit">
+  <button type="primary" wx:else formType="submit">
   发布行程
   </button>
   </view>
+  <!-- </view> -->
 
+  <!-- <view class="btn-area">
+    <button bindtap="GotoNxtPage">GoTo</button>
+  </view> -->
 </form>
