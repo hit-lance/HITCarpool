@@ -12,6 +12,16 @@ Page({
     userDst: "",
     userNum: 0
   },
+
+ /**
+  * 将时间戳转化为标准形式
+  */
+
+  transTime(theTime) {
+    const theDate = new Date(theTime);
+     return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + theDate.getMinutes();
+  },
+
   /**
    * 获取数据
    */
@@ -30,16 +40,26 @@ Page({
         openId: app.globalData.openId
       },
       success: res => {
+        console.log("userTime =", this.data.userTime, this.transTime(this.data.userTime));
+        console.log("before res =", res);
         if (res.result && res.result.data.length) {
-          res.result.data.sort(function(a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
-          for (var idx in res.result.data) {
-            const theDate = new Date(res.result.data[idx].time);
-            res.result.data[idx].time = (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + theDate.getMinutes();
+          var data = res.result.data, lst = [];
+          data.sort(function(a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
+          for (var idx in data) 
+            if (Math.abs(data[idx].time - _.userTime) <= 3 * 60 * 60 * 1000) {
+              lst.push(data[idx]);
+              lst[idx].time = this.transTime(data[idx].time);
+            }
+          if (lst.length()) {
+            this.setData({
+              list: lst
+            })
+          } else {
+            wx.showToast({
+              title: '您好，数据库里没有您想要的信息！',
+              icon: 'none',
+            })
           }
-          console.log("res =", res);
-          this.setData({
-            list: res.result.data
-          })
         } else {
           wx.showToast({
             title: '您好，数据库里没有您想要的信息！',
