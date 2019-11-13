@@ -1,17 +1,47 @@
-<view class="container"> 
-  <view wx:for="{{list}}" wx:key="this"> 
+<view class="container">
+  <view class="card" wx:for="{{list}}" wx:key="this">
     <view class="imgs">
-      <image src="{{item.avatarUrl}}"></image>
+      <image class="head" src="{{item.avatarUrl}}"></image>
+      <view class="id">{{item.nickName}} </view>
+      <view class="num">
+        <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.num}}
+      </view>
     </view>
-    <view>  
-        <view class="content">昵称：{{item.nickName}} </view>   
-        <view class="content">微信：{{item.wechat}} </view>         
-        <view class="content">QQ：{{item.qq}} </view> 
-        <view class="content">手机：{{item.cellphone}} </view>  
-        <view class="content">几人拼车：{{item.num}} </view>  
-        <view class="content">时间：{{item.time}} </view>  
-        <view class="content">出发地：{{item.source}} </view>  
-        <view class="content">到达地：{{item.destination}} </view>  
-    </view> 
+    <view>
+      <view class="content">
+        <image src="{{bluepointUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.source}}
+      </view>
+      <view class="content">
+        <image src="{{greenpointUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.destination}}
+      </view>
+      <view class="content">
+        <image src="{{timeUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.time}}
+        <!-- <view class="content" wx:if="{{item.wechat!=''}}">
+              <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
+              微信：{{item.wechat}}
+            </view> -->
+        <view class="connect">
+          <button class='button' bindtap='buttonTap' type='default' size='mini'>与TA拼车</button>
+          <modal title="联系方式" hidden="{{modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+            <view class="content" wx:if="{{item.wechat!=''}}">
+              <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
+              微信：{{item.wechat}}
+            </view>
+            <view class="content" wx:if="{{item.qq!=''}}">
+              <image src="{{qqimgurl}}" style="width:40rpx;height:40rpx;"></image>
+              QQ：{{item.qq}}
+            </view>
+            <view class="content" wx:if="{{item.cellphone!=''}}">
+              <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
+              手机：{{item.cellphone}}
+            </view>
+          </modal>
+        </view>
+      </view>
+    </view>
   </view>
 </view>
