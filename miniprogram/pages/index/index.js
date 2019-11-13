@@ -126,6 +126,7 @@ Page({
       multiIndex: this.data.multiIndex
     };
     // 把选择的对应值赋值给 multiIndex
+    var preIndex = data.multiIndex[e.detail.column];
     data.multiIndex[e.detail.column] = e.detail.value;
 
     // 然后再判断当前改变的是哪一列,如果是第1列改变
@@ -133,11 +134,16 @@ Page({
       // 如果第一列滚动到第一行
       if (e.detail.value === 0) {
         that.loadData(hours, minute);
+        data.multiIndex[1] = 0;
+        data.multiIndex[2] = 0;
       } else {
         that.loadHoursMinute(hours, minute);
+        if (preIndex === 0) {
+          data.multiIndex[1] += currentHours;
+          const _ = Math.trunc((currentMinute - 1) / 10) + 1;
+          data.multiIndex[2] += _;
+        }
       }
-      data.multiIndex[1] = 0;
-      data.multiIndex[2] = 0;
 
       // 如果是第2列改变
     } else if (e.detail.column === 1) {
@@ -146,10 +152,14 @@ Page({
       if (data.multiIndex[0] === 0) {
         if (e.detail.value === 0) {
           that.loadData(hours, minute);
+          data.multiIndex[2] = 0;
         } else {
           that.loadMinute(hours, minute);
+          if (preIndex === 0) {
+            const _ = Math.trunc((currentMinute - 1) / 10) + 1;
+            data.multiIndex[2] += _;
+          }
         }
-        data.multiIndex[2] = 0;
         // 第一列不为今天
       } else {
         that.loadHoursMinute(hours, minute);
