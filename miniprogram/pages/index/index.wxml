@@ -40,7 +40,7 @@
     <!-- 设置出发人数 -->
     <view class="people">
      <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
-    <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{num}}">
+    <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{nums}}">
       <view class="{{num == '出发人数'?'default':'selected'}}">
         {{num}}
       </view>

@@ -16,7 +16,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
     multiArray: [[''], [0], [0]],
-    num: ['1人', '2人', '3人'],
+    nums: ['1人', '2人', '3人'],
     index1: 0,
     index2: 0,
     index3: 0,
@@ -281,7 +281,7 @@ Page({
   bindPickerChange3: function (e) {
     this.setData({
       index3: e.detail.value,
-      num: this.data.num[e.detail.value]
+      num: this.data.nums[e.detail.value]
     })
   },
 
@@ -358,7 +358,7 @@ Page({
           num: Number(this.data.num.split("人")[0]),
           wechat: this.data.wechat,
           qq: this.data.qq,
-          cellphone: this.data.userInfo.cellphone,
+          cellphone: this.data.cellphone,
           nickName: this.data.userInfo.nickName,
           gender: this.data.userInfo.gender,
           avatarUrl: this.data.userInfo.avatarUrl,
@@ -388,7 +388,8 @@ Page({
 
       //跳到匹配结果页
       wx.navigateTo({
-        url: '../match/match?userTime=' + util.formatTime(this.data.time, date) + '&userSrc='+this.data.src + '&userDst='+this.data.dst,
+        url: '../match/match?userTime=' + util.formatTime(this.data.time, date) + 
+          '&userSrc=' + this.data.src + '&userDst=' + this.data.dst + '&userNum=' + Number(this.data.num.split("人")[0]),
         success: function (res) {
           console.log(res)
         }

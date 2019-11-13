@@ -7,9 +7,10 @@ Page({
    */
   data: {
     list: "",
-    userTime: "",
+    userTime: 0,
     userSrc: "",
-    userDst: ""
+    userDst: "",
+    userNum: 0
   },
   /**
    * 获取数据
@@ -17,20 +18,37 @@ Page({
 
   getData() {
     const _ = this.data;
+    console.log(_);
+    console.log("openId =", app.globalData.openId);
     wx.cloud.callFunction({
       name: 'getData',
       data: {
         userDst: _.userDst,
         userSrc: _.userSrc,
         userTime: _.userTime,
-        openid: app.globalData.openid
+        userNum: _.userNum,
+        openId: app.globalData.openId
       },
       success: res => {
-        console.log("res =", res);
-        res.data.sort(function(a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
-        this.setData({
-          list: res.data
-        })
+        if (res.result && res.result.data.length) {
+          res.result.data.sort(function(a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
+          for (var idx in res.result.data) {
+            const theDate = new Date(res.result.data[idx].time);
+            res.result.data[idx].time = (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + theDate.getMinutes();
+          }
+          console.log("res =", res);
+          this.setData({
+            list: res.result.data
+          })
+        } else {
+          wx.showToast({
+            title: '您好，数据库里没有您想要的信息！',
+            icon: 'none',
+          })
+        }
+      }, 
+      fail: e => {
+        console.error(e);
       }
     })
   },
@@ -48,10 +66,10 @@ Page({
   onLoad: function (e) {
     console.log(e);
     this.setData({
-      userTime: e.userTime,
+      userTime: Number(e.userTime),
       userSrc: e.userSrc,
       userDst: e.userDst,
-      userNum: e.userNum
+      userNum: Number(e.userNum)
     })
   },
 

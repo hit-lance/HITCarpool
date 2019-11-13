@@ -52,7 +52,6 @@ App({
       name: "wxContext"
     }).then(res=>{
       this.globalData.openId = res.result.openid
-      console.log(res)
     })
   },
 
