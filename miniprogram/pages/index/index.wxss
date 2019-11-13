@@ -43,7 +43,7 @@ page {
 .wx {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   padding-top: 50rpx;
 }
@@ -51,7 +51,7 @@ page {
 .qq {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   padding-top: 50rpx;
 }
@@ -59,7 +59,7 @@ page {
 .ph {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   padding-top: 50rpx;
 }
@@ -67,14 +67,14 @@ page {
 .src {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
 }
 
 .dst {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   padding-top: 50rpx;
 }
@@ -82,7 +82,7 @@ page {
 .timePeople {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   padding-top: 50rpx;
 }
@@ -90,9 +90,9 @@ page {
 .people {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
-  padding-left: 200rpx;
+  padding-left: 100rpx;
 }
 
 .btn-area {

@@ -14,7 +14,7 @@ class Util {
       day = date.split("月")[1].split("日")[0]; // 返回日
     }
     console.log(year + "/" + month + "/" + day + " " + time.split(" ")[1])
-    return year + "/" + month + "/" + day + " " + time.split(" ")[1]
+    return new Date(year + "/" + month + "/" + day + " " + time.split(" ")[1]).getTime();
   };
 
 };

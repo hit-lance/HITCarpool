@@ -41,8 +41,8 @@
     <view class="people">
      <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
     <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{num}}">
-      <view class="{{peopleNum == '出发人数'?'default':'selected'}}">
-        {{peopleNum}}
+      <view class="{{num == '出发人数'?'default':'selected'}}">
+        {{num}}
       </view>
     </picker>
     </view>
