@@ -1,9 +1,18 @@
 <!--index.wxml-->
-<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-  <block wx:else>
+
+<block wx:if="{{!hasUserInfo && canIUse}}">
+  <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+  <text>请先登录</text>
+</block>
+
+<block wx:else>
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
     <text style="color: black;font-size: 70rpx">{{userInfo.nickName}}</text>
-  </block>
 
+<view>
+<text>{{wechat}}</text>
+</view>
+<button bindtap="goToContactPage">修改联系方式</button>
 <button bindtap="goToAuthorizePage">学生认证</button>
 <button bindtap="goToHistoryPage">我的行程</button>
+  </block>

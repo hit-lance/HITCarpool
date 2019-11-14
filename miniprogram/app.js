@@ -2,7 +2,10 @@
 App({
   globalData: {
     userInfo: null,
-    openId: null
+    openId: null,
+    wechat: '',
+    qq: '',
+    cellphone: '',
   },
 
   onLaunch: function () {

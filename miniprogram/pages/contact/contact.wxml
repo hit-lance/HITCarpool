@@ -1,0 +1,26 @@
+<!--index.wxml-->
+
+<form bindsubmit="formSubmit">
+    <!-- 设置联系方式 -->
+    <text>Tip: 请填写您常用的联系方式，至少填一项</text>
+    <view class='wx'>
+      <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
+      <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]" />
+    </view>
+    <view class='qq'>
+      <image src="{{qqimgurl}}" style="width:40rpx;height:40rpx;"></image>
+      <input class="input" name="qq" placeholder="请输入您的QQ号" placeholder-style="color:#7c7c7c" bindinput="handleQQInput" type="number" />
+    </view>
+    <view class='ph'>
+    <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
+    <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput="handleCellphoneInput" type="number" maxlength="11" />
+    </view>
+
+
+ <view class="btn-area">
+    <button type="primary" disabled="{{disable}}" formType="submit">
+    确认
+    </button>
+  </view>
+
+</form>

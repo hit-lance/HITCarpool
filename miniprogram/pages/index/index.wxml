@@ -1,10 +1,5 @@
 <!--index.wxml-->
 
-<!-- 前往历史发布页
-<view class="container">
-  <button class='btn1' size="{{primarySize}}" plain="{{plain}}" bindtap="历史发布" display>历史发布</button>
-</view> -->
-
 <form bindsubmit="formSubmit">
 
   <!--设置拼车信息-->
@@ -76,9 +71,4 @@
   发布行程
   </button>
   </view>
-  <!-- </view> -->
-
-  <!-- <view class="btn-area">
-    <button bindtap="GotoNxtPage">GoTo</button>
-  </view> -->
 </form>

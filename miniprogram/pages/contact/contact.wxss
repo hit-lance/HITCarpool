@@ -1,0 +1,117 @@
+/**index.wxss**/
+
+page {
+  background: #f3f3f3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.carpool_info {
+  background: #fff;
+  margin: 20rpx;
+  padding: 50rpx;
+}
+.connect{
+  background: #fff;
+  margin: 20rpx;
+  padding: 50rpx;
+}
+
+.default {
+  color: #7c7c7c;
+}
+
+.selected {
+  color: #000;
+}
+
+.date {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.btn1 {
+  border: none;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.wx {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 50rpx;
+}
+
+.qq {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 50rpx;
+}
+
+.ph {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 50rpx;
+}
+
+.src {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.dst {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 50rpx;
+}
+
+.timePeople {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 50rpx;
+}
+
+.people {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: 100rpx;
+}
+
+.btn-area {
+  width: 100%;
+  
+  position: fixed;
+  
+}
+.sub0{
+  size: default;
+  background-color: #7c7c7c;
+
+}
+
+.Toast{
+   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+   /* padding-top: 50rpx; */
+   font-size: 30rpx;
+}

@@ -1,5 +1,8 @@
 {
   "pages": [
+    "pages/my/my",
+    "pages/contact/contact",
+
     "pages/index/index",
     "pages/match/match"
   ],
