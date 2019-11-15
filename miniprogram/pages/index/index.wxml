@@ -48,9 +48,6 @@
 </view>
 
   <view class="btn-area">
-  <!-- <button type="primary" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" > 
-  发布行程 
-  </button> -->
   <button type="primary" disabled="{{disable||!hasUserInfo}}" formType="submit">
   发布行程
   </button>

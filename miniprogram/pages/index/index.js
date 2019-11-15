@@ -14,9 +14,8 @@ Page({
   data: {
     auth: 0,
     disable: true,
-    userInfo: null,
     hasUserInfo: app.globalData.userInfo,
-    registered:app.globalData.userInfo,
+    registered: app.globalData.registered,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
     multiArray: [[''], [0], [0]],
@@ -40,22 +39,28 @@ Page({
   },
 
   onShow: function () {
-    this.setData({
-      userInfo: app.globalData.userInfo,
-      hasUserInfo: true
-    })
-  },
-
-  getUserInfo: function (e) {
-    console.log("getUserInfo:", e);
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true,
-      nickName: e.detail.userInfo.nickName,
-      gender: e.detail.userInfo.gender,
-      avatarUrl: e.detail.userInfo.avatarUrl
-    })
+    if (app.globalData.userInfo) {
+      this.setData({
+        hasUserInfo: true
+      })
+    } else if (this.data.canIUse) {
+      app.userInfoReadyCallback = res => {
+        app.globalData.userInfo = res.userInfo
+        this.setData({
+          hasUserInfo: true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            hasUserInfo: true
+          })
+        }
+      })
+    }
   },
 
   pickerTap: function () {
@@ -334,9 +339,9 @@ Page({
           wechat: app.globalData.wechat,
           qq: app.globalData.qq,
           cellphone: app.globalData.cellphone,
-          nickName: this.data.userInfo.nickName,
-          gender: this.data.userInfo.gender,
-          avatarUrl: this.data.userInfo.avatarUrl,
+          nickName: app.globalData.userInfo.nickName,
+          gender: app.globalData.userInfo.gender,
+          avatarUrl: app.globalData.userInfo.avatarUrl,
           isDone: false
         },
         success: res => {

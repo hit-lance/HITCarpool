@@ -63,8 +63,7 @@ Page({
   },
   getData() {
     const _ = this.data;
-    console.log(_);
-    console.log("openId =", app.globalData.openId);
+
     wx.cloud.callFunction({
       name: 'getData',
       data: {
@@ -75,8 +74,6 @@ Page({
         openId: app.globalData.openId
       },
       success: res => {
-        console.log("userTime =", this.data.userTime, this.transTime(this.data.userTime));
-        console.log("before res =", res);
         if (res.result && res.result.data.length) {
           var data = res.result.data, lst = [];
           data.sort(function(a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
@@ -86,6 +83,20 @@ Page({
               lst[idx].time = this.transTime(data[idx].time);
             }
           if (lst.length) {
+            // console.log(lst)
+            // for (let i = 0; i < lst.length;i++) {
+            //   wx.cloud.callFunction({
+            //     name: "getInfo",
+            //     data: {
+            //       openId: lst[i]._openid
+            //     },
+            //   }).then(res => {
+            //     lst[i].we = res.result.data[0].wechat
+            //     lst[i].globalData.q = res.result.data[0].qq
+            //     lst[i].globalData.cell = res.result.data[0].cellphone
+            //     }).catch(err => { console.log(err)})
+            // }
+            console.log(lst)
             this.setData({
               list: lst
             })
@@ -119,7 +130,6 @@ Page({
    * 生命周期函数--监听页面安装
    */
   onLoad: function (e) {
-    console.log(e);
     this.setData({
       userTime: Number(e.userTime),
       userSrc: e.userSrc,

@@ -18,6 +18,7 @@ Page({
 
   handleWechatInput: function (e) {
     if (e.detail.value.length > 0) {
+      console.log(e.detail.value)
       isFilled[0] = true
     }
     else {
@@ -57,7 +58,7 @@ Page({
 
   formSubmit: function (e) {
     wx.cloud.callFunction({
-      name: "modifyContact",
+      name: "getInfo",
       data: {
         openId: app.globalData.openId,
         wechat: app.globalData.wechat,
@@ -65,39 +66,52 @@ Page({
         cellphone: app.globalData.cellphone,
       },
     }).then(res => {
-      console.log('ok')
-      wx.navigateBack({
-        delta: 1
-      })
-    }).catch(err => {
-      console.log('error')
-      const db = wx.cloud.database()
-      db.collection('info').add({
-        data: {
-          wechat: app.globalData.wechat,
-          qq: app.globalData.qq,
-          cellphone: app.globalData.cellphone,
-          userInfo: app.globalData.userInfo,
-        },
-        success: res => {
-          console.log(app.globalData.registered)
+      if (!res.result.data.length) {
+        const db = wx.cloud.database()
+        db.collection('info').add({
+          data: {
+            wechat: app.globalData.wechat,
+            qq: app.globalData.qq,
+            cellphone: app.globalData.cellphone,
+          },
+          success: res => {
+            wx.showToast({
+              title: '新增记录成功',
+            })
+            console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            app.globalData.registered = true
+          },
+          fail: err => {
+            wx.showToast({
+              icon: 'none',
+              title: '新增记录失败'
+            })
+            console.error('[数据库] [新增记录] 失败：', err)
+          }
+        })
+      }
+      else {
+        const db = wx.cloud.database()
+        db.collection("info").doc(res.result.data[0]._id).update({
+          data: {
+            wechat: app.globalData.wechat,
+            qq: app.globalData.qq,
+            cellphone: app.globalData.cellphone,
+          }
+        }).then(res => {
+          console.log(res)
           wx.showToast({
-            title: '新增记录成功',
+            title: '更新记录成功',
           })
-          console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-
-          app.globalData.registered = true
-
-        },
-        fail: err => {
+        }).catch(err => {
+          console.error(err)
           wx.showToast({
-            icon: 'none',
-            title: '新增记录失败'
+            title: '更新记录失败',
+            icon: 'none'
           })
-          console.error('[数据库] [新增记录] 失败：', err)
-        }
-      })
-    })
-
+        })
+      }
+    }).catch(err => { console.log(err)}
+    )
   }
 })

@@ -6,6 +6,7 @@ App({
     wechat: '',
     qq: '',
     cellphone: '',
+    info_id:'',
     registered: false
   },
 
@@ -58,9 +59,12 @@ App({
             openId: this.globalData.openId
           },
         }).then(res => {
+          console.log(res)
+          console.log(res.result.data.length)
           this.globalData.wechat = res.result.data[0].wechat
           this.globalData.qq = res.result.data[0].qq
           this.globalData.cellphone = res.result.data[0].cellphone
+          this.globalData.info_id = res.result.data[0]._id
           this.globalData.registered = true
         }).catch(err =>{})
     })
