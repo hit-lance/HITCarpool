@@ -13,14 +13,14 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "拼车",
         "iconPath": "icon/home_nor.png",
         "selectedIconPath": "icon/home_pre.png"
       },
 
       {
         "pagePath": "pages/my/my",
-        "text": "我的",
+        "text": "个人中心",
         "iconPath": "icon/mine_nor.png",
         "selectedIconPath": "icon/mine_pre.png"
       }

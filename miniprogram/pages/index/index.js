@@ -1,4 +1,5 @@
 const app = getApp()
+var isFilled = [false, false, false, false];
 var date = new Date();
 var currentMonth = date.getMonth();
 var currentDay = date.getDay();
@@ -12,8 +13,10 @@ Page({
    */
   data: {
     auth: 0,
-    userInfo: {},
-    hasUserInfo: false,
+    disable: true,
+    userInfo: null,
+    hasUserInfo: app.globalData.userInfo,
+    registered:app.globalData.userInfo,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
     multiArray: [[''], [0], [0]],
@@ -36,33 +39,11 @@ Page({
     peopleUrl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E4%BA%BA.png?sign=e003d9f4efb21f53a399315366fe9624&t=1573570120'
   },
 
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+  onShow: function () {
+    this.setData({
+      userInfo: app.globalData.userInfo,
+      hasUserInfo: true
+    })
   },
 
   getUserInfo: function (e) {
@@ -75,12 +56,6 @@ Page({
       gender: e.detail.userInfo.gender,
       avatarUrl: e.detail.userInfo.avatarUrl
     })
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
   },
 
   pickerTap: function () {
@@ -244,6 +219,7 @@ Page({
   },
 
   bindMultiPickerChange: function (e) {
+    isFilled[2] = true;
     var that = this;
     var monthDay = that.data.multiArray[0][e.detail.value[0]];
     var hours = that.data.multiArray[1][e.detail.value[1]];
@@ -258,28 +234,35 @@ Page({
       minute = "00"
 
     that.setData({
-      time: monthDay + " " + hours + ":" + minute
+      time: monthDay + " " + hours + ":" + minute,
+      disable: !(isFilled[0] && isFilled[1] && isFilled[2] && isFilled[3])
     })
   },
 
   bindPickerChange1: function (e) {
+    isFilled[0] = true;
     this.setData({
       index1: e.detail.value,
-      src: this.data.location[e.detail.value]
+      src: this.data.location[e.detail.value],
+      disable: !(isFilled[0] && isFilled[1] && isFilled[2] && isFilled[3])
     })
   },
 
   bindPickerChange2: function (e) {
+    isFilled[1] = true;
     this.setData({
       index2: e.detail.value,
-      dst: this.data.location[e.detail.value]
+      dst: this.data.location[e.detail.value],
+      disable: !(isFilled[0] && isFilled[1] && isFilled[2] && isFilled[3])
     })
   },
 
   bindPickerChange3: function (e) {
+    isFilled[3] = true;
     this.setData({
       index3: e.detail.value,
-      num: this.data.nums[e.detail.value]
+      num: this.data.nums[e.detail.value],
+      disable: !(isFilled[0] && isFilled[1] && isFilled[2] && isFilled[3])
     })
   },
 

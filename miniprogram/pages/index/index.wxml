@@ -1,7 +1,10 @@
 <!--index.wxml-->
 
-<form bindsubmit="formSubmit">
+<block wx:if="{{!hasUserInfo}}">
+  <text>Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！</text>
+</block>
 
+<form bindsubmit="formSubmit">
   <!--设置拼车信息-->
   <view class="carpool_info">
     <!-- 设置出发地 -->
@@ -43,31 +46,12 @@
     </view>
 </view>
 </view>
-<view class="connect">
-<text class='Toast'style="color:{{color}};">请留下至少一种联系方式</text>
-    <!-- 设置联系方式 -->
-    <view class='wx'>
-      <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
-      <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]" />
-    </view>
-    <view class='qq'>
-      <image src="{{qqimgurl}}" style="width:40rpx;height:40rpx;"></image>
-      <input class="input" name="qq" placeholder="请输入您的QQ号" placeholder-style="color:#7c7c7c" bindinput="handleQQInput" type="number" />
-    </view>
-    <view class='ph'>
-    <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
-    <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput="handleCellphoneInput" type="number" maxlength="11" />
-    </view>
-  </view>
 
-  <!-- 提交按钮 v1-->
-  <!-- <view class="btn-area{{needMessage?'active':''}}"bindtap="regist">发布行程
-  </view> -->
   <view class="btn-area">
-  <button type="primary" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" > 
+  <!-- <button type="primary" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" > 
   发布行程 
-  </button>
-  <button type="primary" wx:else formType="submit">
+  </button> -->
+  <button type="primary" disabled="{{disable||!hasUserInfo}}" formType="submit">
   发布行程
   </button>
   </view>

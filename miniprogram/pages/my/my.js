@@ -18,15 +18,14 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onShow: function () {
     this.setData({
       wechat: app.globalData.wechat,
       qq: app.globalData.qq,
       cellphone: app.globalData.cellphone,
     })
 
-    console.log(app.globalData.wechat)
-    console.log(this.data.wechat)
+    console.log(app.globalData.openId)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

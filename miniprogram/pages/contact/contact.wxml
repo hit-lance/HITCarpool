@@ -5,7 +5,7 @@
     <text>Tip: 请填写您常用的联系方式，至少填一项</text>
     <view class='wx'>
       <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
-      <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" type="[a-zA-Z0-9_-]" />
+      <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" />
     </view>
     <view class='qq'>
       <image src="{{qqimgurl}}" style="width:40rpx;height:40rpx;"></image>

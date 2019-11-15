@@ -1,5 +1,5 @@
 const app = getApp();
-var isFilled=[false,false,false];
+var isFilled = [false, false, false];
 
 Page({
   /**
@@ -17,8 +17,7 @@ Page({
   },
 
   handleWechatInput: function (e) {
-    console.log(e.detail.value.length)
-    if (e.detail.value.length>0) {
+    if (e.detail.value.length > 0) {
       isFilled[0] = true
     }
     else {
@@ -32,7 +31,7 @@ Page({
 
   handleQQInput: function (e) {
     if (e.detail.value.length > 0) {
-      isFilled[1]=true
+      isFilled[1] = true
     }
     else {
       isFilled[1] = false
@@ -57,16 +56,23 @@ Page({
   },
 
   formSubmit: function (e) {
-    if ((app.globalData.qq == "") && (app.globalData.wechat == "") && (app.globalData.cellphone == "")) {
-      wx.showToast({
-        title: '请填联系方式',
-        icon: 'none'
+    wx.cloud.callFunction({
+      name: "modifyContact",
+      data: {
+        openId: app.globalData.openId,
+        wechat: app.globalData.wechat,
+        qq: app.globalData.qq,
+        cellphone: app.globalData.cellphone,
+      },
+    }).then(res => {
+      console.log('ok')
+      wx.navigateBack({
+        delta: 1
       })
-    }
-    else {
+    }).catch(err => {
+      console.log('error')
       const db = wx.cloud.database()
-      console.log(e.detail)
-      db.collection('user_info').add({
+      db.collection('info').add({
         data: {
           wechat: app.globalData.wechat,
           qq: app.globalData.qq,
@@ -74,14 +80,14 @@ Page({
           userInfo: app.globalData.userInfo,
         },
         success: res => {
-          // 在返回结果中会包含新创建的记录的 _id
-          this.setData({
-            counterId: res._id,
-          })
+          console.log(app.globalData.registered)
           wx.showToast({
             title: '新增记录成功',
           })
           console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+
+          app.globalData.registered = true
+
         },
         fail: err => {
           wx.showToast({
@@ -91,9 +97,7 @@ Page({
           console.error('[数据库] [新增记录] 失败：', err)
         }
       })
-      this.setData({
-        allValue: e.detail.value
-      })
-    }
+    })
+
   }
 })

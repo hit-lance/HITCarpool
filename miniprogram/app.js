@@ -6,6 +6,7 @@ App({
     wechat: '',
     qq: '',
     cellphone: '',
+    registered: false
   },
 
   onLaunch: function () {
@@ -52,7 +53,7 @@ App({
     }).then(res => {
       this.globalData.openId = res.result.openid,
         wx.cloud.callFunction({
-          name: "getContact",
+          name: "getInfo",
           data: {
             openId: this.globalData.openId
           },
@@ -60,7 +61,8 @@ App({
           this.globalData.wechat = res.result.data[0].wechat
           this.globalData.qq = res.result.data[0].qq
           this.globalData.cellphone = res.result.data[0].cellphone
-        })
+          this.globalData.registered = true
+        }).catch(err =>{})
     })
   },
 })
