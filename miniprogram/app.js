@@ -2,7 +2,7 @@
 App({
   globalData: {
     userInfo: null,
-    openId: null,
+    openId: '',
     wechat: '',
     qq: '',
     cellphone: '',
@@ -24,12 +24,7 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-
+    wx.login();
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -53,9 +48,18 @@ App({
 
     wx.cloud.callFunction({
       name: "wxContext"
-    }).then(res=>{
-      this.globalData.openId = res.result.openid
+    }).then(res => {
+      this.globalData.openId = res.result.openid,
+        wx.cloud.callFunction({
+          name: "getContact",
+          data: {
+            openId: this.globalData.openId
+          },
+        }).then(res => {
+          this.globalData.wechat = res.result.data[0].wechat
+          this.globalData.qq = res.result.data[0].qq
+          this.globalData.cellphone = res.result.data[0].cellphone
+        })
     })
   },
-
 })

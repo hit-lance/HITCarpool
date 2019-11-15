@@ -6,6 +6,8 @@ Page({
   data: {
     userInfo: {},
     wechat: '',
+    qq:'',
+    cellphone:'',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
@@ -18,8 +20,12 @@ Page({
   onLoad: function () {
     this.setData({
       wechat: app.globalData.wechat,
+      qq: app.globalData.qq,
+      cellphone: app.globalData.cellphone,
     })
 
+    console.log(app.globalData.wechat)
+    console.log(this.data.wechat)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -69,5 +75,18 @@ Page({
         console.log(res)
       }
     })
+  }
+})
+
+Component({
+  pageLifetimes: {
+    show() {
+      if (typeof this.getTabBar === 'function' &&
+        this.getTabBar()) {
+        this.getTabBar().setData({
+          selected: 1
+        })
+      }
+    }
   }
 })

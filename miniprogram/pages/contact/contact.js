@@ -71,7 +71,7 @@ Page({
           wechat: app.globalData.wechat,
           qq: app.globalData.qq,
           cellphone: app.globalData.cellphone,
-          userInfo: app.globalData.userInfo
+          userInfo: app.globalData.userInfo,
         },
         success: res => {
           // 在返回结果中会包含新创建的记录的 _id
