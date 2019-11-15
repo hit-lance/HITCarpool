@@ -1,6 +1,6 @@
 <!--index.wxml-->
 
-<block wx:if="{{!hasUserInfo}}">
+<block wx:if="{{!hasUserInfo||!registered}}">
   <text>Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！</text>
 </block>
 
@@ -48,7 +48,7 @@
 </view>
 
   <view class="btn-area">
-  <button type="primary" disabled="{{disable||!hasUserInfo}}" formType="submit">
+  <button type="primary" disabled="{{disable||!hasUserInfo||!registered}}" formType="submit">
   发布行程
   </button>
   </view>

@@ -27,7 +27,10 @@ Page({
 
   transTime(theTime) {
     const theDate = new Date(theTime);
-     return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + theDate.getMinutes();
+    var minute = theDate.getMinutes();
+    if(minute==0)
+    minute="00";
+    return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + minute
   },
 
   /**
@@ -83,19 +86,23 @@ Page({
               lst[idx].time = this.transTime(data[idx].time);
             }
           if (lst.length) {
-            // console.log(lst)
-            // for (let i = 0; i < lst.length;i++) {
-            //   wx.cloud.callFunction({
-            //     name: "getInfo",
-            //     data: {
-            //       openId: lst[i]._openid
-            //     },
-            //   }).then(res => {
-            //     lst[i].we = res.result.data[0].wechat
-            //     lst[i].globalData.q = res.result.data[0].qq
-            //     lst[i].globalData.cell = res.result.data[0].cellphone
-            //     }).catch(err => { console.log(err)})
-            // }
+            console.log(lst)
+            for (let i = 0; i < lst.length;i++) {
+              wx.cloud.callFunction({
+                name: "getInfo",
+                data: {
+                  openId: lst[i]._openid
+                },
+              }).then(res => {
+                console.log(res)
+                lst[i].wechat = res.result.data[0].wechat
+                lst[i].qq = res.result.data[0].qq
+                lst[i].cellphone = res.result.data[0].cellphone
+                lst[i].nickName = res.result.data[0].userInfo.nickName
+                lst[i].gender = res.result.data[0].userInfo.gender
+                lst[i].avatarUrl = res.result.data[0].userInfo.avatarUrl
+                }).catch(err => { console.log(err)})
+            }
             console.log(lst)
             this.setData({
               list: lst

@@ -18,7 +18,6 @@ Page({
 
   handleWechatInput: function (e) {
     if (e.detail.value.length > 0) {
-      console.log(e.detail.value)
       isFilled[0] = true
     }
     else {
@@ -67,12 +66,14 @@ Page({
       },
     }).then(res => {
       if (!res.result.data.length) {
+        app.globalData.registered=true
         const db = wx.cloud.database()
         db.collection('info').add({
           data: {
             wechat: app.globalData.wechat,
             qq: app.globalData.qq,
             cellphone: app.globalData.cellphone,
+            userInfo: app.globalData.userInfo
           },
           success: res => {
             wx.showToast({
@@ -91,12 +92,14 @@ Page({
         })
       }
       else {
+        app.globalData.registered = true
         const db = wx.cloud.database()
         db.collection("info").doc(res.result.data[0]._id).update({
           data: {
             wechat: app.globalData.wechat,
             qq: app.globalData.qq,
             cellphone: app.globalData.cellphone,
+            userInfo: app.globalData.userInfo
           }
         }).then(res => {
           console.log(res)

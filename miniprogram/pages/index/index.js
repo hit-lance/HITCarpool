@@ -39,6 +39,11 @@ Page({
   },
 
   onShow: function () {
+    console.log(app.globalData.registered)
+    console.log(app.globalData.userInfo)
+    this.setData({
+      registered:app.globalData.registered
+    })
     if (app.globalData.userInfo) {
       this.setData({
         hasUserInfo: true
@@ -336,12 +341,6 @@ Page({
           destination: this.data.dst,
           time: util.formatTime(this.data.time, date),
           num: Number(this.data.num.split("人")[0]),
-          wechat: app.globalData.wechat,
-          qq: app.globalData.qq,
-          cellphone: app.globalData.cellphone,
-          nickName: app.globalData.userInfo.nickName,
-          gender: app.globalData.userInfo.gender,
-          avatarUrl: app.globalData.userInfo.avatarUrl,
           isDone: false
         },
         success: res => {
