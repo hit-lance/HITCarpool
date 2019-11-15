@@ -13,7 +13,7 @@
 <text>联系方式\n</text>
 <text>微信号: {{wechat}}\n</text>
 <text>QQ: {{qq}}\n</text>
-<text>手机{{cellphone}}</text>
+<text>手机: {{cellphone}}</text>
 </view>
 <button bindtap="goToContactPage">修改联系方式</button>
 <button bindtap="goToAuthorizePage">学生认证</button>

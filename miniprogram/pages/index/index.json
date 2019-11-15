@@ -1,6 +1,5 @@
 {
-"usingComponents": {
-  "van-tabbar": "../../dist/tabbar/index",
-  "van-tabbar-item": "../../dist/tabbar-item/index"
-}
+  "usingComponents": {
+    "tabbar": "/components/tabbar/index"
+  }
 }

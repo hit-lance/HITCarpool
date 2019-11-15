@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    auth: 0,
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -386,6 +387,8 @@ Page({
         }
       })
     }
-  }
+  },
+
 })
+
 

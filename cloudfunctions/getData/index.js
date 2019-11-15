@@ -5,7 +5,7 @@ cloud.init({
 const db = cloud.database()
 const _ = db.command
 exports.main = async (event, context) => {
-  const __ = event;
+  const __ = event; 
   console.log(__);
   try {
     return await db.collection('man').where({

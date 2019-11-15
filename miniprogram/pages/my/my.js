@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    auth: 0,
     userInfo: {},
     wechat: '',
     qq:'',
@@ -75,18 +76,5 @@ Page({
         console.log(res)
       }
     })
-  }
-})
-
-Component({
-  pageLifetimes: {
-    show() {
-      if (typeof this.getTabBar === 'function' &&
-        this.getTabBar()) {
-        this.getTabBar().setData({
-          selected: 1
-        })
-      }
-    }
-  }
+  },
 })
