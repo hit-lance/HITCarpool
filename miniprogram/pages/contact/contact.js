@@ -66,7 +66,7 @@ Page({
       },
     }).then(res => {
       if (!res.result.data.length) {
-        app.globalData.registered=true
+        app.globalData.registered = true
         const db = wx.cloud.database()
         db.collection('info').add({
           data: {
@@ -114,7 +114,7 @@ Page({
           })
         })
       }
-    }).catch(err => { console.log(err)}
+    }).catch(err => { console.log(err) }
     )
   }
 })

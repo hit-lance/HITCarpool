@@ -39,22 +39,30 @@ Page({
   },
 
   onShow: function () {
+    let that = this;
+    if (app.globalData.registered == true) {
+      that.test()
+    } else {
+      app.userInfoReadyCallback = () => {
+        that.test()
+      }
+    }
+  },
+
+  test: function () {
     console.log(app.globalData.registered)
     console.log(app.globalData.userInfo)
     this.setData({
-      registered:app.globalData.registered
+      registered: app.globalData.registered
     })
     if (app.globalData.userInfo) {
       this.setData({
         hasUserInfo: true
       })
     } else if (this.data.canIUse) {
-      app.userInfoReadyCallback = res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          hasUserInfo: true
-        })
-      }
+      this.setData({
+        hasUserInfo: true
+      })
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
@@ -67,7 +75,6 @@ Page({
       })
     }
   },
-
   pickerTap: function () {
     var monthDay = ['今天', '明天'];
     var hours = [];
@@ -174,12 +181,12 @@ Page({
   },
 
   loadData: function (hours, minute) {
-    var minuteIndex = Math.trunc((currentMinute-1)/10)*10+10;
+    var minuteIndex = Math.trunc((currentMinute - 1) / 10) * 10 + 10;
 
     if (minuteIndex == 60) {
       // 时
       for (var i = currentHours + 1; i < 24; i++) {
-          hours.push(i + "点");
+        hours.push(i + "点");
       }
       // 分
       for (var i = 0; i < 60; i += 10) {
@@ -188,7 +195,7 @@ Page({
     } else {
       // 时
       for (var i = currentHours; i < 24; i++) {
-          hours.push(i + "点");
+        hours.push(i + "点");
       }
       // 分
       for (var i = minuteIndex; i < 60; i += 10) {
@@ -200,7 +207,7 @@ Page({
   loadHoursMinute: function (hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
-        hours.push(i + "点");
+      hours.push(i + "点");
     }
     // 分
     for (var i = 0; i < 60; i += 10) {
@@ -209,17 +216,17 @@ Page({
   },
 
   loadMinute: function (hours, minute) {
-    var minuteIndex = Math.trunc((currentMinute-1)/10)*10+10
+    var minuteIndex = Math.trunc((currentMinute - 1) / 10) * 10 + 10
 
     if (minuteIndex == 60) {
       // 时
       for (var i = currentHours + 1; i < 24; i++) {
-            hours.push(i + "点");
+        hours.push(i + "点");
       }
     } else {
       // 时
       for (var i = currentHours; i < 24; i++) {
-          hours.push(i + "点");
+        hours.push(i + "点");
       }
     }
     // 分
@@ -367,7 +374,7 @@ Page({
 
       //跳到匹配结果页
       wx.navigateTo({
-        url: '../match/match?userTime=' + util.formatTime(this.data.time, date) + 
+        url: '../match/match?userTime=' + util.formatTime(this.data.time, date) +
           '&userSrc=' + this.data.src + '&userDst=' + this.data.dst + '&userNum=' + Number(this.data.num.split("人")[0]),
         success: function (res) {
           console.log(res)

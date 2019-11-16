@@ -7,8 +7,8 @@ Page({
     auth: 0,
     userInfo: {},
     wechat: '',
-    qq:'',
-    cellphone:'',
+    qq: '',
+    cellphone: '',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
@@ -68,7 +68,7 @@ Page({
     }
   },
 
-  goToContactPage: function(e) {
+  goToContactPage: function (e) {
     wx.navigateTo({
       url: '../contact/contact',
       success: function (res) {

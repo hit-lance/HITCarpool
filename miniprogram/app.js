@@ -6,12 +6,12 @@ App({
     wechat: '',
     qq: '',
     cellphone: '',
-    info_id:'',
+    info_id: '',
     registered: false
   },
 
   onLaunch: function () {
-
+    let that = this
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -36,13 +36,7 @@ App({
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
+              that.globalData.userInfo = res.userInfo
             }
           })
         }
@@ -52,21 +46,25 @@ App({
     wx.cloud.callFunction({
       name: "wxContext"
     }).then(res => {
-      this.globalData.openId = res.result.openid,
+      that.globalData.openId = res.result.openid,
         wx.cloud.callFunction({
           name: "getInfo",
           data: {
-            openId: this.globalData.openId
+            openId: that.globalData.openId
           },
         }).then(res => {
           console.log(res)
           console.log(res.result.data.length)
-          this.globalData.wechat = res.result.data[0].wechat
-          this.globalData.qq = res.result.data[0].qq
-          this.globalData.cellphone = res.result.data[0].cellphone
-          this.globalData.info_id = res.result.data[0]._id
-          this.globalData.registered = true
-        }).catch(err =>{})
+          that.globalData.wechat = res.result.data[0].wechat
+          that.globalData.qq = res.result.data[0].qq
+          that.globalData.cellphone = res.result.data[0].cellphone
+          that.globalData.info_id = res.result.data[0]._id
+          that.globalData.registered = true
+          if (that.userInfoReadyCallback) {
+            that.userInfoReadyCallback()
+          }
+        }).catch(err => {
+        })
     })
   },
 })
