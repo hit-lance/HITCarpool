@@ -21,18 +21,21 @@ Page({
     peopleUrl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E4%BA%BA.png?sign=e003d9f4efb21f53a399315366fe9624&t=1573570120'
   },
 
- /**
-  * 将时间戳转化为标准形式
-  */
+  /**
+   * 将时间戳转化为标准形式
+   */
 
   transTime(theTime) {
     const theDate = new Date(theTime);
     var minute = theDate.getMinutes();
-    if(minute==0)
-    minute="00";
+    if (minute == 0)
+      minute = "00";
     return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + minute
   },
 
+  /**
+   * 获取数据
+   */
   /**
    * 显示弹窗
    */
@@ -61,10 +64,7 @@ Page({
       modalHidden: true
     })
   },
-  /**
-   * 获取数据
-   */
-  getData() {
+  getData(callback) {
     const _ = this.data;
 
     wx.cloud.callFunction({
@@ -79,34 +79,32 @@ Page({
       success: res => {
         if (res.result && res.result.data.length) {
           var data = res.result.data, lst = [];
-          data.sort(function(a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
-          for (var idx in data) 
+          data.sort(function (a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
+          for (var idx in data)
             if (Math.abs(data[idx].time - _.userTime) <= 3 * 60 * 60 * 1000) {
               lst.push(data[idx]);
               lst[idx].time = this.transTime(data[idx].time);
             }
           if (lst.length) {
-            console.log(lst)
-            for (let i = 0; i < lst.length;i++) {
+            for (let i = 0; i < lst.length; i++) {
               wx.cloud.callFunction({
                 name: "getInfo",
                 data: {
                   openId: lst[i]._openid
                 },
               }).then(res => {
-                console.log(res)
                 lst[i].wechat = res.result.data[0].wechat
                 lst[i].qq = res.result.data[0].qq
                 lst[i].cellphone = res.result.data[0].cellphone
                 lst[i].nickName = res.result.data[0].userInfo.nickName
                 lst[i].gender = res.result.data[0].userInfo.gender
                 lst[i].avatarUrl = res.result.data[0].userInfo.avatarUrl
-                }).catch(err => { console.log(err)})
+              }).catch(err => { console.log(err) })
             }
-            console.log(lst)
-            this.setData({
-              list: lst
-            })
+            setTimeout(function () {
+              callback(lst);
+            }, 1000);
+
           } else {
             wx.showToast({
               title: '您好，数据库里没有您想要的信息！',
@@ -119,7 +117,7 @@ Page({
             icon: 'none',
           })
         }
-      }, 
+      },
       fail: e => {
         console.error(e);
       }
@@ -130,7 +128,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getData();
+    var that=this
+    this.getData(function(lst){
+      that.setData({
+        list: lst
+      })
+    });
   },
 
   /**

@@ -14,12 +14,7 @@ Page({
     cWidth: null,
     cHeight: null
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -61,7 +56,7 @@ Page({
     // 从相册和相机中获取图片
     wx.chooseImage({
       count: 1,
-      sourceType: ['album','camera'], 
+      sourceType: ['album', 'camera'],
       success: dRes => {
         // 展示加载组件
         wx.showLoading({
@@ -71,12 +66,12 @@ Page({
         wx.getImageInfo({
           src: tempImagePath,
           success: function (res) {
-            console.log("压缩前"+res.width+"x"+res.height)
+            console.log("压缩前" + res.width + "x" + res.height)
             //---------利用canvas压缩图片--------------
             var ratio = 2;
             var canvasWidth = res.width //图片原始长宽
             var canvasHeight = res.height
-            while (canvasWidth > 1200 || canvasHeight > 1200) { // 保证宽高在400以内
+            while (canvasWidth > 300 || canvasHeight > 300) { // 保证宽高在400以内
               canvasWidth = Math.trunc(res.width / ratio)
               canvasHeight = Math.trunc(res.height / ratio)
               ratio++;
@@ -99,39 +94,39 @@ Page({
                 destWidth: canvasWidth,
                 destHeight: canvasHeight,
                 success: function (res) {
-                console.log(res.tempFilePath)
-                      const savedFilePath = res.tempFilePath;
-                      console.log(savedFilePath)
-                      that.setData({
-                        imgPath: savedFilePath
-                      }, () => {
-                        let cloudPath = `${Date.now()}-${Math.floor(Math.random(0, 1) *
-                          1000)}.png`;
-                        // 云开发新接口，用于上传文件
-                        wx.cloud.uploadFile({
-                          cloudPath: cloudPath,
-                          filePath: that.data.imgPath,
-                          success: res => {
-                            if (res.statusCode < 300) {
-                              console.log(res.fileID);
-                              that.setData({
-                                fileID: res.fileID,
-                              }, () => {
-                                that.parseStudentCard();
-                                wx.hideLoading();
-                              });
-                            }
-                          },
-                          fail: err => {
-                            // 隐藏加载组件并提示
+                  console.log(res.tempFilePath)
+                  const savedFilePath = res.tempFilePath;
+                  console.log(savedFilePath)
+                  that.setData({
+                    imgPath: savedFilePath
+                  }, () => {
+                    let cloudPath = `${Date.now()}-${Math.floor(Math.random(0, 1) *
+                      1000)}.png`;
+                    // 云开发新接口，用于上传文件
+                    wx.cloud.uploadFile({
+                      cloudPath: cloudPath,
+                      filePath: that.data.imgPath,
+                      success: res => {
+                        if (res.statusCode < 300) {
+                          console.log(res.fileID);
+                          that.setData({
+                            fileID: res.fileID,
+                          }, () => {
+                            that.parseStudentCard();
                             wx.hideLoading();
-                            wx.showToast({
-                              title: '上传失败',
-                              icon: 'none'
-                            });
-                          },
+                          });
+                        }
+                      },
+                      fail: err => {
+                        // 隐藏加载组件并提示
+                        wx.hideLoading();
+                        wx.showToast({
+                          title: '上传失败',
+                          icon: 'none'
                         });
-                      })
+                      },
+                    });
+                  })
                 },
                 fail: function (res) {
                   console.log("fail")
@@ -174,16 +169,16 @@ Page({
         wx.hideLoading();
         return;
       }
-      console.log(res.result)  
+      console.log(res.result)
       let data = that.handleData(res.result.items);
       console.log(data);
-      if(that.data.varify == true){
+      if (that.data.varify == true) {
         that.setData({
           formData: data
         });
         that.addStudent();
         wx.hideLoading();
-      }else{
+      } else {
         wx.hideLoading();
         wx.showToast({
           title: '非学生卡',
@@ -211,7 +206,7 @@ Page({
     //console.log("处理名片数据", data);
     data.map(item => {
       let txt = item.text;
-      if(new RegExp('学生卡是学').test(txt) == true){
+      if (new RegExp('学生卡').test(txt) == true) {
         that.setData({
           varify: true
         })
@@ -244,8 +239,8 @@ Page({
       data: formData
     }).then((res) => {
       wx.hideLoading();
-      let url = '../faceCompare/index?imgPath='+that.data.imgPath
-      //console.log(url)
+      let url = '../faceCompare/index?imgPath=' + that.data.imgPath
+      
       wx.redirectTo({
         url: url
       });

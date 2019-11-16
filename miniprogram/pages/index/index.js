@@ -50,8 +50,6 @@ Page({
   },
 
   test: function () {
-    console.log(app.globalData.registered)
-    console.log(app.globalData.userInfo)
     this.setData({
       registered: app.globalData.registered
     })
@@ -341,7 +339,6 @@ Page({
 
     else {
       const db = wx.cloud.database()
-      console.log(e.detail)
       db.collection('man').add({
         data: {
           source: this.data.src,

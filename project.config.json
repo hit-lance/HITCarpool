@@ -23,7 +23,7 @@
 		"nodeModules": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.1",
+	"libVersion": "2.9.3",
 	"appid": "wx48fbce58158a0030",
 	"projectname": "HITCarpool",
 	"miniprogramRoot": "miniprogram/",

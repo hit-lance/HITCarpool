@@ -9,7 +9,7 @@ Page({
     image_a: '',
     image_b: '',
     imgPath_a: '',
-    imgPath_b:'',
+    imgPath_b: '',
     app_id: 2123939493,
     app_key: 'USKQCiyPOTvdfEMR',
     _openid: 'oMfVH4wZcFIrZ8noriIJJphy1N_4',
@@ -48,7 +48,7 @@ Page({
     // 从相册和相机中获取图片
     wx.chooseImage({
       count: 1,
-      sourceType: ['album','camera'],
+      sourceType: ['album', 'camera'],
       success: function (res) {
         let Abase64 = wx.getFileSystemManager().readFileSync(that.data.imgPath_a, "base64")
         //Abase64 　= 'data:image/jpeg;base64,' + Abase64
@@ -57,7 +57,7 @@ Page({
           image_a: Abase64,
           imgPath_b: res.tempFilePaths[0]
         }, () => {
-            //console.log(that.data.imgPath)
+          //console.log(that.data.imgPath)
           wx.getImageInfo({
             src: that.data.imgPath_b,
             success: function (res) {
@@ -66,7 +66,7 @@ Page({
               var ratio = 2;
               var canvasWidth = res.width //图片原始长宽
               var canvasHeight = res.height
-              while (canvasWidth > 600 || canvasHeight > 600) { // 保证宽高在400以内
+              while (canvasWidth > 300 || canvasHeight > 300) { // 保证宽高在400以内
                 canvasWidth = Math.trunc(res.width / ratio)
                 canvasHeight = Math.trunc(res.height / ratio)
                 ratio++;
