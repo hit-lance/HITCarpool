@@ -1,0 +1,17 @@
+const cloud = require('wx-server-sdk')
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
+const db = cloud.database()
+const _ = db.command
+exports.main = async (event, context) => {
+  const __ = event;
+  console.log(__);
+  try {
+    return await db.collection('man').where({
+      _openid: __.openId
+    }).get()
+  } catch (e) {
+    console.error(e)
+  }
+}

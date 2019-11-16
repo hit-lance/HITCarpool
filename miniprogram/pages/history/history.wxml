@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="card" wx:for="{{list}}" wx:key="this">
+    <view class="imgs">
+      <image class="head" src="{{item.avatarUrl}}"></image>
+      <view class="id">{{item.nickName}} </view>
+      <view class="num">
+        <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.num}}
+      </view>
+    </view>
+    <view>
+      <view class="content">
+        <image src="{{bluepointUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.source}}
+      </view>
+      <view class="content">
+        <image src="{{greenpointUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.destination}}
+      </view>
+      <view class="content">
+        <image src="{{timeUrl}}" style="width:40rpx;height:40rpx;"></image>
+        {{item.time}}
+        <!-- <view class="content" wx:if="{{item.wechat!=''}}">
+              <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
+              微信：{{item.wechat}}
+            </view> -->
+        <view class="connect">
+          <button class='button' bindtap='deleteTheMessage' type='default' size='mini' data-theid="{{item._id}}">取消行程</button>
+          <view wx:if="{{item.isDone}}">
+            <button class='button' bindtap='restoreTheMessage' type='default' size='mini' data-theid="{{item._id}}">拼车成功</button>
+           </view> 
+          <view wx:if="{{!item.isDone}}">
+            <button class='button' bindtap='cancelTheMessage' type='default' size='mini' data-theid="{{item._id}}">未拼车</button>
+           </view> 
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

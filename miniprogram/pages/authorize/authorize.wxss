@@ -1,0 +1,6 @@
+
+button.upload {
+ width: 620rpx;
+ font-size: 28rpx;
+ margin: 40rpx 0 20rpx 0;
+}

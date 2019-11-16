@@ -34,9 +34,6 @@ Page({
   },
 
   /**
-   * 获取数据
-   */
-  /**
    * 显示弹窗
    */
   buttonTap: function () {
@@ -64,6 +61,9 @@ Page({
       modalHidden: true
     })
   },
+  /**
+   * 获取数据
+   */
   getData() {
     const _ = this.data;
 

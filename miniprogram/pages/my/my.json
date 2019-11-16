@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "tabbar": "/components/tabbar/index"
+    "tabbar": "/components/tabbar/index",
+    "van-cell": "../../dist/cell/index",
+    "van-cell-group": "../../dist/cell-group/index"
   }
 }

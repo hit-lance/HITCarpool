@@ -1,21 +1,37 @@
 <!--index.wxml-->
 
 <block wx:if="{{!hasUserInfo && canIUse}}">
-  <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-  <text>请先登录</text>
+<view class="login">
+<image class="userinfo-avatar" src="../../icon/user-unlogin.png" mode="cover"></image>
+  <button  class="log" open-type="getUserInfo" bindgetuserinfo="getUserInfo"  round  size="mini"> 请先登录 </button>
+  
+</view>
 </block>
 
 <block wx:else>
+  <view class="head">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-    <text style="color: black;font-size: 70rpx">{{userInfo.nickName}}</text>
+    <text class="name" style="color: black;font-size: small">{{userInfo.nickName}}</text>
+    <button class="AC" plain round type="primary" size="mini" bindtap="goToAuthorizePage">学生认证</button>
+  </view>
+  <view class="connect">
+    <view>
+      <view class="body">
+        <text class="con_">联系方式\n</text>
+        <button class="trans_" bindtap="goToContactPage" size="mini">
+          <text class="trans">修改</text>
+        </button>
+      </view>
+    </view>
+    <view class="con">
+    <van-cell-group>
+      <van-cell title="微信号" value="{{wechat}}" />
+      <van-cell title="QQ" value="{{qq}}" />
+      <van-cell title="手机" value="{{cellphone}}" />
+    </van-cell-group>
+  </view>
+  </view>
 
-<view>
-<text>联系方式\n</text>
-<text>微信号: {{wechat}}\n</text>
-<text>QQ: {{qq}}\n</text>
-<text>手机: {{cellphone}}</text>
-</view>
-<button bindtap="goToContactPage">修改联系方式</button>
-<button bindtap="goToAuthorizePage">学生认证</button>
-<button bindtap="goToHistoryPage">我的行程</button>
-  </block>
+
+  <button bindtap="goToHistoryPage">我的行程</button>
+</block>

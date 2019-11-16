@@ -76,4 +76,22 @@ Page({
       }
     })
   },
+  
+  goToHistoryPage: function (e) {
+    wx.navigateTo({
+      url: '../history/history',
+      success: function (res) {
+        console.log(res)
+      }
+    })
+  },
+
+  goToAuthorizePage: function (e) {
+    wx.navigateTo({
+      url: '../authorize/authorize',
+      success: function (res) {
+        console.log(res)
+      }
+    })
+  }
 })

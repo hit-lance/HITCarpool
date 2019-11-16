@@ -63,6 +63,12 @@
 					"name": "db guide",
 					"pathName": "pages/databaseGuide/databaseGuide",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/history/history",
+					"scene": null
 				}
 			]
 		}

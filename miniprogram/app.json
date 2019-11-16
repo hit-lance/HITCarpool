@@ -3,12 +3,16 @@
     "pages/index/index",
     "pages/my/my",
     "pages/contact/contact",
-    "pages/match/match"
+    "pages/match/match",
+    "pages/history/history",
+    "pages/authorize/authorize",
+    "pages/faceCompare/index",
+    "pages/success/index",
+    "pages/fail/index"
   ],
-
   "tabBar": {
     "color": "#333",
-    "selectedColor": "#fdb975",
+    "selectedColor": "#1afa29",
     "backgroundColor": "#fff",
     "list": [
       {
@@ -17,7 +21,6 @@
         "iconPath": "icon/home_nor.png",
         "selectedIconPath": "icon/home_pre.png"
       },
-
       {
         "pagePath": "pages/my/my",
         "text": "个人中心",
@@ -26,7 +29,6 @@
       }
     ]
   },
-
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -36,5 +38,4 @@
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2"
-  
 }
