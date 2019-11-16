@@ -3,7 +3,7 @@
 <block wx:if="{{!hasUserInfo && canIUse}}">
 <view class="login">
 <image class="userinfo-avatar" src="../../icon/user-unlogin.png" mode="cover"></image>
-  <button  class="log" open-type="getUserInfo" bindgetuserinfo="getUserInfo"  round  size="mini"> 请先登录 </button>
+  <button  class="log" open-type="getUserInfo" bindgetuserinfo="getUserInfo"  round size="mini"> 请先登录 </button>
   
 </view>
 </block>
@@ -12,7 +12,8 @@
   <view class="head">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
     <text class="name" style="color: black;font-size: small">{{userInfo.nickName}}</text>
-    <button class="AC" plain round type="primary" size="mini" bindtap="goToAuthorizePage">学生认证</button>
+    <button wx:if="{{!authorized}}"class="AC" plain round type="primary" size="mini" bindtap="goToAuthorizePage">学生认证</button>
+    <button wx:else class="AC" plain round type="primary" size="mini" bindtap="goToAuthorizePage" disabled="true">已认证</button>
   </view>
   <view class="connect">
     <view>

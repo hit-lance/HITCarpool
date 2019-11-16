@@ -7,7 +7,8 @@ App({
     qq: '',
     cellphone: '',
     info_id: '',
-    registered: false
+    registered: false,
+    authorized: false
   },
 
   onLaunch: function () {
@@ -59,6 +60,7 @@ App({
           that.globalData.qq = res.result.data[0].qq
           that.globalData.cellphone = res.result.data[0].cellphone
           that.globalData.info_id = res.result.data[0]._id
+          that.globalData.authorized = res.result.data[0].authorized
           that.globalData.registered = true
           if (that.userInfoReadyCallback) {
             that.userInfoReadyCallback()

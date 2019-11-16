@@ -1,6 +1,6 @@
 <!--index.wxml-->
 
-<block wx:if="{{!hasUserInfo||!registered}}">
+<block wx:if="{{!hasUserInfo||!registered||!authorized}}">
   <text>Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！</text>
 </block>
 

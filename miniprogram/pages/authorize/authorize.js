@@ -240,10 +240,27 @@ Page({
     }).then((res) => {
       wx.hideLoading();
       let url = '../faceCompare/index?imgPath=' + that.data.imgPath
-      
-      wx.redirectTo({
-        url: url
-      });
+      wx.showModal({
+        title: '提示',
+        content: '上传学生卡成功\r\n将开启摄像头进行人脸验证',
+        cancelText: '取消',
+        confirmText: '确认',
+        success: function (res) {
+          if (res.cancel) {
+            //这个跳转是左边按钮的跳转链接
+            wx.redirectTo({
+              url: '../authorize/authorize'
+            })
+          } else {
+            //这里是右边按钮的跳转链接
+            wx.redirectTo({
+              url: url
+            })
+          }
+        }
+      })
+
+
     }).catch((e) => {
       console.log("添加名片信息失败", e)
       wx.hideLoading();

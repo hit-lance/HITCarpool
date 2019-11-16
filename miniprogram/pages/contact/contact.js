@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    disable: true,
+    disable: false,
     wximgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E5%BE%AE%E4%BF%A1%20(1).png?sign=bcfccda64816d93550d3d84502a1aafa&t=1573632057',
     qqimgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/QQ.png?sign=c66cba101605f15a2d70af554c8b3585&t=1573632085',
     phimgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E6%89%8B%E6%9C%BA.png?sign=d2f71881cfbb260ce9de3c68021b90ca&t=1573569891',
@@ -17,7 +17,9 @@ Page({
   },
 
   handleWechatInput: function (e) {
+    console.log(e.detail.value)
     if (e.detail.value.length > 0) {
+      console.log(e.detail.value)
       isFilled[0] = true
     }
     else {
@@ -66,14 +68,12 @@ Page({
       },
     }).then(res => {
       if (!res.result.data.length) {
-        app.globalData.registered = true
         const db = wx.cloud.database()
         db.collection('info').add({
           data: {
             wechat: app.globalData.wechat,
             qq: app.globalData.qq,
             cellphone: app.globalData.cellphone,
-            userInfo: app.globalData.userInfo
           },
           success: res => {
             wx.showToast({
@@ -92,14 +92,12 @@ Page({
         })
       }
       else {
-        app.globalData.registered = true
         const db = wx.cloud.database()
         db.collection("info").doc(res.result.data[0]._id).update({
           data: {
             wechat: app.globalData.wechat,
             qq: app.globalData.qq,
             cellphone: app.globalData.cellphone,
-            userInfo: app.globalData.userInfo
           }
         }).then(res => {
           console.log(res)

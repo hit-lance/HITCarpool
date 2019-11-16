@@ -10,7 +10,8 @@ Page({
     qq: '',
     cellphone: '',
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    authorized: app.globalData.authorized
   },
   //事件处理函数
   bindViewTap: function () {
@@ -23,6 +24,7 @@ Page({
       wechat: app.globalData.wechat,
       qq: app.globalData.qq,
       cellphone: app.globalData.cellphone,
+      authorized: app.globalData.authorized
     })
 
     console.log(app.globalData.openId)

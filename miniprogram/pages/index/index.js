@@ -16,6 +16,7 @@ Page({
     disable: true,
     hasUserInfo: app.globalData.userInfo,
     registered: app.globalData.registered,
+    authorized: app.globalData.authorized,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
     multiArray: [[''], [0], [0]],
@@ -40,7 +41,7 @@ Page({
 
   onShow: function () {
     let that = this;
-    if (app.globalData.registered == true) {
+    if (app.globalData.registered && app.globalData.authorized) {
       that.test()
     } else {
       app.userInfoReadyCallback = () => {
@@ -51,27 +52,18 @@ Page({
 
   test: function () {
     this.setData({
-      registered: app.globalData.registered
+      registered: app.globalData.registered,
+      authorized: app.globalData.authorized
     })
     if (app.globalData.userInfo) {
       this.setData({
         hasUserInfo: true
       })
-    } else if (this.data.canIUse) {
+    } else{
       this.setData({
         hasUserInfo: true
       })
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    } 
   },
   pickerTap: function () {
     var monthDay = ['今天', '明天'];

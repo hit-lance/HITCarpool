@@ -48,7 +48,7 @@ Page({
     // 从相册和相机中获取图片
     wx.chooseImage({
       count: 1,
-      sourceType: ['album', 'camera'],
+      sourceType: ['camera'],
       success: function (res) {
         let Abase64 = wx.getFileSystemManager().readFileSync(that.data.imgPath_a, "base64")
         //Abase64 　= 'data:image/jpeg;base64,' + Abase64
@@ -117,9 +117,28 @@ Page({
                         //console.log(res.result.data)
                         //console.log(res.result.data.similarity)
                         if (res.data.similarity > 70) {
-                          wx.redirectTo({
-                            url: '../success/index',
+                          const db = wx.cloud.database()
+                          db.collection("info").doc(app.globalData.info_id).update({
+                            data: {
+                              authorized: true
+                            }
+                          }).then(res => {
+                            console.log(res)
+                            wx.showToast({
+                              title: '认证成功',
+                            })
+                            wx.switchTab({
+                              url: '../my/my',
+                            })
+                          }).catch(err => {
+                            console.error(err)
+                            wx.showToast({
+                              title: '更新记录失败',
+                              icon: 'none'
+                            })
                           })
+
+
                         } else {
                           wx.showToast({
                             title: '验证失败，请重试',
