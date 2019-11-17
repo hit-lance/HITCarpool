@@ -65,8 +65,13 @@ Page({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       })
-
+    if(!app.globalData.registered) {
+      wx.showToast({
+        title: '请填写联系方式以完成注册',
+        icon: 'none'
+      })
       this.goToContactPage()
+    }
     }
   },
 

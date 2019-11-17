@@ -74,6 +74,7 @@ Page({
             wechat: app.globalData.wechat,
             qq: app.globalData.qq,
             cellphone: app.globalData.cellphone,
+            userInfo: app.globalData.userInfo,
             authorized: false
           },
           success: res => {
@@ -99,6 +100,7 @@ Page({
             wechat: app.globalData.wechat,
             qq: app.globalData.qq,
             cellphone: app.globalData.cellphone,
+            userInfo: app.globalData.userInfo
           }
         }).then(res => {
           console.log(res)

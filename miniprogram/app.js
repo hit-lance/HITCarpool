@@ -54,8 +54,6 @@ App({
             openId: that.globalData.openId
           },
         }).then(res => {
-          console.log(res)
-          console.log(res.result.data.length)
           that.globalData.wechat = res.result.data[0].wechat
           that.globalData.qq = res.result.data[0].qq
           that.globalData.cellphone = res.result.data[0].cellphone
