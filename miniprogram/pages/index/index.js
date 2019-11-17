@@ -331,7 +331,7 @@ Page({
 
     else {
       const db = wx.cloud.database()
-      db.collection('man').add({
+      db.collection('carpool').add({
         data: {
           source: this.data.src,
           destination: this.data.dst,

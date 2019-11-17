@@ -25,7 +25,7 @@ Page({
     var theId = event.currentTarget.dataset.theid;
     console.log("theId =", theId);
     const db = wx.cloud.database();
-    db.collection('man').doc(theId).update({
+    db.collection('carpool').doc(theId).update({
       data: {
         isDone: true
       }
@@ -38,7 +38,7 @@ Page({
     var theId = event.currentTarget.dataset.theid;
     console.log("theId =", theId);
     const db = wx.cloud.database();
-    db.collection('man').doc(theId).update({
+    db.collection('carpool').doc(theId).update({
       data: {
         isDone: false
       }
@@ -51,7 +51,7 @@ Page({
     var theId = event.currentTarget.dataset.theid;
     console.log("theId =", theId);
     const db = wx.cloud.database();
-    db.collection('man').doc(theId).remove().then(this.getData()).catch()
+    db.collection('carpool').doc(theId).remove().then(this.getData()).catch()
   },
 
   /**

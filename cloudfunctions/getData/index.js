@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const __ = event; 
   console.log(__);
   try {
-    return await db.collection('man').where({
+    return await db.collection('carpool').where({
       isDone: false,
       num: _.lte(4 - __.userNum),
       time: _.gte(__.userTime - 3 * 60 * 60 * 1000),

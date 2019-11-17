@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const __ = event;
   console.log(__);
   try {
-    return await db.collection('man').where({
+    return await db.collection('carpool').where({
       _openid: __.openId
     }).get()
   } catch (e) {

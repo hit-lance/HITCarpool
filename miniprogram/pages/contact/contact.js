@@ -78,10 +78,28 @@ Page({
             authorized: false
           },
           success: res => {
-            wx.showToast({
-              title: '新增记录成功',
+            console.log(res)
+            wx.showModal({
+              title: '提示',
+              content: '注册成功，请验证学生身份以正常使用小程序功能',
+              cancelText: '取消',
+              confirmText: '确认',
+              success: function (res) {
+                if (res.cancel) {
+                  //这个跳转是左边按钮的跳转链接
+                  wx.switchTab({
+                    url: '../my/my',
+                  })
+                } else {
+                  //这里是右边按钮的跳转链接
+                  wx.switchTab({
+                    url: '../my/my',
+                  })
+                }
+              }
             })
             console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            app.globalData.info_id = res._id
             app.globalData.registered = true
           },
           fail: err => {
@@ -105,7 +123,10 @@ Page({
         }).then(res => {
           console.log(res)
           wx.showToast({
-            title: '更新记录成功',
+            title: '修改成功',
+          })
+          wx.switchTab({
+            url: '../my/my',
           })
         }).catch(err => {
           console.error(err)

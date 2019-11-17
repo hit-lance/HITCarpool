@@ -66,11 +66,26 @@ Page({
         hasUserInfo: true
       })
     if(!app.globalData.registered) {
-      wx.showToast({
-        title: '请填写联系方式以完成注册',
-        icon: 'none'
+      wx.showModal({
+        title: '提示',
+        content: '注册成功，请填写联系方式以完成注册',
+        cancelText: '取消',
+        confirmText: '确认',
+        success: function (res) {
+          if (res.cancel) {
+            //这个跳转是左边按钮的跳转链接
+            wx.redirectTo({
+              url: '../my/my'
+            })
+          } else {
+            //这里是右边按钮的跳转链接
+            wx.redirectTo({
+              url: '../contact/contact'
+            })
+          }
+        }
       })
-      this.goToContactPage()
+      // this.goToContactPage()
     }
     }
   },
