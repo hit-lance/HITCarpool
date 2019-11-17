@@ -103,7 +103,7 @@ Page({
             }
             setTimeout(function () {
               callback(lst);
-            }, 1000);
+            }, 3000);
 
           } else {
             wx.showToast({

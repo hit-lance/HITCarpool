@@ -124,6 +124,7 @@ Page({
                             }
                           }).then(res => {
                             console.log(res)
+                            app.globalData.authorized=true
                             wx.showToast({
                               title: '认证成功',
                             })
