@@ -206,7 +206,8 @@ Page({
     //console.log("处理名片数据", data);
     data.map(item => {
       let txt = item.text;
-      if (new RegExp('学生卡').test(txt) == true) {
+      //
+      if (new RegExp('').test(txt) == true) {
         that.setData({
           varify: true
         })
