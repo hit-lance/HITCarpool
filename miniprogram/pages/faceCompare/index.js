@@ -36,7 +36,6 @@ Page({
   onGetUserInfo: function (e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
-        logged: true,
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo
       })
@@ -83,6 +82,26 @@ Page({
               ctx.drawImage(res.path, 0, 0, canvasWidth, canvasHeight)
               ctx.draw(false, setTimeout(function () {
                 console.log("绘制完成")
+                let cloudPath = `${Date.now()}-${Math.floor(Math.random(0, 1) *
+                  1000)}.png`;
+                wx.cloud.uploadFile({
+                  cloudPath: cloudPath,
+                  filePath: that.data.imgPath_b,
+                  success: res => {
+                    if (res.statusCode < 300) {
+                      console.log(res.fileID);
+       
+                    }
+                  },
+                  fail: err => {
+                    // 隐藏加载组件并提示
+                    wx.hideLoading();
+                    wx.showToast({
+                      title: '上传失败',
+                      icon: 'none'
+                    });
+                  },
+                });
                 wx.canvasToTempFilePath({
                   canvasId: 'canvas',
                   fileType: 'jpg',
@@ -116,6 +135,7 @@ Page({
                         console.log(res);
                         //console.log(res.result.data)
                         //console.log(res.result.data.similarity)
+                        //    if (res.data.similarity > 70) {
                         if (res.data.similarity > 70) {
                           const db = wx.cloud.database()
                           db.collection("info").doc(app.globalData.info_id).update({
