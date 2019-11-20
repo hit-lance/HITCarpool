@@ -6,6 +6,7 @@ var currentDay = date.getDay();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
 var util = require('../../util/util.js')
+var thereIsNoToday = 0;
 
 Page({
   /**
@@ -41,6 +42,7 @@ Page({
 
   onShow: function () {
     let that = this;
+    thereIsNoToday = (currentHours == 23) && (currentMinute > 50);
     if (app.globalData.registered && app.globalData.authorized) {
       that.test()
     } else {
@@ -66,7 +68,9 @@ Page({
     } 
   },
   pickerTap: function () {
-    var monthDay = ['今天', '明天'];
+    var monthDay = [];
+    if (!thereIsNoToday) monthDay.push("今天");
+    monthDay.push("明天");
     var hours = [];
     var minute = [];
 
@@ -83,7 +87,7 @@ Page({
       multiIndex: this.data.multiIndex
     };
 
-    if (data.multiIndex[0] === 0) {
+    if (data.multiIndex[0] === 0 && !thereIsNoToday) {
       if (data.multiIndex[1] === 0) {
         this.loadData(hours, minute);
       } else {
@@ -102,7 +106,9 @@ Page({
 
   bindMultiPickerColumnChange: function (e) {
     var that = this;
-    var monthDay = ['今天', '明天'];
+    var monthDay = [];
+    if (!thereIsNoToday) monthDay.push("今天");
+    monthDay.push("明天");
     var hours = [];
     var minute = [];
 
@@ -117,13 +123,13 @@ Page({
     // 然后再判断当前改变的是哪一列,如果是第1列改变
     if (e.detail.column === 0) {
       // 如果第一列滚动到第一行
-      if (e.detail.value === 0) {
+      if (e.detail.value === 0 && !thereIsNoToday) {
         that.loadData(hours, minute);
         data.multiIndex[1] = 0;
         data.multiIndex[2] = 0;
       } else {
         that.loadHoursMinute(hours, minute);
-        if (preIndex === 0) {
+        if (preIndex === 0 && !thereIsNoToday) {
           data.multiIndex[1] += currentHours;
           const _ = Math.trunc((currentMinute - 1) / 10) + 1;
           data.multiIndex[2] += _;
@@ -134,7 +140,7 @@ Page({
     } else if (e.detail.column === 1) {
 
       // 如果第一列为今天
-      if (data.multiIndex[0] === 0) {
+      if (data.multiIndex[0] === 0 && !thereIsNoToday) {
         if (e.detail.value === 0) {
           that.loadData(hours, minute);
           data.multiIndex[2] = 0;
@@ -153,7 +159,7 @@ Page({
       // 如果是第3列改变
     } else {
       // 如果第一列为'今天'
-      if (data.multiIndex[0] === 0) {
+      if (data.multiIndex[0] === 0 && !thereIsNoToday) {
 
         // 如果第一列为 '今天'并且第二列为当前时间
         if (data.multiIndex[1] === 0) {

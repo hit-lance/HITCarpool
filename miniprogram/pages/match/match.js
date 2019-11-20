@@ -65,6 +65,9 @@ Page({
     })
   },
   getData(callback) {
+    console.log("getData in");
+    console.log(app.globalData.openId);
+    console.log(this.data);
     wx.cloud.callFunction({
       name: 'getData',
       data: {
@@ -75,54 +78,53 @@ Page({
         openId: app.globalData.openId
       },
       success: res => {
+        console.log("getData success");
         if (res.result && res.result.data.length) {
           var data = res.result.data, fixedMatchResult = [], userTime = this.data.userTime;
-          console.log("before sort", data);
           data.sort(function (a, b) { return Math.abs(a.time - userTime) - Math.abs(b.time - userTime); });
-          console.log("after sort", data);
-          for (var idx in data)
-            if (Math.abs(data[idx].time - this.data.userTime) <= 3 * 60 * 60 * 1000) {
-              fixedMatchResult.push(data[idx]);
-              console.log("data[idx] =", data[idx]);
-              fixedMatchResult[idx].time = this.transTime(data[idx].time);
-            } else break;
+          for (var idx in data) {
+            fixedMatchResult.push(data[idx]);
+            fixedMatchResult[idx].time = this.transTime(data[idx].time);
+          }
           if (fixedMatchResult.length) {
             for (var idx in fixedMatchResult) {
-              wx.cloud.callFunction({
-                name: "getInfo",
-                data: {
-                  cloudSet: "info",
-                  openId: fixedMatchResult[idx]._openid
-                },
-              }).then(res => {
-                fixedMatchResult[idx].wechat = res.result.data[0].wechat
-                fixedMatchResult[idx].qq = res.result.data[0].qq
-                fixedMatchResult[idx].cellphone = res.result.data[0].cellphone
-                fixedMatchResult[idx].nickName = res.result.data[0].userInfo.nickName
-                fixedMatchResult[idx].gender = res.result.data[0].userInfo.gender
-                fixedMatchResult[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
-              }).catch(err => { console.log(err) })
+              (function (idx) {
+                console(idx, fixedMatchResult[idx]);
+                wx.cloud.callFunction({
+                  name: "getInfo",
+                  data: {
+                    cloudSet: "info",
+                    openId: fixedMatchResult[idx]._openid
+                  },
+                }).then(res => {
+                  fixedMatchResult[idx].wechat = res.result.data[0].wechat
+                  fixedMatchResult[idx].qq = res.result.data[0].qq
+                  fixedMatchResult[idx].cellphone = res.result.data[0].cellphone
+                  fixedMatchResult[idx].nickName = res.result.data[0].userInfo.nickName
+                  fixedMatchResult[idx].gender = res.result.data[0].userInfo.gender
+                  fixedMatchResult[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
+                  }).catch(err => { console.log(err) })
+                  setTimeout(function () {
+                    callback(fixedMatchResult);
+                  }, 3000);
+              })(idx)
+              console(idx, fixedMatchResult[idx]);
             }
-            setTimeout(function () {
-              callback(fixedMatchResult);
-            }, 3000);
-
+            this.setData({
+              matchResult: fixedMatchResult
+            })
+            console.log(this.data.matchResult);
+            console.log(fixedMatchResult);
           } else {
             wx.showToast({
               title: '您好，数据库里没有您想要的信息！',
               icon: 'none',
             })
           }
-          this.setData({
-            matchResult: fixedMatchResult
-          })
         } else {
           wx.showToast({
             title: '您好，数据库里没有您想要的信息！',
             icon: 'none',
-          })
-          this.setData({
-            matchResult: ""
           })
         }
       },

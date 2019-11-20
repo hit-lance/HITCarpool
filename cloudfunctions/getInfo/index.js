@@ -8,13 +8,13 @@ const _ = db.command
 
 exports.main = async (event, context) => {
   // 先取出集合记录总数
-  const countResult = await db.collection('info').count()
+  const setName = event.cloudSet
+  const countResult = await db.collection(setName).count()
   const total = countResult.total
   // 计算需分几次取
   const batchTimes = Math.ceil(total / 100)
   // 承载所有读操作的 promise 的数组
   const tasks = []
-  const setName = event.cloudSet
   console.log(event.openId)
   for (let i = 0; i < batchTimes; i++) {
     const promise = db.collection(setName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).where({

@@ -159,8 +159,6 @@ Page({
                               icon: 'none'
                             })
                           })
-
-
                         } else {
                           wx.showToast({
                             title: '验证失败，请重试',

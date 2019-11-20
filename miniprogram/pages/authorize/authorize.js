@@ -260,8 +260,6 @@ Page({
           }
         }
       })
-
-
     }).catch((e) => {
       console.log("添加名片信息失败", e)
       wx.hideLoading();

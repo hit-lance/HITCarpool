@@ -19,6 +19,9 @@ Page({
       url: '../logs/logs'
     })
   },
+  /**
+   * 开始时渲染页面
+   */
   onShow: function () {
     this.setData({
       wechat: app.globalData.wechat,
