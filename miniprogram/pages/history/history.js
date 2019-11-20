@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: "",
+    historyData: "",
     modalHidden: true,
     wximgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E5%BE%AE%E4%BF%A1%20(1).png?sign=bcfccda64816d93550d3d84502a1aafa&t=1573632057',
     qqimgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/QQ.png?sign=c66cba101605f15a2d70af554c8b3585&t=1573632085',
@@ -23,35 +23,32 @@ Page({
    */
   cancelTheMessage: function (event) {
     var theId = event.currentTarget.dataset.theid;
-    console.log("theId =", theId);
     const db = wx.cloud.database();
     db.collection('carpool').doc(theId).update({
       data: {
         isDone: true
       }
-    }).then(this.getData()).catch()
+    }).then(this.getHistoryData()).catch()
   },
   /**
    * 设置为未拼车
    */
   restoreTheMessage: function (event) {
     var theId = event.currentTarget.dataset.theid;
-    console.log("theId =", theId);
     const db = wx.cloud.database();
     db.collection('carpool').doc(theId).update({
       data: {
         isDone: false
       }
-    }).then(this.getData()).catch()
+    }).then(this.getHistoryData()).catch()
   },
   /**
    * 取消行程
    */
   deleteTheMessage: function (event) {
     var theId = event.currentTarget.dataset.theid;
-    console.log("theId =", theId);
     const db = wx.cloud.database();
-    db.collection('carpool').doc(theId).remove().then(this.getData()).catch()
+    db.collection('carpool').doc(theId).remove().then(this.getHistoryData()).catch()
   },
 
   /**
@@ -69,42 +66,50 @@ Page({
    * 获取数据
    */
 
-  getData() {
-    const _ = this.data;
+  getHistoryData() {
     console.log("openid =", app.globalData.openId)
     wx.cloud.callFunction({
-      name: 'getHistoryData',
+      name: 'getInfo',
       data: {
+        cloudSet: "carpool",
         openId: app.globalData.openId
       },
       success: res => {
         console.log("res =", res);
+        this.setData({
+          historyData: ""
+        })
         if (res.result && res.result.data.length) {
-          var data = res.result.data, lst = [];
+          var data = res.result.data, fixedHistoryData = [];
           wx.cloud.callFunction({
             name: 'getInfo',
             data: {
+              cloudSet: "info",
               openId: app.globalData.openId
             },
             success: res => {
               console.log("res =", res);
               console.log("data =", data);
               for (var idx in data) {
-                lst.push(data[idx]);
-                lst[idx].time = this.transTime(lst[idx].time);
-                lst[idx].wechat = res.result.data[0].wechat
-                lst[idx].qq = res.result.data[0].qq
-                lst[idx].cellphone = res.result.data[0].cellphone
-                lst[idx].nickName = res.result.data[0].userInfo.nickName
-                lst[idx].gender = res.result.data[0].userInfo.gender
-                lst[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
+                fixedHistoryData.push(data[idx]);
+                fixedHistoryData[idx].time = this.transTime(fixedHistoryData[idx].time);
+                fixedHistoryData[idx].wechat = res.result.data[0].wechat
+                fixedHistoryData[idx].qq = res.result.data[0].qq
+                fixedHistoryData[idx].cellphone = res.result.data[0].cellphone
+                fixedHistoryData[idx].nickName = res.result.data[0].userInfo.nickName
+                fixedHistoryData[idx].gender = res.result.data[0].userInfo.gender
+                fixedHistoryData[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
               }
-              if (lst.length) {
-                console.log("lst =", lst)
+              if (fixedHistoryData.length) {
+                console.log(fixedHistoryData);
                 this.setData({
-                  list: lst
+                  historyData: fixedHistoryData
                 })
+                console.log(this.data.historyData);
               } else {
+                this.setData({
+                  historyData: ""
+                })
                 wx.showToast({
                   itle: '您好，数据库里没有您想要的信息！',
                   icon: 'none',
@@ -129,7 +134,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getData();
+    this.getHistoryData();
   },
 
   /**

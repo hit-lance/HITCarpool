@@ -26,12 +26,14 @@ Page({
       isFilled[0] = false
     }
     app.globalData.wechat = e.detail.value
+    console.log("isFilled =", isFilled)
     this.setData({
       disable: !(isFilled[0] || isFilled[1] || isFilled[2])
     })
   },
 
   handleQQInput: function (e) {
+    console.log("e =", e);
     if (e.detail.value.length > 0) {
       isFilled[1] = true
     }
@@ -39,6 +41,7 @@ Page({
       isFilled[1] = false
     }
     app.globalData.qq = e.detail.value
+    console.log("isFilled =", isFilled)
     this.setData({
       disable: !(isFilled[0] || isFilled[1] || isFilled[2])
     })
@@ -52,6 +55,7 @@ Page({
       isFilled[2] = false
     }
     app.globalData.cellphone = e.detail.value
+    console.log("isFilled =", isFilled)
     this.setData({
       disable: !(isFilled[0] || isFilled[1] || isFilled[2])
     })
@@ -61,6 +65,7 @@ Page({
     wx.cloud.callFunction({
       name: "getInfo",
       data: {
+        cloudSet: "info", 
         openId: app.globalData.openId,
         wechat: app.globalData.wechat,
         qq: app.globalData.qq,

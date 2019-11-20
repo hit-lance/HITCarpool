@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: "",
+    matchResult: [],
     userTime: 0,
     userSrc: "",
     userDst: "",
@@ -65,44 +65,46 @@ Page({
     })
   },
   getData(callback) {
-    const _ = this.data;
-
     wx.cloud.callFunction({
       name: 'getData',
       data: {
-        userDst: _.userDst,
-        userSrc: _.userSrc,
-        userTime: _.userTime,
-        userNum: _.userNum,
+        userDst: this.data.userDst,
+        userSrc: this.data.userSrc,
+        userTime: this.data.userTime,
+        userNum: this.data.userNum,
         openId: app.globalData.openId
       },
       success: res => {
         if (res.result && res.result.data.length) {
-          var data = res.result.data, lst = [];
-          data.sort(function (a, b) { return Math.abs(a.time - _.userTime) - Math.abs(b.time - _.userTime); });
+          var data = res.result.data, fixedMatchResult = [], userTime = this.data.userTime;
+          console.log("before sort", data);
+          data.sort(function (a, b) { return Math.abs(a.time - userTime) - Math.abs(b.time - userTime); });
+          console.log("after sort", data);
           for (var idx in data)
-            if (Math.abs(data[idx].time - _.userTime) <= 3 * 60 * 60 * 1000) {
-              lst.push(data[idx]);
-              lst[idx].time = this.transTime(data[idx].time);
-            }
-          if (lst.length) {
-            for (let i = 0; i < lst.length; i++) {
+            if (Math.abs(data[idx].time - this.data.userTime) <= 3 * 60 * 60 * 1000) {
+              fixedMatchResult.push(data[idx]);
+              console.log("data[idx] =", data[idx]);
+              fixedMatchResult[idx].time = this.transTime(data[idx].time);
+            } else break;
+          if (fixedMatchResult.length) {
+            for (var idx in fixedMatchResult) {
               wx.cloud.callFunction({
                 name: "getInfo",
                 data: {
-                  openId: lst[i]._openid
+                  cloudSet: "info",
+                  openId: fixedMatchResult[idx]._openid
                 },
               }).then(res => {
-                lst[i].wechat = res.result.data[0].wechat
-                lst[i].qq = res.result.data[0].qq
-                lst[i].cellphone = res.result.data[0].cellphone
-                lst[i].nickName = res.result.data[0].userInfo.nickName
-                lst[i].gender = res.result.data[0].userInfo.gender
-                lst[i].avatarUrl = res.result.data[0].userInfo.avatarUrl
+                fixedMatchResult[idx].wechat = res.result.data[0].wechat
+                fixedMatchResult[idx].qq = res.result.data[0].qq
+                fixedMatchResult[idx].cellphone = res.result.data[0].cellphone
+                fixedMatchResult[idx].nickName = res.result.data[0].userInfo.nickName
+                fixedMatchResult[idx].gender = res.result.data[0].userInfo.gender
+                fixedMatchResult[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
               }).catch(err => { console.log(err) })
             }
             setTimeout(function () {
-              callback(lst);
+              callback(fixedMatchResult);
             }, 3000);
 
           } else {
@@ -111,10 +113,16 @@ Page({
               icon: 'none',
             })
           }
+          this.setData({
+            matchResult: fixedMatchResult
+          })
         } else {
           wx.showToast({
             title: '您好，数据库里没有您想要的信息！',
             icon: 'none',
+          })
+          this.setData({
+            matchResult: ""
           })
         }
       },
@@ -129,9 +137,9 @@ Page({
    */
   onShow: function () {
     var that=this
-    this.getData(function(lst){
+    this.getData(function (fixedMatchResult){
       that.setData({
-        list: lst
+        matchResult: fixedMatchResult
       })
     });
   },

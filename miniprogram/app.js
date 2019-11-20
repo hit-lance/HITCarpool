@@ -51,6 +51,7 @@ App({
         wx.cloud.callFunction({
           name: "getInfo",
           data: {
+            cloudSet: "info",
             openId: that.globalData.openId
           },
         }).then(res => {
@@ -63,6 +64,7 @@ App({
           if (that.userInfoReadyCallback) {
             that.userInfoReadyCallback()
           }
+          console.log(that);
         }).catch(err => {
         })
     })

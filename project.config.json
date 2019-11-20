@@ -68,6 +68,13 @@
 					"id": -1,
 					"name": "test",
 					"pathName": "pages/history/history",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/contact/contact",
+					"pathName": "pages/contact/contact",
 					"scene": null
 				}
 			]

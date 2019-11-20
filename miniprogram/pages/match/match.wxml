@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="card" wx:for="{{list}}" wx:key="this">
+  <view class="card" wx:for="{{matchResult}}" wx:key="this">
     <view class="imgs">
       <image class="head" src="{{item.avatarUrl}}"></image>
       <view class="id">{{item.nickName}} </view>

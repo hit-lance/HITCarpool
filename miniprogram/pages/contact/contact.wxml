@@ -13,7 +13,7 @@
     </view>
     <view class='ph'>
     <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
-    <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput="handleCellphoneInput" type="number" maxlength="11" />
+    <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput='handleCellphoneInput' type="number" maxlength="11" />
     </view>
 
 
