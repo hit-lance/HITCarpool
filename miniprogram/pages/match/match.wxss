@@ -3,8 +3,8 @@
 .head {
   width: 50rpx;
   height: 50rpx;
-   border-radius:50%;
-   overflow:hidden;
+  border-radius:50%;
+  overflow:hidden;
   text-align: center;
 
 }

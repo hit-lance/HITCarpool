@@ -22,8 +22,8 @@
         {{item.time}}
 
         <view class="connect">
-          <button class='button' bindtap='buttonTap' type='default' size='mini'>与TA拼车</button>
-          <modal title="联系方式" hidden="{{modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+          <button class='button' bindtap='buttonTap' type='default' size='mini' data-unique="{{item.unique}}">与TA拼车</button>
+          <modal title="联系方式" hidden="{{item.modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel" data-unique="{{item.unique}}">
             <view class="content" wx:if="{{item.wechat!=''}}">
               <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
               微信：{{item.wechat}}

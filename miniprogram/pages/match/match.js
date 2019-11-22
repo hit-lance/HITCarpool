@@ -1,4 +1,3 @@
-// pages/match/match.js
 const app = getApp()
 Page({
 
@@ -11,7 +10,6 @@ Page({
     userSrc: "",
     userDst: "",
     userNum: 0,
-    modalHidden: true,
     wximgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E5%BE%AE%E4%BF%A1%20(1).png?sign=bcfccda64816d93550d3d84502a1aafa&t=1573632057',
     qqimgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/QQ.png?sign=c66cba101605f15a2d70af554c8b3585&t=1573632085',
     phimgurl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E6%89%8B%E6%9C%BA.png?sign=d2f71881cfbb260ce9de3c68021b90ca&t=1573569891',
@@ -20,7 +18,6 @@ Page({
     timeUrl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E6%97%B6%E9%97%B4.png?sign=4fc61cf4061c0422e4196440557e6d7e&t=1573570096',
     peopleUrl: 'https://6361-carpool-2kcqi-1300592193.tcb.qcloud.la/%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90/%E4%BA%BA.png?sign=e003d9f4efb21f53a399315366fe9624&t=1573570120'
   },
-
   /**
    * 将时间戳转化为标准形式
    */
@@ -33,117 +30,163 @@ Page({
     return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + minute
   },
 
-  /**
-   * 获取数据
-   */
+
   /**
    * 显示弹窗
    */
-  buttonTap: function () {
+  buttonTap: function (event) {
+    var theId = event.currentTarget.dataset.unique, theIndex = -1;
+    console.log("this.matchResult =", this.data.matchResult)
+    for (let index in this.data.matchResult) {
+      console.log("index =", index, "unique =", this.data.matchResult[index].unique)
+      if (theId === this.data.matchResult[index].unique) {
+        theIndex = index
+        break
+      }
+    }
+    console.log("theId =", theId)
+    console.log("index =", theIndex)
+    var str = 'matchResult[' + theIndex + '].modalHidden';
     this.setData({
-      modalHidden: false,
+      [str]: false,
     })
   },
 
   /**
     * 点击取消
     */
-  modalCandel: function () {
+  modalCandel: function (event) {
     // do something
+    var theId = event.currentTarget.dataset.unique, theIndex = -1;
+    console.log("this.matchResult =", this.data.matchResult)
+    for (let index in this.data.matchResult) {
+      console.log("index =", index, "unique =", this.data.matchResult[index].unique)
+      if (theId === this.data.matchResult[index].unique) {
+        theIndex = index
+        break
+      }
+    }
+    console.log("theId =", theId)
+    console.log("index =", theIndex)
+    var str = 'matchResult[' + theIndex + '].modalHidden';
     this.setData({
-      modalHidden: true
+      [str]: true,
     })
   },
 
   /**
     *  点击确认
     */
-  modalConfirm: function () {
+  modalConfirm: function (event) {
     // do something
+    var theId = event.currentTarget.dataset.unique, theIndex = -1;
+    console.log("this.matchResult =", this.data.matchResult)
+    for (let index in this.data.matchResult) {
+      console.log("index =", index, "unique =", this.data.matchResult[index].unique)
+      if (theId === this.data.matchResult[index].unique) {
+        theIndex = index
+        break
+      }
+    }
+    console.log("theId =", theId)
+    console.log("index =", theIndex)
+    var str = 'matchResult[' + theIndex + '].modalHidden';
     this.setData({
-      modalHidden: true
+      [str]: true,
     })
   },
-  getData(callback) {
-    console.log("getData in");
-    console.log(app.globalData.openId);
-    console.log(this.data);
-    wx.cloud.callFunction({
-      name: 'getData',
-      data: {
-        userDst: this.data.userDst,
-        userSrc: this.data.userSrc,
-        userTime: this.data.userTime,
-        userNum: this.data.userNum,
-        openId: app.globalData.openId
-      },
-      success: res => {
-        console.log("getData success");
-        if (res.result && res.result.data.length) {
-          var data = res.result.data, fixedMatchResult = [], userTime = this.data.userTime;
-          data.sort(function (a, b) { return Math.abs(a.time - userTime) - Math.abs(b.time - userTime); });
-          for (var idx in data) {
-            fixedMatchResult.push(data[idx]);
-            fixedMatchResult[idx].time = this.transTime(data[idx].time);
-          }
-          if (fixedMatchResult.length) {
-            for (var idx in fixedMatchResult) {
-              (function (idx) {
-                console(idx, fixedMatchResult[idx]);
-                wx.cloud.callFunction({
-                  name: "getInfo",
-                  data: {
-                    cloudSet: "info",
-                    openId: fixedMatchResult[idx]._openid
-                  },
-                }).then(res => {
-                  fixedMatchResult[idx].wechat = res.result.data[0].wechat
-                  fixedMatchResult[idx].qq = res.result.data[0].qq
-                  fixedMatchResult[idx].cellphone = res.result.data[0].cellphone
-                  fixedMatchResult[idx].nickName = res.result.data[0].userInfo.nickName
-                  fixedMatchResult[idx].gender = res.result.data[0].userInfo.gender
-                  fixedMatchResult[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
-                  }).catch(err => { console.log(err) })
-                  setTimeout(function () {
-                    callback(fixedMatchResult);
-                  }, 3000);
-              })(idx)
-              console(idx, fixedMatchResult[idx]);
-            }
+
+  /**
+   * 获取匹配数据
+   */
+getMatchData: function () {
+  var that = this;
+  wx.cloud.callFunction({
+    name: 'getData',
+    data: {
+      userDst: this.data.userDst,
+      userSrc: this.data.userSrc,
+      userTime: this.data.userTime,
+      userNum: this.data.userNum,
+      openId: app.globalData.openId
+    },
+    success: (res) => {
+      console.log(res.result.data)
+      //matchResult中存匹配到的拼车信息以及openid
+      if (res.result && res.result.data.length) {
+        console.log(res.result.data)
+        var data = res.result.data, userTime = that.data.userTime;
+        data.sort(function (a, b) { return Math.abs(a.time - userTime) - Math.abs(b.time - userTime); });
+        if (data.length) {
+          // 对matchResult中的每一个openid，去info集合中查找对应的联系方式以及userinfo
+          const promises = data.map(async function(info) {
+            var fixedinfo = {};
+            console.log(info)
+            fixedinfo.unique = info._id
+            fixedinfo.num = info.num
+            fixedinfo.source = info.source
+            fixedinfo.destination = info.destination
+            fixedinfo.time = that.transTime(info.time);
+            fixedinfo.wechat = ""
+            fixedinfo.qq = ""
+            fixedinfo.cellphone = ""
+            fixedinfo.nickName = ""
+            fixedinfo.avatarUrl = ""
+            fixedinfo.modalHidden = true
+            var promise =  new Promise(resolve => {
+              wx.cloud.callFunction({
+                name: "getInfo",
+                data: {
+                  cloudSet: "info",
+                  openId: info._openid
+                },
+              }).then(res => {
+                fixedinfo.wechat = res.result.data[0].wechat
+                fixedinfo.qq = res.result.data[0].qq
+                fixedinfo.cellphone = res.result.data[0].cellphone
+                fixedinfo.nickName = res.result.data[0].userInfo.nickName
+                fixedinfo.avatarUrl = res.result.data[0].userInfo.avatarUrl
+                resolve(fixedinfo)
+              }).catch(err => { console.log(err) });
+            })
+            let test = await promise;
+            console.log("test =", test);
+            return fixedinfo
+          })
+          console.log(promises);
+          Promise.all(promises).then(res => {
+            //打印返回信息
+            console.log("res =", res);
             this.setData({
-              matchResult: fixedMatchResult
+              matchResult: res
             })
-            console.log(this.data.matchResult);
-            console.log(fixedMatchResult);
-          } else {
-            wx.showToast({
-              title: '您好，数据库里没有您想要的信息！',
-              icon: 'none',
-            })
-          }
+          }).catch((reason) => {
+            console.log("fail")
+          });
         } else {
           wx.showToast({
             title: '您好，数据库里没有您想要的信息！',
             icon: 'none',
           })
         }
-      },
-      fail: e => {
-        console.error(e);
+      } else {
+        wx.showToast({
+          title: '您好，数据库里没有您想要的信息！',
+          icon: 'none',
+        })
       }
-    })
-  },
+    },
+    fail: e => {
+      console.error(e);
+    }
+  })
+},
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that=this
-    this.getData(function (fixedMatchResult){
-      that.setData({
-        matchResult: fixedMatchResult
-      })
-    });
+    this.getMatchData();
   },
 
   /**
