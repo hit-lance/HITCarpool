@@ -7,8 +7,8 @@ App({
     qq: '',
     cellphone: '',
     info_id: '',
-    registered: true,
-    authorized: true
+    registered: false,
+    authorized: false
   },
 
   onLaunch: function () {

@@ -6,9 +6,8 @@
     "pages/match/match",
     "pages/history/history",
     "pages/authorize/authorize",
-    "pages/faceCompare/index",
-    "pages/success/index",
-    "pages/fail/index"
+    "pages/faceCompare/index"
+
   ],
   "tabBar": {
     "color": "#333",

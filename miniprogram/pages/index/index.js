@@ -343,28 +343,13 @@ Page({
           destination: this.data.dst,
           time: util.formatTime(this.data.time, date),
           num: Number(this.data.num.split("人")[0]),
-          isDone: false
         },
         success: res => {
-          // 在返回结果中会包含新创建的记录的 _id
-          this.setData({
-            counterId: res._id,
-          })
-          wx.showToast({
-            title: '新增记录成功',
-          })
           console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
         },
         fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '新增记录失败'
-          })
           console.error('[数据库] [新增记录] 失败：', err)
         }
-      })
-      this.setData({
-        allValue: e.detail.value
       })
 
       //跳到匹配结果页

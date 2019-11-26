@@ -1,6 +1,5 @@
 const app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -30,7 +29,6 @@ Page({
     return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + minute
   },
 
-
   /**
    * 显示弹窗
    */
@@ -44,8 +42,6 @@ Page({
         break
       }
     }
-    console.log("theId =", theId)
-    console.log("index =", theIndex)
     var str = 'matchResult[' + theIndex + '].modalHidden';
     this.setData({
       [str]: false,
@@ -100,6 +96,9 @@ Page({
    * 获取匹配数据
    */
 getMatchData: function () {
+  wx.showLoading({
+    title: '正在为您匹配',
+  })
   var that = this;
   wx.cloud.callFunction({
     name: 'getData',
@@ -163,18 +162,9 @@ getMatchData: function () {
           }).catch((reason) => {
             console.log("fail")
           });
-        } else {
-          wx.showToast({
-            title: '您好，数据库里没有您想要的信息！',
-            icon: 'none',
-          })
-        }
-      } else {
-        wx.showToast({
-          title: '您好，数据库里没有您想要的信息！',
-          icon: 'none',
-        })
-      }
+        } 
+      } 
+      wx.hideLoading()
     },
     fail: e => {
       console.error(e);
