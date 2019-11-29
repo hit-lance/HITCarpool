@@ -1,16 +1,27 @@
 /**index.wxss**/
 
-page {
-  background: #f3f3f3;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
 
 .carpool_info {
   background: #fff;
-  margin: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  height: 90%;
+  margin: auto;
+  margin-top: 30rpx;
   padding: 50rpx;
+   border-radius: 20px;
+   /* box-shadow:1px 1px 3px 3px grey; */
+}
+.imgpoint{
+   margin-left:10rpx;
+display: flex;
+flex-direction:column;
+justify-content: flex-start;
+align-items: center;
+width:40%;
+  
 }
 .connect{
   background: #fff;
@@ -40,30 +51,6 @@ page {
   justify-content: flex-end;
 }
 
-.wx {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 50rpx;
-}
-
-.qq {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 50rpx;
-}
-
-.ph {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 50rpx;
-}
-
 .src {
   display: flex;
   flex-direction: row;
@@ -76,44 +63,47 @@ page {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 50rpx;
+  /* padding-top: 50rpx; */
 }
 
 .timePeople {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 50rpx;
+  justify-content: space-between;
+  padding-top: 69rpx;
 }
-
+.time{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .people {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
-  padding-left: 100rpx;
+  justify-content: space-between;
+  
 }
 
 .btn-area {
+  padding-top: 50rpx;
   width: 100%;
-  
+ 
   position: fixed;
   
 }
-.sub0{
-  size: default;
-  background-color: #7c7c7c;
-
+.btn{
+    
+    background-color: #48a417;
+    color: white;
 }
-.sub1{
 
+
+.tip{
+  color: #ff0000;
+  font-size: smaller;
 }
-.Toast{
-   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-   /* padding-top: 50rpx; */
-   font-size: 30rpx;
+.img{
+  margin-right:20rpx;
 }

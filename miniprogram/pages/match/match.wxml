@@ -1,33 +1,44 @@
 <block wx:if="{{!matchResult.length}}">
-  <text> 暂未匹配到合适的拼车信息 </text>
+  <text class="center"> 好像没有合适的行程呢..。 </text>
 </block>
 <block wx:else>
   <view class="container">
     <view class="card" wx:for="{{matchResult}}" wx:key="this">
       <view class="imgs">
-        <image class="head" src="{{item.avatarUrl}}"></image>
-        <view class="id">{{item.nickName}} </view>
-        <view class="num">
-          <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
-          {{item.num}}
+        <view class="info">
+          <image class="head" src="{{item.avatarUrl}}"></image>
+          <view class="id">{{item.nickName}} </view>
+        </view>
+        <view wx:if="{{item.gender==1}}">
+          <image class="gender" src="../../icon/img_my_man.png" style="width:40rpx;height:40rpx;" />
+        </view>
+        <view wx:elif="{{item.gender==2}}">
+          <image class="gender" src="../../icon/img_my_woman.png" style="width:40rpx;height:40rpx;" />
         </view>
       </view>
       <view>
         <view class="content">
-          <image src="{{bluepointUrl}}" style="width:40rpx;height:40rpx;"></image>
+          <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
           {{item.source}}
         </view>
+        <image class="imgpoint" src="../../icon/picker_icon_index_point3.png" style="width:11rpx;height:69rpx;">
+        </image>
         <view class="content">
-          <image src="{{greenpointUrl}}" style="width:40rpx;height:40rpx;"></image>
+          <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
           {{item.destination}}
         </view>
-        <view class="content">
-          <image src="{{timeUrl}}" style="width:40rpx;height:40rpx;"></image>
-          {{item.time}}
-
-          <view class="connect">
-            <button class='button' bindtap='buttonTap' type='default' size='mini' data-unique="{{item.unique}}">与TA拼车</button>
-            <modal title="联系方式" hidden="{{item.modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel" data-unique="{{item.unique}}">
+        <view class="time_btn">
+          <view class="time">
+            <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+            {{item.time}}
+          </view>
+          <view class="num">
+            <image class="img" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+            {{item.num}}
+          </view>
+          <view class="btn">
+            <button class='button' bindtap='buttonTap' type='default' round style="border-radius: 10px;" size='mini' data-unique="{{item.unique}}">联系方式</button>
+            <modal style="border-radius: 20px;"title="联系方式" hidden="{{item.modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel" data-unique="{{item.unique}}">
               <view class="content" wx:if="{{item.wechat!=''}}">
                 <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
                 微信：{{item.wechat}}
@@ -45,5 +56,6 @@
         </view>
       </view>
     </view>
+
   </view>
 </block>

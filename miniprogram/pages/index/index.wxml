@@ -1,55 +1,65 @@
 <!--index.wxml-->
-
-<block wx:if="{{!hasUserInfo||!registered||!authorized}}">
-  <text>Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！</text>
-</block>
-
-<form bindsubmit="formSubmit">
-  <!--设置拼车信息-->
-  <view class="carpool_info">
-    <!-- 设置出发地 -->
-    <view class="src">
-    <image src="{{bluepointUrl}}" style="width:40rpx;height:40rpx;"></image>
-    <picker name="src" bindchange="bindPickerChange1" value="{{index1}}" range="{{location}}">
-      <view class="{{src == '从哪儿出发'?'default':'selected'}}">
-        {{src}}
+<van-notice-bar wx:if="{{!hasUserInfo||!registered||!authorized}}" text=" Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！">
+  Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！
+</van-notice-bar>
+<!-- <view class="tips" wx:if="{{!hasUserInfo||!registered||!authorized}}">
+  <text class="tip">Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！</text>
+</view> -->
+<view>
+  <form bindsubmit="formSubmit">
+    <!--设置拼车信息-->
+    <view class="carpool_info">
+      <!-- 设置出发地 -->
+      <view class="src">
+        <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
+        <picker name="src" bindchange="bindPickerChange1" value="{{index1}}" range="{{location}}">
+          <view class="{{src == '出发地'?'default':'selected'}}">
+            {{src}}
+          </view>
+        </picker>
       </view>
-    </picker>
-  </view>
-    <!-- 设置目的地 -->
-    <view class="dst">
-    <image src="{{greenpointUrl}}" style="width:40rpx;height:40rpx;"></image>
-    <picker name="dst" bindchange="bindPickerChange2" value="{{index2}}" range="{{location}}">
-      <view class="{{dst == '您要去哪儿'?'default':'selected'}}">
-        {{dst}}
+
+      <image class="imgpoint" src="../../icon/picker_icon_index_point3.png" style="width:11rpx;height:69rpx;">
+      </image>
+      <!-- 设置目的地 -->
+      <view class="dst">
+        <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
+        <picker name="dst" bindchange="bindPickerChange2" value="{{index2}}" range="{{location}}">
+          <view class="{{dst == '目的地'?'default':'selected'}}">
+            {{dst}}
+          </view>
+        </picker>
       </view>
-    </picker>
+      <!-- <image class="imgpoint"src="../../icon/picker_icon_index_point3.png" style="width:11rpx;height:69rpx;">
+  </image> -->
+
+      <!-- 设置出发时间 -->
+      <view class="timePeople">
+        <view class="time">
+          <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+          <picker name="time" class='time-picker' mode="multiSelector" bindchange="bindMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+            <view class="{{time == '出发时间'?'default':'selected'}}">
+              {{time}}
+            </view>
+          </picker>
+        </view>
+
+        <!-- 设置出发人数 -->
+        <view class="people">
+          <image class="img" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+          <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{nums}}">
+            <view class="{{num == '人数'?'default':'selected'}}">
+              {{num}}
+            </view>
+          </picker>
+        </view>
+      </view>
     </view>
 
-    <!-- 设置出发时间 -->
-    <view class="timePeople">
-     <image src="{{timeUrl}}" style="width:40rpx;height:40rpx;"></image>
-    <picker name="time" class='time-picker' mode="multiSelector" bindchange="bindMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-      <view class="{{time == '出发时间'?'default':'selected'}}">
-        {{time}}
-      </view>
-    </picker>
-
-    <!-- 设置出发人数 -->
-    <view class="people">
-     <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
-    <picker name="number" bindchange="bindPickerChange3" value="{{index3}}" range="{{nums}}">
-      <view class="{{num == '出发人数'?'default':'selected'}}">
-        {{num}}
-      </view>
-    </picker>
+    <view class="btn-area">
+      <button class="btn" size="small" color="#48a417" round style="border-radius: 10px;" disabled="{{disable||!hasUserInfo||!registered}}" formType="submit">
+        发布行程
+      </button>
     </view>
+  </form>
 </view>
-</view>
-
-  <view class="btn-area">
-  <button type="primary" disabled="{{disable||!hasUserInfo||!registered}}" formType="submit">
-  发布行程
-  </button>
-  </view>
-</form>

@@ -1,26 +1,23 @@
-page {
-  width: 100%;
-  background: #f3f3f3;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+
 .head {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   padding-top: 50rpx;
-  margin-left:30rpx;
+  margin-left:70rpx;
+}
+.connect{
+  width: 100%;
+  padding-top: 30rpx;
 }
 .body{
-  width: 90%;
+
   display: flex;
+  margin-top: 10rpx;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 50rpx;
-  margin-left:30rpx;
+  justify-content: center;
 }
 .trans{
   font-size:smaller;
@@ -28,20 +25,33 @@ page {
   font-weight: 100;
 }
 .con_{
-  font-weight:700;
+  background: #fff;
+  font-weight:400;
+  display: flex;
+ align-items: center;
+  justify-content: center;
 }
 .AC{
-  margin-right:20rpx;
+  margin-right:40rpx;
 }
 .trans_{
-  margin-right:0rpx;
+  display: flex;
+ align-items: center;
+  justify-content: space-between;
+  margin-left: 175rpx;
 }
 .name{
   margin-left:20rpx;
 }
 .con{
-  width: 95%;
-  margin: 20rpx;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  border-radius: 20px;
 }
 .login{
   background: #fff;
@@ -54,4 +64,31 @@ page {
 }
 .log{
   margin-left:30rpx;
+}
+.text{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-inline-start:40%;
+ 
+}
+.route{
+   padding-top: 50rpx;
+  width: 100%;
+}
+.gender{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left:30rpx;
+}
+
+.upload{
+  width: 50rpx;
+  height: 50rpx;
+  /* position: absolute; */
+  /* margin: auto; */
+  background-size: 50rpx 50rpx;
+  background-repeat:no-repeat;
+  border:none;
 }

@@ -28,6 +28,7 @@ Page({
       qq: app.globalData.qq,
       cellphone: app.globalData.cellphone,
       authorized: app.globalData.authorized
+
     })
 
     console.log(app.globalData.openId)

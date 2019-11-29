@@ -1,6 +1,31 @@
 
-button.upload {
- width: 620rpx;
- font-size: 28rpx;
- margin: 40rpx 0 20rpx 0;
+.head{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin:auto;
+  
+}
+.upload{
+  width: 440rpx;
+  height: 280rpx;
+  position: absolute;
+  margin: auto;
+  background-size: 440rpx 280rpx;
+  background-repeat:no-repeat;
+  border:none;
+}
+.tip{
+  color:#ff0000;
+  font-size: smaller;
+  display: flex;
+  flex-direction: column;
+   /* align-items: center; */
+  margin-inline-start: 20rpx;
+   justify-content: flex-start;
+}
+page{
+  width: 100%;
 }

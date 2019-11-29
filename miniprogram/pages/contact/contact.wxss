@@ -34,10 +34,11 @@ page {
   align-items: flex-end;
 }
 
-.btn1 {
+.btn {
   border: none;
   flex-direction: row;
-  justify-content: flex-end;
+   background-color: #48a417;
+    color: white;
 }
 
 .wx {
@@ -45,7 +46,7 @@ page {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 50rpx;
+  
 }
 
 .qq {
@@ -96,9 +97,12 @@ page {
 }
 
 .btn-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 40rpx;
   width: 100%;
-  
-  position: fixed;
+  margin: auto;
   
 }
 .sub0{
@@ -114,4 +118,24 @@ page {
   justify-content: flex-start;
    /* padding-top: 50rpx; */
    font-size: 30rpx;
+}
+.card{
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  height: 90%;
+  margin: auto;
+  padding: 50rpx;
+   border-radius: 20px;
+}
+.tip{
+  color:#ff0000;
+  font-size: smaller;
+}
+.head{
+   display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

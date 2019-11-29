@@ -1,32 +1,49 @@
 <block wx:if="{{!historyData.length}}">
-  <text> 您还没有发布行程哦 </text>
+  <view class="center">
+    <text> 您还没有发布新的行程哦O_O </text>
+  </view>
 </block>
 <block wx:else>
   <view class="container">
     <view class="card" wx:for="{{historyData}}" wx:key="this">
       <view class="imgs">
-        <image class="head" src="{{item.avatarUrl}}"></image>
-        <view class="id">{{item.nickName}} </view>
-        <view class="num">
-          <image src="{{peopleUrl}}" style="width:40rpx;height:40rpx;"></image>
-          {{item.num}}
+        <view class="info">
+          <image class="head" src="{{item.avatarUrl}}"></image>
+          <view class="id">{{item.nickName}} </view>
         </view>
+        <view wx:if="{{userInfo.gender==1}}">
+          <image class="gender" src="../../icon/img_my_man.png" style="width:40rpx;height:40rpx;" />
+        </view>
+        <view wx:elif="{{userInfo.gender==2}}">
+          <image class="gender" src="../../icon/img_my_woman.png" style="width:40rpx;height:40rpx;" />
+        </view>
+        <!-- <view class="num">
+          <image src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+          {{item.num}}
+        </view> -->
       </view>
-      <view>
+      <view class="set">
         <view class="content">
-          <image src="{{bluepointUrl}}" style="width:40rpx;height:40rpx;"></image>
+          <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
           {{item.source}}
         </view>
+        <image class="imgpoint" src="../../icon/picker_icon_index_point3.png" style="width:11rpx;height:69rpx;">
+        </image>
         <view class="content">
-          <image src="{{greenpointUrl}}" style="width:40rpx;height:40rpx;"></image>
+          <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
           {{item.destination}}
         </view>
-        <view class="content">
-          <image src="{{timeUrl}}" style="width:40rpx;height:40rpx;"></image>
-          {{item.time}}
-
-          <view class="connect">
-            <button class='button' bindtap='deleteTheMessage' type='default' size='mini' data-theid="{{item._id}}">取消行程</button>
+        <view class="time_btn">
+          <view class="time">
+            <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+            {{item.time}}
+          </view>
+          <view class="num">
+            <image class="img" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+            {{item.num}}
+          </view>
+          <view class="btn">
+            <button class='button' bindtap='deleteTheMessage' type='default' size='mini' round style="border-radius: 10px;" data-theid="{{item._id}}">取消行程</button>
           </view>
         </view>
       </view>

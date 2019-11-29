@@ -2,7 +2,10 @@
 
 <form bindsubmit="formSubmit">
     <!-- 设置联系方式 -->
-    <text>Tip: 请填写您常用的联系方式，至少填一项</text>
+    <view class="head">
+    <text class="tip">*请填写您常用的联系方式(至少填写一项)</text>
+    </view>
+    <view class="card">
     <view class='wx'>
       <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
       <input class="input" name="wechat" placeholder="请输入您的微信号" placeholder-style="color:#7c7c7c" bindinput="handleWechatInput" />
@@ -15,10 +18,10 @@
     <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
     <input class="input" name="cellphone" placeholder="请输入您的手机号" placeholder-style="color:#7c7c7c" bindinput='handleCellphoneInput' type="number" maxlength="11" />
     </view>
-
+  </view>
 
  <view class="btn-area">
-    <button type="primary" disabled="{{disable}}" formType="submit">
+    <button class="btn" size="small" color="#48a417" round style="border-radius: 10px;" disabled="{{disable}}" formType="submit">
     确认
     </button>
   </view>
