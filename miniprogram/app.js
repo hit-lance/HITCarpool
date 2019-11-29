@@ -8,7 +8,8 @@ App({
     cellphone: '',
     info_id: '',
     registered: false,
-    authorized: false
+    authorized: false,
+    gender:0
   },
 
   onLaunch: function () {
@@ -61,6 +62,7 @@ App({
           that.globalData.info_id = res.result.data[0]._id
           that.globalData.authorized = res.result.data[0].authorized
           that.globalData.registered = true
+          that.globalData.gender=res.result.data[0].gender
           if (that.userInfoReadyCallback) {
             that.userInfoReadyCallback()
           }

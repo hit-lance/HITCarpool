@@ -11,20 +11,20 @@
   ],
   "tabBar": {
     "color": "#333",
-    "selectedColor": "#1afa29",
+    "selectedColor": "#48a417",
     "backgroundColor": "#fff",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "拼车",
-        "iconPath": "icon/home_nor.png",
-        "selectedIconPath": "icon/home_pre.png"
+        "iconPath": "icon/tabbar_car_default.png",
+        "text":"拼车",
+        "selectedIconPath": "icon/tabbar_car_selected.png"
       },
       {
         "pagePath": "pages/my/my",
-        "text": "个人中心",
-        "iconPath": "icon/mine_nor.png",
-        "selectedIconPath": "icon/mine_pre.png"
+        "iconPath": "icon/tabbar_home_default.png",
+        "text":"个人中心",
+        "selectedIconPath": "icon/tabbar_home_selected.png"
       }
     ]
   },

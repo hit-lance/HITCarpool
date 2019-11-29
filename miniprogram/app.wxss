@@ -5,7 +5,13 @@
   align-items: center;
   box-sizing: border-box;
 } 
-
+page {
+  width: 100%;
+  background: #ececec;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 button {
   background: initial;
 }
