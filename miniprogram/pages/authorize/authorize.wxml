@@ -3,14 +3,14 @@
   <view class="head">
     <!-- <button class="upload" bindtap="uploadFile"style="background-image:url(../../icon/button_authorize.png);" plain='true'> -->
     <view>
-      <image src="../../icon/button_authorize.png" mode='widthFix' style="width:588rpx;height:374rpx;" bindtap="uploadFile" />
+      <image src="{{imgPath}}" mode='widthFix' style="width:588rpx;height:374rpx;" bindtap="uploadFile" />
     </view>
     <view class="tip">
       <text class="tip">*请上传清晰的学生卡照片</text>
       <text class="tip">*请勿涂抹或遮挡</text>
       <text class="tip">*禁止借用他人证件</text>
     </view>
+     </view>
+      </view>
     <!-- </button> -->
-  </view>
-  <canvas canvas-id="canvas" style="width:{{cWidth}}px;height:{{cHeight}}px;position: absolute;left:-1000px;top:-1000px;"></canvas>
-</view>
+   <canvas canvas-id="canvas" style="width:{{cWidth}}px;height:{{cHeight}}px;position: absolute;left:-1000px;top:-1000px;"></canvas>

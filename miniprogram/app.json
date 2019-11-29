@@ -6,7 +6,7 @@
     "pages/match/match",
     "pages/history/history",
     "pages/authorize/authorize",
-    "pages/faceCompare/index"
+    "pages/faceCompare/faceCompare"
 
   ],
   "tabBar": {

@@ -8,7 +8,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     fileID: null,
-    imgPath: null,
+    imgPath: '../../icon/button_authorize.png',
     varify: false,
     formData: [],
     cWidth: null,
@@ -57,96 +57,98 @@ Page({
     })
   },
   uploadFile() {
-    var that = this 
+    //var temp = sha256('123')
+    //console.log(temp)
+    var that = this
     //从相册和相机中获取图片
-    var p = new Promise((resolve,reject)=>{
+    var p = new Promise((resolve, reject) => {
       console.log("选取图片")
       resolve()
     })
-    p.then(()=>{
-      return new Promise((resolve,reject)=>{
+    p.then(() => {
+      return new Promise((resolve, reject) => {
         wx.chooseImage({
-          success: function(res) {
-            wx.showLoading({
-              title: '上传文件',
-            })
+          count: 1,
+          sizeType: 'compressed',
+          sourceType: ['album','camera'],
+          success: function (res) {
             resolve(res)
           },
         })
       })
     })
-    .then(res=>{
-      let tempImagePath = res.tempFilePaths[0]
-      console.log(tempImagePath)
-      return new Promise((resolve,reject)=>{
-        wx.getImageInfo({
-          src: tempImagePath,
-          success:res=>{
-            console.log("压缩前" + res.width + "x" + res.height)
-            //---------利用canvas压缩图片--------------
-            var ratio = 2;
-            var canvasWidth = res.width //图片原始长宽
-            var canvasHeight = res.height
-            while (canvasWidth > 2000 || canvasHeight > 2000) { // 保证宽高在1200以内
-              canvasWidth = Math.trunc(res.width / ratio)
-              canvasHeight = Math.trunc(res.height / ratio)
-              ratio++;
-            }
-            that.setData({
-              cWidth: canvasWidth,
-              cHeight: canvasHeight
-            })
-            console.log("压缩后" + canvasWidth + "x" + canvasHeight)
-            //console.log("success")
-            //console.log(res.path)
-            resolve(res)
-          }
+      .then(res => {
+        let tempImagePath = res.tempFilePaths[0]
+        console.log(tempImagePath)
+        wx.showLoading({
+          title: '图片压缩中',
         })
-      })
-    })
-    .then(res=>{
-      //console.log(res)
-      return new Promise((resolve,reject)=>{
-        var ctx = wx.createCanvasContext('canvas')
-        ctx.drawImage(res.path, 0, 0, that.data.cWidth, that.data.cHeight)
-        ctx.draw(false,setTimeout(()=>{
-          console.log("绘制完成")
-          wx.canvasToTempFilePath({
-            canvasId: 'canvas',
-            fileType: 'jpg',
-            destWidth: that.data.cWidth,
-            destHeight: that.data.cHeight,
-            success: res=>{
-              const savedFilePath = res.tempFilePath;
-              console.log(savedFilePath)
+        return new Promise((resolve, reject) => {
+          wx.getImageInfo({
+            src: tempImagePath,
+            success: res => {
+              console.log("压缩前" + res.width + "x" + res.height)
+              //---------利用canvas压缩图片--------------
+              var ratio = 2;
+              var canvasWidth = res.width //图片原始长宽
+              var canvasHeight = res.height
+              
+              while (canvasWidth > 1200 || canvasHeight > 1200) { // 保证宽高在1200以内
+                canvasWidth = Math.trunc(res.width / ratio)
+                canvasHeight = Math.trunc(res.height / ratio)
+                ratio++;
+              }
+              
+              console.log("压缩后" + canvasWidth + "x" + canvasHeight)
               that.setData({
-                imgPath: savedFilePath
+                cWidth: canvasWidth,
+                cHeight: canvasHeight
               })
-              resolve()
+              var ctx = wx.createCanvasContext('canvas')
+              ctx.drawImage(res.path, 0, 0, canvasWidth, canvasHeight)
+              ctx.draw()
+              setTimeout(() => {
+                console.log("绘制完成")
+                wx.canvasToTempFilePath({
+                  canvasId: 'canvas',
+                  fileType: 'png',
+                  destWidth: canvasWidth,
+                  destHeight: canvasHeight,
+                  success: res => {
+                    const savedFilePath = res.tempFilePath;
+                    console.log(savedFilePath)
+                    that.setData({
+                      imgPath: savedFilePath
+                    })
+                    resolve()
+                  }
+                })
+              }, 200)
             }
           })
-        },200))
+        })
       })
-    })
-    .then(()=>{
-      let cloudPath = 'studentCard/'+app.globalData.openid+'.png'
-      return new Promise((resolve,reject)=>{
-        wx.cloud.uploadFile({
-          cloudPath: cloudPath,
-          filePath: that.data.imgPath,
-          success: res => {
-            if (res.statusCode < 300) {
-              console.log(res.fileID);
-              that.setData({
-                fileID: res.fileID,
-              });
-              that.parseStudentCard();
-              wx.hideLoading();
+      .then(() => {
+        let cloudPath = 'studentCard/' + app.globalData.openid + '.png'
+        wx.showLoading({
+          title: '图片上传中',
+        })
+        return new Promise((resolve, reject) => {
+          wx.cloud.uploadFile({
+            cloudPath: cloudPath,
+            filePath: that.data.imgPath,
+            success: res => {
+              if (res.statusCode < 300) {
+                console.log(res.fileID);
+                that.setData({
+                  fileID: res.fileID,
+                });
+                that.parseStudentCard();
+              }
             }
-          }
+          })
+        })
       })
-    })
-    })
   },
   /**
  * 调用接口解析名片
@@ -155,7 +157,7 @@ Page({
     let that = this
     console.log('解析名片');
     wx.showLoading({
-      title: '解析名片',
+      title: '解析学生卡',
     });
     // 云开发新接口，调用云函数
 
@@ -174,16 +176,19 @@ Page({
         wx.hideLoading();
         return;
       }
-      console.log(res.result)  
+      console.log(res.result)
       let data = that.handleData(res.result.items);
       console.log(data);
-      if(that.data.varify == true){
+      if (that.data.varify == true) {
         that.setData({
           formData: data
         });
         that.addStudent();
         wx.hideLoading();
-      }else{
+        wx.showToast({
+          title: '学生卡认证成功',
+        })
+      } else {
         wx.hideLoading();
         wx.showToast({
           title: '非学生卡',
@@ -211,7 +216,7 @@ Page({
     //console.log("处理名片数据", data);
     data.map(item => {
       let txt = item.text;
-      if(new RegExp('学生卡是学生的身份证').test(txt) == true){
+      if (new RegExp('学生卡是学生的').test(txt) == true) {
         that.setData({
           varify: true
         })
@@ -235,16 +240,15 @@ Page({
     var that = this
     console.log("添加学生");
     const formData = that.data.formData;
-    let imgPath = that.data.imgPath;
     wx.showLoading({
       title: '添加中'
     });
-    const db = wx.cloud.database();
-    db.collection('student').add({
+    const db = wx.cloud.database()
+    db.collection("info").doc(app.globalData.info_id).update({
       data: formData
     }).then((res) => {
       wx.hideLoading();
-      let url = '../faceCompare/index?imgPath='+that.data.imgPath
+      let url = '../faceCompare/faceCompare?fileID_a=' + that.data.fileID
       //console.log(url)
       wx.redirectTo({
         url: url
@@ -259,4 +263,6 @@ Page({
     });
   }
 })
+
+
 
