@@ -113,7 +113,7 @@ Page({
           wx.showLoading({
             title: '图片上传中',
           })
-          let timestamp = (new Data()).valueof()
+          var timestamp = (new Date()).valueOf();
           wx.cloud.uploadFile({
             cloudPath: 'face/' + app.globalData.openId+'-'+timestamp + '.jpg',
             filePath: savedFilePath,
@@ -142,6 +142,7 @@ Page({
             res = res.result.replace(/\ufeff/g, "");
             res = JSON.parse(res)
             console.log(res);
+            wx.hideLoading()
             if (res.data.similarity > 50) {
               const db = wx.cloud.database()
               db.collection("info").doc(app.globalData.info_id).update({
