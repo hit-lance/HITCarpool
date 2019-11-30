@@ -1,2 +1,5 @@
-<button class="btn" type="default" bindtap="uploadImage">如果没有自动跳转，请点击此处开启摄像头:-)</button>
+<button class="open-camera" type="default" bindtap="uploadImage">
+<text>如果没有自动跳转</text>
+<text>点击此处开启摄像头</text>
+</button>
  <canvas canvas-id="canvas" style="width:{{cWidth}}px;height:{{cHeight}}px;position: absolute;left:-1000px;top:-1000px;"></canvas>

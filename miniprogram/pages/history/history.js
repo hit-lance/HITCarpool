@@ -1,5 +1,7 @@
-// pages/match/match.js
+//history.js
+
 const app = getApp()
+
 Page({
 
   /**

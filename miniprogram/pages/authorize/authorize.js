@@ -1,7 +1,8 @@
-//index.js
-//获取应用实例
+//authorize.js
+
 const app = getApp()
-const mapping = require('../common/mapping.js');
+const mapping = require('../../util/mapping.js');
+
 Page({
   data: {
     userInfo: {},

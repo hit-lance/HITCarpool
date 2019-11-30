@@ -10,7 +10,7 @@
   <block wx:else>
     <view class="head">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="name" style="color: black;font-size: small">{{userInfo.nickName}}</text>
+      <text class="name" style="color: black">{{userInfo.nickName}}</text>
       <view wx:if="{{userInfo.gender==1}}">
         <image class="gender" src="../../icon/img_my_man.png" style="width:40rpx;height:40rpx;" />
       </view>

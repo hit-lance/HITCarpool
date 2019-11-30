@@ -1,5 +1,5 @@
-//index.js
-//获取应用实例
+//my.js
+
 const app = getApp()
 
 Page({
@@ -31,7 +31,6 @@ Page({
 
     })
 
-    console.log(app.globalData.openId)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -61,7 +60,6 @@ Page({
   },
 
   getUserInfo: function (e) {
-    console.log(e)
     if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo
       this.setData({

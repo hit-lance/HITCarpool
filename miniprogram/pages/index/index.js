@@ -1,3 +1,5 @@
+//index.js
+
 const app = getApp()
 var isFilled = [false, false, false, false];
 var date = new Date();

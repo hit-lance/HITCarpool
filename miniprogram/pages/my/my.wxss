@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: space-evenly;
   padding-top: 50rpx;
+  padding-bottom: 30rpx;
   margin-left:70rpx;
 }
 .connect{

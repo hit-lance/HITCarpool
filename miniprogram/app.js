@@ -66,7 +66,6 @@ App({
           if (that.userInfoReadyCallback) {
             that.userInfoReadyCallback()
           }
-          console.log(that);
         }).catch(err => {
         })
     })
