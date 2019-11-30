@@ -79,7 +79,6 @@ Page({
             authorized: false
           },
           success: res => {
-            console.log(res)
             wx.showModal({
               title: '提示',
               content: '注册成功，请验证学生身份以正常使用小程序功能',
@@ -93,8 +92,8 @@ Page({
                   })
                 } else {
                   //这里是右边按钮的跳转链接
-                  wx.switchTab({
-                    url: '../my/my',
+                  wx.redirectTo({
+                    url: '../authorize/authorize',
                   })
                 }
               }

@@ -185,24 +185,36 @@ Page({
         });
         that.addStudent();
         wx.hideLoading();
-        wx.showToast({
-          title: '学生卡认证成功',
-        })
       } else {
         wx.hideLoading();
-        wx.showToast({
-          title: '非学生卡',
-          icon: 'none',
-          duration: 2000
-        });
+        wx.showModal({
+          title: '提示',
+          content: '学生卡识别失败',
+          showCancel: false,
+          confirmText: '重新上传',
+          success: function (res) {
+            if (!res.cancel) {
+              wx.redirectTo({
+                url: '../authorize/authorize',
+              })
+            }
+          }
+        })
       }
     }).catch(err => {
-      console.error('解析失败，请重试。', err);
-      wx.showToast({
-        title: '解析失败，请重试',
-        icon: 'none'
-      });
-      wx.hideLoading();
+      wx.showModal({
+        title: '提示',
+        content: '学生卡识别失败',
+        showCancel: false,
+        confirmText: '重新上传',
+        success: function (res) {
+          if (!res.cancel) {
+            wx.redirectTo({
+              url: '../authorize/authorize',
+            })
+          }
+        }
+      })
     });
   },
   /**
@@ -235,9 +247,9 @@ Page({
       if(returnData["gender"] == "男"){
         returnData["gender"] = 1
       }else if (returnData["gender"] == "女"){
-        returnData["gender"] = 0
+        returnData["gender"] = 2
       }else{
-        returnData["gender"] = null
+        returnData["gender"] = res.result.data[0].gender
       }
     }
     return returnData;
@@ -247,7 +259,6 @@ Page({
  */
   addStudent() {
     var that = this
-    console.log("添加学生");
     const formData = that.data.formData;
     wx.showLoading({
       title: '添加中'
@@ -258,17 +269,34 @@ Page({
     }).then((res) => {
       wx.hideLoading();
       let url = '../faceCompare/faceCompare?fileID_a=' + that.data.fileID
-      //console.log(url)
-      wx.redirectTo({
-        url: url
-      });
+      wx.showModal({
+        title: '提示',
+        content: '学生卡识别成功，您将进入人脸识别环节',
+        showCancel: false,
+        confirmText: '确认',
+        success: function (res) {
+          if (!res.cancel) {
+            wx.redirectTo({
+              url: url,
+            })
+          }
+        }
+      })
     }).catch((e) => {
-      console.log("添加名片信息失败", e)
       wx.hideLoading();
-      wx.showToast({
-        title: '添加失败，请重试',
-        icon: 'none'
-      });
+      wx.showModal({
+        title: '提示',
+        content: '学生卡识别失败',
+        showCancel: false,
+        confirmText: '重新上传',
+        success: function (res) {
+          if (!res.cancel) {
+            wx.redirectTo({
+              url: '../authorize/authorize',
+            })
+          }
+        }
+      })
     });
   }
 })

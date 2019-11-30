@@ -154,22 +154,43 @@ Page({
                 wx.hideLoading()
                 wx.showToast({
                   title: '认证成功',
+                  duration: 3000
                 })
                 wx.switchTab({
                   url: '../my/my',
                 })
               })
             } else {
-              wx.showToast({
-                title: '认证失败，请重试',
+              wx.showModal({
+                title: '提示',
+                content: '人脸识别失败',
+                showCancel: false,
+                confirmText: '重新识别',
+                success: function (res) {
+                  if (!res.cancel) {
+                    wx.redirectTo({
+                      url: '../faceCompare/faceCompare',
+                    })
+                  }
+                }
               })
             }
           })
         })
       })
       .catch(() => {
-        wx.showToast({
-          title: '认证失败请重试',
+        wx.showModal({
+          title: '提示',
+          content: '人脸识别失败',
+          showCancel: false,
+          confirmText: '重新识别',
+          success: function (res) {
+            if (!res.cancel) {
+              wx.redirectTo({
+                url: '../faceCompare/faceCompare',
+              })
+            }
+          }
         })
       })
   }
