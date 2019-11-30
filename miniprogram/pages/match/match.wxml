@@ -8,10 +8,10 @@
       <view class="content">
         <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
         {{userSrc}}
-      <!-- </view> -->
-      <image class="imgpoint_head" src="../../icon/picker_icon_index_point3.png" style="width:69rpx;height:11rpx;">
-      </image>
-      <!-- <view class="content"> -->
+        <!-- </view> -->
+        <image class="imgpoint_head" src="../../icon/picker_icon_index_point3.png" style="width:34rpx;height:11rpx;">
+        </image>
+        <!-- <view class="content"> -->
         <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
         {{userDst}}
       </view>
@@ -26,21 +26,22 @@
         </view>
       </view>
     </view>
-</view>
+  </view>
 
-<view class="title">已为您匹配到以下行程信息</view>
-<view class="container">
+  <view class="title">已为您匹配到以下行程信息</view>
+  <view class="container">
     <view class="card" wx:for="{{matchResult}}" wx:key="this">
       <view class="imgs">
         <view class="info">
           <image class="head" src="{{item.avatarUrl}}"></image>
           <view class="id">{{item.nickName}} </view>
-        </view>
-        <view wx:if="{{item.gender==1}}">
-          <image class="gender" src="../../icon/img_my_man.png" style="width:40rpx;height:40rpx;" />
-        </view>
-        <view wx:elif="{{item.gender==2}}">
-          <image class="gender" src="../../icon/img_my_woman.png" style="width:40rpx;height:40rpx;" />
+
+          <view wx:if="{{item.gender==1}}">
+            <image class="gender" src="../../icon/img_my_man.png" style="width:40rpx;height:40rpx;" />
+          </view>
+          <view wx:elif="{{item.gender==2}}">
+            <image class="gender" src="../../icon/img_my_woman.png" style="width:40rpx;height:40rpx;" />
+          </view>
         </view>
       </view>
       <view>
@@ -48,7 +49,7 @@
           <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
           {{item.source}}
         </view>
-        <image class="imgpoint" src="../../icon/picker_icon_index_point3.png" style="width:11rpx;height:69rpx;">
+        <image class="imgpoint" src="../../icon/picker_icon_index_point3.png" style="width:5rpx;height:34rpx;">
         </image>
         <view class="content">
           <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>

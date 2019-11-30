@@ -1,8 +1,12 @@
 .btn{
   width: 440rpx;
   height: 280rpx;
-  position: absolute;
-  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50%;
+  margin-left: 50%;
   background-size: 440rpx 280rpx;
   background-repeat:no-repeat;
   border:none;

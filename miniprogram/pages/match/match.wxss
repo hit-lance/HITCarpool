@@ -32,6 +32,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-bottom: 34rpx;
 }
 .id{
   display: flex;
@@ -125,7 +126,9 @@ padding-inline-start: 0rpx;
   justify-content: flex-start;
   padding-top: 34rpx;
 }
-.gender{
+.gender{ display: flex;
+  flex-direction: row;
+  align-items: center;
   padding-left: 30rpx;
 }
 

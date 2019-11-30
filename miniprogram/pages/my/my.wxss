@@ -8,8 +8,16 @@
   margin-left:70rpx;
 }
 .connect{
-  width: 100%;
-  padding-top: 30rpx;
+  width: 90%;
+  /* padding-top: 30rpx; */
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  height: 90%;
+  margin: auto;
+  border-radius: 20px;
 }
 .body{
 
