@@ -129,24 +129,23 @@ Page({
         })
       })
       .then(() => {
-        let cloudPath = 'studentCard/' + app.globalData.openId + '.jpg'
+        var timestamp = (new Date()).valueOf();
+        let cloudPath = 'studentCard/' + app.globalData.openId +'-'+timestamp+ '.jpg'
         wx.showLoading({
           title: '图片上传中',
         })
-        return new Promise((resolve, reject) => {
-          wx.cloud.uploadFile({
-            cloudPath: cloudPath,
-            filePath: that.data.imgPath,
-            success: res => {
-              if (res.statusCode < 300) {
-                console.log(res.fileID);
-                that.setData({
-                  fileID: res.fileID,
-                });
-                that.parseStudentCard();
-              }
+        wx.cloud.uploadFile({
+          cloudPath: cloudPath,
+          filePath: that.data.imgPath,
+          success: res => {
+            if (res.statusCode < 300) {
+              console.log(res.fileID);
+              that.setData({
+                fileID: res.fileID,
+              });
+              that.parseStudentCard();
             }
-          })
+          }
         })
       })
   },
