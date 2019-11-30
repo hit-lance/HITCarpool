@@ -113,8 +113,9 @@ Page({
           wx.showLoading({
             title: '图片上传中',
           })
+          let timestamp = (new Data()).valueof()
           wx.cloud.uploadFile({
-            cloudPath: 'face/' + app.globalData.openId + '.jpg',
+            cloudPath: 'face/' + app.globalData.openId+'-'+timestamp + '.jpg',
             filePath: savedFilePath,
             success: res => {
               that.setData({
@@ -168,9 +169,7 @@ Page({
                 confirmText: '重新识别',
                 success: function (res) {
                   if (!res.cancel) {
-                    wx.redirectTo({
-                      url: '../faceCompare/faceCompare',
-                    })
+                    that.uploadImage()
                   }
                 }
               })
@@ -186,9 +185,7 @@ Page({
           confirmText: '重新识别',
           success: function (res) {
             if (!res.cancel) {
-              wx.redirectTo({
-                url: '../faceCompare/faceCompare',
-              })
+              that.uploadImage()
             }
           }
         })

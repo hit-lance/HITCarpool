@@ -129,7 +129,8 @@ Page({
         })
       })
       .then(() => {
-        let cloudPath = 'studentCard/' + app.globalData.openId + '.jpg'
+        let timestamp = (new Data()).valueof()
+        let cloudPath = 'studentCard/' + app.globalData.openId+'-'+timestamp + '.jpg'
         wx.showLoading({
           title: '图片上传中',
         })
