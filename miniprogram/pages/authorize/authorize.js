@@ -271,8 +271,8 @@ Page({
       wx.hideLoading();
       let url = '../faceCompare/faceCompare?fileID_a=' + that.data.fileID
       wx.showModal({
-        title: '提示',
-        content: '学生卡识别成功，您将进入人脸识别环节',
+        title: '识别成功',
+        content: '您将进入人脸识别环节',
         showCancel: false,
         confirmText: '确认',
         success: function (res) {
