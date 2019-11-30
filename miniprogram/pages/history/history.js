@@ -8,7 +8,6 @@ Page({
   data: {
     historyData: null,
     modalHidden: true,
-    
   },
 
   /**
@@ -97,6 +96,7 @@ Page({
             },
             fail: e => {
               console.error(e);
+              wx.hideLoading()
             }
           })
         }else {
@@ -105,6 +105,7 @@ Page({
       },
       fail: e => {
         console.error(e);
+        wx.hideLoading()
       }
     })
   },

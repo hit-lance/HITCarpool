@@ -23,16 +23,6 @@
     </view>
     <view class="connect">
       <view class="con">
-        <!-- <view class="body"> -->
-          <!-- <view class="text">
-            <text class="con_">个人信息</text>
-          </view> -->
-          <!-- <button class="trans_" bindtap="goToContactPage" size="mini"> -->
-          <!-- <view class="trans_">
-            <image src="../../icon/button_my_compile.png" style="width:50rpx;height:50rpx;" bindtap="goToContactPage"></image>
-          </view> -->
-          <!-- </button> -->
-        <!-- </view> -->
         <van-cell-group>
           <van-cell>
             <view slot="title">

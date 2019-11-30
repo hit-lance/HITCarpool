@@ -70,7 +70,7 @@ Page({
               var ratio = 2;
               var canvasWidth = res.width //图片原始长宽
               var canvasHeight = res.height
-              while (canvasWidth > 400 || canvasHeight > 400) { // 保证宽高在1200以内
+              while (canvasWidth > 400 || canvasHeight > 400) { // 保证宽高在400以内
                 canvasWidth = Math.trunc(res.width / ratio)
                 canvasHeight = Math.trunc(res.height / ratio)
                 ratio++;
@@ -96,7 +96,7 @@ Page({
             console.log("绘制完成")
             wx.canvasToTempFilePath({
               canvasId: 'canvas',
-              fileType: 'jpg',
+              fileType: 'png',
               destWidth: that.data.cWidth,
               destHeight: that.data.cHeight,
               success: res => {
@@ -114,7 +114,7 @@ Page({
             title: '图片上传中',
           })
           wx.cloud.uploadFile({
-            cloudPath: 'face/' + app.globalData.openid + '.png',
+            cloudPath: 'face/' + app.globalData.openId + '.png',
             filePath: savedFilePath,
             success: res => {
               that.setData({
@@ -158,8 +158,8 @@ Page({
                 wx.switchTab({
                   url: '../my/my',
                 })
-            })
-            }else {
+              })
+            } else {
               wx.showToast({
                 title: '认证失败，请重试',
               })
@@ -167,7 +167,7 @@ Page({
           })
         })
       })
-      .catch(()=>{
+      .catch(() => {
         wx.showToast({
           title: '认证失败请重试',
         })

@@ -70,7 +70,7 @@ Page({
         wx.chooseImage({
           count: 1,
           sizeType: 'compressed',
-          sourceType: ['album','camera'],
+          sourceType: ['album', 'camera'],
           success: function (res) {
             resolve(res)
           },
@@ -92,13 +92,13 @@ Page({
               var ratio = 2;
               var canvasWidth = res.width //图片原始长宽
               var canvasHeight = res.height
-              
+
               while (canvasWidth > 1200 || canvasHeight > 1200) { // 保证宽高在1200以内
                 canvasWidth = Math.trunc(res.width / ratio)
                 canvasHeight = Math.trunc(res.height / ratio)
                 ratio++;
               }
-              
+
               console.log("压缩后" + canvasWidth + "x" + canvasHeight)
               that.setData({
                 cWidth: canvasWidth,
@@ -129,7 +129,7 @@ Page({
         })
       })
       .then(() => {
-        let cloudPath = 'studentCard/' + app.globalData.openid + '.png'
+        let cloudPath = 'studentCard/' + app.globalData.openId + '.png'
         wx.showLoading({
           title: '图片上传中',
         })
@@ -216,7 +216,7 @@ Page({
     //console.log("处理名片数据", data);
     data.map(item => {
       let txt = item.text;
-      if (new RegExp('学生卡是学生的').test(txt) == true) {
+      if (new RegExp('学生卡').test(txt) == true) {
         that.setData({
           varify: true
         })
@@ -263,6 +263,3 @@ Page({
     });
   }
 })
-
-
-

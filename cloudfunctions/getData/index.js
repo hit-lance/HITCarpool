@@ -18,7 +18,6 @@ exports.main = async (event, context) => {
   console.log(event.openId)
   for (let i = 0; i < batchTimes; i++) {
     const promise = db.collection(setName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).where({
-      isDone: false,
       num: _.lte(4 - event.userNum),
       time: _.and(_.gte(event.userTime - 3 * 60 * 60 * 1000), _.lte(event.userTime + 3 * 60 * 60 * 1000)),
       destination: event.userDst,
