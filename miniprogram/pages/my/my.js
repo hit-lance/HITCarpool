@@ -112,11 +112,21 @@ Page({
   },
 
   goToAuthorizePage: function (e) {
-    wx.navigateTo({
-      url: '../authorize/authorize',
-      success: function (res) {
-        console.log(res)
-      }
-    })
+    if(app.globalData.registered){
+      wx.navigateTo({
+        url: '../authorize/authorize',
+        success: function (res) {
+          console.log(res)
+        }
+      })
+    }
+    else {
+      wx.showModal({
+        title: '提示',
+        content: '请先填写联系方式',
+        showCancel: false,
+        confirmText: '确定'
+      })
+    }
   }
 })

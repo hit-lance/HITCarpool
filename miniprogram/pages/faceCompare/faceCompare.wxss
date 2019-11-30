@@ -1,6 +1,9 @@
-button {
- width: 620rpx;
- height: 1000rpx;
- margin: 20rpx 40rpx 40rpx;
- font-size: 50rpx;
+.btn{
+  width: 440rpx;
+  height: 280rpx;
+  position: absolute;
+  margin: auto;
+  background-size: 440rpx 280rpx;
+  background-repeat:no-repeat;
+  border:none;
 }

@@ -8,15 +8,7 @@
   margin:auto;
   
 }
-.upload{
-  width: 440rpx;
-  height: 280rpx;
-  position: absolute;
-  margin: auto;
-  background-size: 440rpx 280rpx;
-  background-repeat:no-repeat;
-  border:none;
-}
+
 .tip{
   color:#ff0000;
   font-size: smaller;

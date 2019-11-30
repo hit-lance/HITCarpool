@@ -4,7 +4,6 @@
     <view class="login">
       <image class="userinfo-avatar" src="../../icon/user-unlogin.png" mode="cover"></image>
       <button class="log" open-type="getUserInfo" bindgetuserinfo="getUserInfo" round size="mini"> 请先登录 </button>
-
     </view>
   </block>
 
@@ -18,7 +17,7 @@
       <view wx:elif="{{userInfo.gender==2}}">
         <image class="gender" src="../../icon/img_my_woman.png" style="width:40rpx;height:40rpx;" />
       </view>
-      <button wx:if="{{!authorized}}" class="AC" plain round style="border-radius: 10px;" type="default" size="mini" style="color:#e60012; border-color:#e60012;border-radius: 10px;" bindtap="goToAuthorizePage">未认证</button>
+      <button wx:if="{{!authorized}}" class="AC" plain round style="border-radius: 10px;" type="default" size="mini" style="color:#e60012; border-color:#e60012;border-radius: 10px;" bindtap="goToAuthorizePage">点击认证</button>
       <button wx:else class="AC" plain round style="border-radius: 10px;"type="primary" size="mini" bindtap="goToAuthorizePage" disabled="true">已认证</button>
     </view>
     <view class="connect">
@@ -27,13 +26,13 @@
           <van-cell>
             <view slot="title">
               <view class="text">
-                <text class="con_">个人信息</text>
+                <text class="con_">联系方式</text>
                 <image class="trans_"src="../../icon/button_my_compile.png" style="width:50rpx;height:50rpx;" bindtap="goToContactPage"></image>
               </view>
               
             </view>
           </van-cell>
-          <van-cell title="微信号" value="{{wechat}}" />
+          <van-cell title="微信" value="{{wechat}}" />
           <van-cell title="QQ" value="{{qq}}" />
           <van-cell title="手机" value="{{cellphone}}" />
         </van-cell-group>

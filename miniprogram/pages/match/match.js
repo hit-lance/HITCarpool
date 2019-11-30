@@ -32,9 +32,7 @@ Page({
    */
   buttonTap: function (event) {
     var theId = event.currentTarget.dataset.unique, theIndex = -1;
-    console.log("this.matchResult =", this.data.matchResult)
     for (let index in this.data.matchResult) {
-      console.log("index =", index, "unique =", this.data.matchResult[index].unique)
       if (theId === this.data.matchResult[index].unique) {
         theIndex = index
         break
@@ -52,16 +50,12 @@ Page({
   modalCandel: function (event) {
     // do something
     var theId = event.currentTarget.dataset.unique, theIndex = -1;
-    console.log("this.matchResult =", this.data.matchResult)
     for (let index in this.data.matchResult) {
-      console.log("index =", index, "unique =", this.data.matchResult[index].unique)
       if (theId === this.data.matchResult[index].unique) {
         theIndex = index
         break
       }
     }
-    console.log("theId =", theId)
-    console.log("index =", theIndex)
     var str = 'matchResult[' + theIndex + '].modalHidden';
     this.setData({
       [str]: true,
@@ -74,16 +68,13 @@ Page({
   modalConfirm: function (event) {
     // do something
     var theId = event.currentTarget.dataset.unique, theIndex = -1;
-    console.log("this.matchResult =", this.data.matchResult)
     for (let index in this.data.matchResult) {
-      console.log("index =", index, "unique =", this.data.matchResult[index].unique)
       if (theId === this.data.matchResult[index].unique) {
         theIndex = index
         break
       }
     }
-    console.log("theId =", theId)
-    console.log("index =", theIndex)
+
     var str = 'matchResult[' + theIndex + '].modalHidden';
     this.setData({
       [str]: true,
@@ -108,17 +99,14 @@ getMatchData: function () {
       openId: app.globalData.openId
     },
     success: (res) => {
-      console.log(res.result.data)
       //matchResult中存匹配到的拼车信息以及openid
       if (res.result && res.result.data.length) {
-        console.log(res.result.data)
         var data = res.result.data, userTime = that.data.userTime;
         data.sort(function (a, b) { return Math.abs(a.time - userTime) - Math.abs(b.time - userTime); });
         if (data.length) {
           // 对matchResult中的每一个openid，去info集合中查找对应的联系方式以及userinfo
           const promises = data.map(async function(info) {
             var fixedinfo = {};
-            console.log(info)
             fixedinfo.unique = info._id
             fixedinfo.num = info.num
             fixedinfo.source = info.source
@@ -149,22 +137,22 @@ getMatchData: function () {
               }).catch(err => { console.log(err) });
             })
             let test = await promise;
-            console.log("test =", test);
             return fixedinfo
           })
-          console.log(promises);
           Promise.all(promises).then(res => {
             //打印返回信息
-            console.log("res =", res);
             this.setData({
               matchResult: res
             })
+            wx.hideLoading()
           }).catch((reason) => {
             console.log("fail")
           });
         } 
+      }
+      else{
+        wx.hideLoading()
       } 
-      wx.hideLoading()
     },
     fail: e => {
       console.error(e);

@@ -1,14 +1,15 @@
 <block wx:if="{{!matchResult.length}}">
-  <text class="center"> 好像没有合适的行程呢..。 </text>
+  <text class="center"> 好像没有合适的行程呢... </text>
 </block>
 <block wx:else>
+  <view class="title">您的行程</view>
   <view class="container">
-    <view class="my_card">
+    <view class="card">
       <view class="content">
         <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
         {{userSrc}}
       <!-- </view> -->
-      <image class="imgpoint_head" src="../../icon/picker_icon_index_point.png" style="width:69rpx;height:11rpx;">
+      <image class="imgpoint_head" src="../../icon/picker_icon_index_point3.png" style="width:69rpx;height:11rpx;">
       </image>
       <!-- <view class="content"> -->
         <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
@@ -25,6 +26,10 @@
         </view>
       </view>
     </view>
+</view>
+
+<view class="title">已为您匹配到以下行程信息</view>
+<view class="container">
     <view class="card" wx:for="{{matchResult}}" wx:key="this">
       <view class="imgs">
         <view class="info">
@@ -62,15 +67,12 @@
             <button class='button' bindtap='buttonTap' type='default' round style="border-radius: 10px;" size='mini' data-unique="{{item.unique}}">联系方式</button>
             <modal style="border-radius: 20px;" title="联系方式" hidden="{{item.modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel" data-unique="{{item.unique}}">
               <view class="content" wx:if="{{item.wechat!=''}}">
-                <image src="{{wximgurl}}" style="width:40rpx;height:40rpx;"></image>
                 微信：{{item.wechat}}
               </view>
               <view class="content" wx:if="{{item.qq!=''}}">
-                <image src="{{qqimgurl}}" style="width:40rpx;height:40rpx;"></image>
                 QQ：{{item.qq}}
               </view>
               <view class="content" wx:if="{{item.cellphone!=''}}">
-                <image src="{{phimgurl}}" style="width:40rpx;height:40rpx;"></image>
                 手机：{{item.cellphone}}
               </view>
             </modal>

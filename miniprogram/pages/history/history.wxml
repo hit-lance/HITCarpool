@@ -6,22 +6,6 @@
 <block wx:else>
   <view class="container">
     <view class="card" wx:for="{{historyData}}" wx:key="this">
-      <view class="imgs">
-        <view class="info">
-          <image class="head" src="{{item.avatarUrl}}"></image>
-          <view class="id">{{item.nickName}} </view>
-        </view>
-        <view wx:if="{{userInfo.gender==1}}">
-          <image class="gender" src="../../icon/img_my_man.png" style="width:40rpx;height:40rpx;" />
-        </view>
-        <view wx:elif="{{userInfo.gender==2}}">
-          <image class="gender" src="../../icon/img_my_woman.png" style="width:40rpx;height:40rpx;" />
-        </view>
-        <!-- <view class="num">
-          <image src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
-          {{item.num}}
-        </view> -->
-      </view>
       <view class="set">
         <view class="content">
           <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>

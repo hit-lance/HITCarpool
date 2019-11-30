@@ -1,7 +1,6 @@
 <!--index.wxml-->
 <view class="back">
   <view class="head">
-    <!-- <button class="upload" bindtap="uploadFile"style="background-image:url(../../icon/button_authorize.png);" plain='true'> -->
     <view>
       <image src="{{imgPath}}" mode='widthFix' style="width:588rpx;height:374rpx;" bindtap="uploadFile" />
     </view>

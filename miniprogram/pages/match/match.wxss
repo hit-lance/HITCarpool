@@ -6,24 +6,6 @@
    border-radius:50%;
    overflow:hidden;
   text-align: center;
-
-}
-.my_card{
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 90%;
-  
-  margin: auto;
-  padding: 50rpx;
-
-}
-.imgs {
- display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
 }
 
 .card {
@@ -36,7 +18,14 @@
   margin: auto;
   margin-top: 30rpx;
   padding: 50rpx;
-   border-radius: 20px;
+  border-radius: 20px;
+}
+
+.imgs {
+ display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .info{
@@ -58,9 +47,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding-top:20rpx;
+  /* padding-top:20rpx; */
   padding-left:5rpx;
-  font-size:small;
+  /* font-size:small; */
 }
 .set{
   padding-top:34rpx;
@@ -138,4 +127,10 @@ padding-inline-start: 0rpx;
 }
 .gender{
   padding-left: 30rpx;
+}
+
+.title{
+  padding: 40rpx 30rpx 0rpx;
+  font-size: 30rpx;
+  color:#7c7c7c;
 }

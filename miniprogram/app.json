@@ -7,7 +7,6 @@
     "pages/history/history",
     "pages/authorize/authorize",
     "pages/faceCompare/faceCompare"
-
   ],
   "tabBar": {
     "color": "#333",
