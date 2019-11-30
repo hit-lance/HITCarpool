@@ -48,9 +48,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding-top:20rpx;
+  /* padding-top:20rpx; */
   padding-left:5rpx;
-  font-size:small;
+  /* font-size:small; */
 }
 .set{
   padding-top:34rpx;
@@ -87,6 +87,9 @@ width:40%;
 }
 .img{
   margin-right:20rpx;
+}
+.img_time{
+  margin-right: 10rpx;
 }
 .time{
   display: flex;

@@ -113,16 +113,14 @@ Page({
           wx.showLoading({
             title: '图片上传中',
           })
-          var timestamp = (new Date()).valueOf();
           wx.cloud.uploadFile({
-            cloudPath: 'face/' + app.globalData.openId +'-'+timestamp+ '.jpg',
+            cloudPath: 'face/' + app.globalData.openId + '.jpg',
             filePath: savedFilePath,
             success: res => {
               that.setData({
                 image_b: res.fileID
               })
-              console.log(that.data.image_a)
-              console.log(that.data.image_b)
+              //console.log(that.data.image_b)
               resolve()
             }
           })
@@ -163,7 +161,6 @@ Page({
                 })
               })
             } else {
-              wx.hideLoading()
               wx.showModal({
                 title: '提示',
                 content: '人脸识别失败',
@@ -171,7 +168,9 @@ Page({
                 confirmText: '重新识别',
                 success: function (res) {
                   if (!res.cancel) {
-                    that.uploadImage()
+                    wx.redirectTo({
+                      url: '../faceCompare/faceCompare',
+                    })
                   }
                 }
               })
@@ -187,7 +186,9 @@ Page({
           confirmText: '重新识别',
           success: function (res) {
             if (!res.cancel) {
-              that.uploadImage()
+              wx.redirectTo({
+                url: '../faceCompare/faceCompare',
+              })
             }
           }
         })

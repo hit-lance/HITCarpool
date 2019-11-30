@@ -6,6 +6,7 @@ Page({
   data: {
     matchResult: [],
     userTime: 0,
+    time:"",
     userSrc: "",
     userDst: "",
     userNum: 0,
@@ -186,7 +187,9 @@ getMatchData: function () {
       userTime: Number(e.userTime),
       userSrc: e.userSrc,
       userDst: e.userDst,
-      userNum: Number(e.userNum)
+      userNum: Number(e.userNum),
+      time : this.transTime(Number(e.userTime))
+      
     })
   },
 

@@ -36,7 +36,7 @@
       <!-- 设置出发时间 -->
       <view class="timePeople">
         <view class="time">
-          <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+          <image class="img_time" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
           <picker name="time" class='time-picker' mode="multiSelector" bindchange="bindMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
             <view class="{{time == '出发时间'?'default':'selected'}}">
               {{time}}

@@ -35,7 +35,7 @@
         </view>
         <view class="time_btn">
           <view class="time">
-            <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+            <image class="img_time" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
             {{item.time}}
           </view>
           <view class="num">
