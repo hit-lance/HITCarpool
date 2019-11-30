@@ -111,7 +111,7 @@ Page({
                 console.log("绘制完成")
                 wx.canvasToTempFilePath({
                   canvasId: 'canvas',
-                  fileType: 'png',
+                  fileType: 'jpg',
                   destWidth: canvasWidth,
                   destHeight: canvasHeight,
                   success: res => {
@@ -129,7 +129,7 @@ Page({
         })
       })
       .then(() => {
-        let cloudPath = 'studentCard/' + app.globalData.openId + '.png'
+        let cloudPath = 'studentCard/' + app.globalData.openId + '.jpg'
         wx.showLoading({
           title: '图片上传中',
         })
@@ -231,6 +231,15 @@ Page({
         }
       });
     });
+    if("gender" in returnData){
+      if(returnData["gender"] == "男"){
+        returnData["gender"] = 1
+      }else if (returnData["gender"] == "女"){
+        returnData["gender"] = 0
+      }else{
+        returnData["gender"] = null
+      }
+    }
     return returnData;
   },
   /**

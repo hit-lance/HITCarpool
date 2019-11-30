@@ -48,7 +48,7 @@ Page({
       return new Promise((resolve, reject) => {
         wx.chooseImage({
           count: 1,
-          sourceType: ['album', 'camera'],
+          sourceType: ['camera'],
           success: function (res) {
             that.setData({
               imgPath_b: res.tempFilePaths[0]
@@ -96,7 +96,7 @@ Page({
             console.log("绘制完成")
             wx.canvasToTempFilePath({
               canvasId: 'canvas',
-              fileType: 'png',
+              fileType: 'jpg',
               destWidth: that.data.cWidth,
               destHeight: that.data.cHeight,
               success: res => {
@@ -114,7 +114,7 @@ Page({
             title: '图片上传中',
           })
           wx.cloud.uploadFile({
-            cloudPath: 'face/' + app.globalData.openId + '.png',
+            cloudPath: 'face/' + app.globalData.openId + '.jpg',
             filePath: savedFilePath,
             success: res => {
               that.setData({
