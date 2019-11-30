@@ -3,13 +3,13 @@ cloud.init()
 
 exports.main = async (event, context) => {
   try {
-    const fileID = event.fileID;
-    const res = await cloud.downloadFile({
+    let fileID = event.fileID;
+    let res = await cloud.downloadFile({
       fileID: fileID,
     });
-    const buffer = res.fileContent;
+    let buffer = res.fileContent;
     console.log(res.fileContent);
-    const result = await cloud.openapi.ocr.printedText({
+    let result = await cloud.openapi.ocr.printedText({
       type: 'photo',
       img: {
         contentType: 'image/jpg',
