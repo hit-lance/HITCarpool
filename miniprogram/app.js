@@ -7,6 +7,7 @@ App({
     qq: '',
     cellphone: '',
     info_id: '',
+    carpool_id:'' ,
     registered: false,
     authorized: false,
     gender:0

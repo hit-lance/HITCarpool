@@ -13,6 +13,7 @@ Page({
     userSrc: "",
     userDst: "",
     userNum: 0,
+    carpool_id: null,
     wximgurl: '../../icon/icon_wx.png',
     qqimgurl: '../../icon/icon_qq.png',
     phimgurl: '../../icon/icon_phone.png',
@@ -174,13 +175,14 @@ getMatchData: function () {
    * 生命周期函数--监听页面安装
    */
   onLoad: function (e) {
+    console.log(e)
     this.setData({
       userTime: Number(e.userTime),
       userSrc: e.userSrc,
       userDst: e.userDst,
       userNum: Number(e.userNum),
-      time : this.transTime(Number(e.userTime))
-      
+      time : this.transTime(Number(e.userTime)),
+      carpool_id: e.carpool_id
     })
   },
 
@@ -190,4 +192,26 @@ getMatchData: function () {
       data: e.currentTarget.dataset.content,
     });
   },
+
+  deleteTheMessage: function (event) {
+    wx.showLoading({
+      title: '正在取消',
+    })
+    const db = wx.cloud.database();
+    console.log(app.globalData.carpool_id)
+    db.collection('carpool').doc(app.globalData.carpool_id ).remove().then(res => {
+      console.log(res)
+      wx.hideLoading()
+      wx.showToast({
+        title: '取消成功',
+        icon: 'success',
+        duration: 1000
+      })
+
+      wx.switchTab({
+        url: '../index/index',
+      })
+    }).catch()
+  },
+
 })

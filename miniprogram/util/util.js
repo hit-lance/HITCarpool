@@ -18,7 +18,6 @@ class Util {
       month = tomorrow.getMonth() + 1,
       year = tomorrow.getFullYear();
     }
-    console.log(year + "/" + month + "/" + day + " " + time.split(" ")[1])
     return new Date(year + "/" + month + "/" + day + " " + time.split(" ")[1]).getTime();
   };
 

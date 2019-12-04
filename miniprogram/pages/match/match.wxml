@@ -1,4 +1,7 @@
-  <view class="title">您的行程</view>
+  <view class='title'>
+  <text>您的行程</text>
+  <button bindtap='deleteTheMessage'>取消</button>
+  </view>
   <view class="container">
     <view class="card">
       <view class="content">

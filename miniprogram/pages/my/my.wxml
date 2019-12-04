@@ -43,10 +43,6 @@
             <van-cell title="手机" value="{{cellphone}}" />
           </van-cell-group>
         </view>
-
-      </view>
-      <view class="route">
-        <button round style="border-radius: 10px; background-color: #48a417;color: white;" bindtap="goToHistoryPage">我的行程</button>
       </view>
     </view>
 

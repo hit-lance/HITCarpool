@@ -99,15 +99,6 @@ Page({
       }
     })
   },
-  
-  goToHistoryPage: function (e) {
-    wx.navigateTo({
-      url: '../history/history',
-      success: function (res) {
-        console.log(res)
-      }
-    })
-  },
 
   goToAuthorizePage: function (e) {
     if(app.globalData.registered){

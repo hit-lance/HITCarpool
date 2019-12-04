@@ -21,13 +21,12 @@ Page({
     registered: app.globalData.registered,
     authorized: app.globalData.authorized,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场','哈尔滨大剧院'],
+    location: ['一校区', '二校区', '建筑学院','科学园' ,'哈尔滨站', '哈尔滨西站', '太平机场','哈尔滨大剧院'],
     multiArray: [[''], [0], [0]],
     nums: ['1人', '2人', '3人'],
     index1: 0,
     index2: 0,
     index3: 0,
-    color: "grey",
     multiIndex: [0, 0, 0],
     src: '出发地',
     dst: '目的地',
@@ -386,6 +385,7 @@ Page({
         },
         success: res => {
           console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+          app.globalData.carpool_id = res._id
         },
         fail: err => {
           console.error('[数据库] [新增记录] 失败：', err)
@@ -451,6 +451,7 @@ Page({
 
   query(e) {
     // console.log(e.currentTarget.dataset)
+    app.globalData.carpool_id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: '../match/match?userTime=' + e.currentTarget.dataset.time +
         '&userSrc=' + e.currentTarget.dataset.source + '&userDst=' + e.currentTarget.dataset.destination + '&userNum=' + e.currentTarget.dataset.num,

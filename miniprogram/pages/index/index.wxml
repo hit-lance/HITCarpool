@@ -59,10 +59,10 @@
 
 
 <block wx:if="{{historyData.length}}">
-  <text>已发布</text>
+  <text>您发布的行程</text>
     <view class="card" wx:for="{{historyData}}" wx:key="this">
 
-    <button bindtap="query" data-source='{{item.source}}' data-destination='{{item.destination}}' data-time='{{item.timestamp}}' data-num='{{item.num}}'>
+    <button bindtap="query" data-source='{{item.source}}' data-destination='{{item.destination}}' data-time='{{item.timestamp}}' data-num='{{item.num}}' data-id='{{item._id}}'>
       <view class="content_my">
         <image class="img1" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
         {{item.source}}
