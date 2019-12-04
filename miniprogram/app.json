@@ -4,7 +4,6 @@
     "pages/my/my",
     "pages/contact/contact",
     "pages/match/match",
-    "pages/history/history",
     "pages/authorize/authorize",
     "pages/faceCompare/faceCompare"
   ],
