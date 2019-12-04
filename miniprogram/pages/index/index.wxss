@@ -11,8 +11,8 @@
   margin: auto;
   margin-top: 30rpx;
   padding: 50rpx;
-   border-radius: 20px;
-   /* box-shadow:1px 1px 3px 3px grey; */
+  border-radius: 20rpx;
+  margin-bottom: 80rpx;
 }
 .imgpoint{
    margin-left:15rpx;
@@ -96,9 +96,9 @@ width:40%;
   
 }
 .btn{
-    
     background-color: #48a417;
     color: white;
+    margin-bottom: 50rpx; 
 }
 
 
@@ -111,4 +111,110 @@ width:40%;
 }
 .img_time{
   margin-right: 10rpx;
+}
+
+/* pages/match/match.wxss */
+
+.head {
+  width: 50rpx;
+  height: 50rpx;
+   border-radius:50%;
+   overflow:hidden;
+  text-align: center;
+
+}
+
+.imgs {
+ display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.id{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left:20rpx;
+  font-size:smaller;
+  color:#7c7c7c;
+}
+.content_my{
+ display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  /* padding-top:20rpx; */
+  padding-left:5rpx;
+  /* font-size:small; */
+}
+.set{
+  padding-top:34rpx;
+}
+.connect
+  {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: 200rpx;
+}
+.num{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.center{
+   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50%;
+}
+.imgpoint{
+   margin-left:15rpx;
+display: flex;
+flex-direction:column;
+justify-content: flex-start;
+align-items: center;
+width:40%;
+  
+}
+
+.img1{
+  margin-right:20rpx;
+}
+
+.img_time{
+  margin-right: 10rpx;
+}
+
+.time{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.cancel_btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+.time_btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 34rpx;
 }

@@ -21,7 +21,7 @@ Page({
     registered: app.globalData.registered,
     authorized: app.globalData.authorized,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场'],
+    location: ['一校区', '二校区', '建筑学院', '哈尔滨站', '哈尔滨西站', '太平机场','哈尔滨大剧院'],
     multiArray: [[''], [0], [0]],
     nums: ['1人', '2人', '3人'],
     index1: 0,
@@ -32,10 +32,16 @@ Page({
     src: '出发地',
     dst: '目的地',
     time: '出发时间',
-    num: '人数'
+    num: '人数',
+    timestamp: null,
+    historyData: null,
+    modalHidden: true,
   },
 
   onShow: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
     let that = this;
     thereIsNoToday = (currentHours == 23) && (currentMinute > 50);
     if (app.globalData.registered && app.globalData.authorized) {
@@ -48,6 +54,7 @@ Page({
   },
 
   test: function () {
+
     this.setData({
       registered: app.globalData.registered,
       authorized: app.globalData.authorized
@@ -61,6 +68,57 @@ Page({
         hasUserInfo: true
       })
     } 
+
+    wx.cloud.callFunction({
+      name: 'getInfo',
+      data: {
+        cloudSet: "carpool",
+        openId: app.globalData.openId
+      },
+      success: res => {
+        this.setData({
+          historyData: ""
+        })
+        if (res.result && res.result.data.length) {
+          var data = res.result.data, historyData = [];
+          wx.cloud.callFunction({
+            name: 'getInfo',
+            data: {
+              cloudSet: "info",
+              openId: app.globalData.openId
+            },
+            success: res => {
+              for (var idx in data) {
+                historyData.push(data[idx]);
+                historyData[idx].timestamp = historyData[idx].time
+                historyData[idx].time = this.transTime(historyData[idx].time);    
+                historyData[idx].wechat = res.result.data[0].wechat
+                historyData[idx].qq = res.result.data[0].qq
+                historyData[idx].cellphone = res.result.data[0].cellphone
+                historyData[idx].nickName = res.result.data[0].userInfo.nickName
+                historyData[idx].gender = res.result.data[0].userInfo.gender
+                historyData[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
+              }
+              this.setData({
+                historyData: historyData
+              })
+              wx.hideLoading()
+            },
+            fail: e => {
+              console.error(e);
+              wx.hideLoading()
+            }
+          })
+        } else {
+          wx.hideLoading()
+        }
+      },
+      fail: e => {
+        console.error(e);
+        wx.hideLoading()
+      }
+    })
+
   },
   pickerTap: function () {
     var monthDay = [];
@@ -274,18 +332,6 @@ Page({
     })
   },
 
-  handleWechatInput: function (e) {
-    app.globalData.wechat = e.detail.value
-  },
-
-  handleQQInput: function (e) {
-    app.globalData.qq = e.detail.value
-  },
-
-  handleCellphoneInput: function (e) {
-    app.globalData.cellphone = e.detail.value
-  },
-
   formSubmit: function (e) {
     if (this.data.src === "从哪儿出发") {
       wx.showToast({
@@ -315,17 +361,16 @@ Page({
       })
     }
 
-    else if ((app.globalData.qq == "") && (app.globalData.wechat == "") && (app.globalData.cellphone == "")) {
-      wx.showToast({
-        title: '请填联系方式',
-        icon: 'none'
-      })
-      console.log('[数据库] [新增记录] 失败：')
-    }
-
     else if (this.data.src === this.data.dst) {
       wx.showToast({
         title: '起终点相同！',
+        icon: 'none'
+      })
+    }
+
+    else if (this.isDuplicate(this.data.time, this.data.historyData)) {
+      wx.showToast({
+        title: '发布失败：与已经发布行程的时间太近',
         icon: 'none'
       })
     }
@@ -358,6 +403,62 @@ Page({
     }
   },
 
+  deleteTheMessage: function (event) {
+    wx.showLoading({
+      title: '正在取消',
+    })
+    var temp = this.data.historyData
+    var _id = event.currentTarget.dataset.theid;
+    console.log(event)
+    const db = wx.cloud.database();
+    db.collection('carpool').doc(_id).remove().then(res => {
+      var index = temp.findIndex(function (element) {
+        return element._id == _id
+      })
+      temp.splice(index, 1);
+      this.setData({
+        historyData: temp
+      })
+      wx.hideLoading()
+      wx.showToast({
+        title: '取消成功',
+        icon: 'success',
+        duration: 1000
+      })
+    }).catch()
+  },
+
+  /**
+   * 将时间戳转化为标准形式
+   */
+
+  transTime(theTime) {
+    const theDate = new Date(theTime);
+    var minute = theDate.getMinutes();
+    if (minute == 0)
+      minute = "00";
+    return (theDate.getMonth() + 1) + "/" + theDate.getDate() + " " + theDate.getHours() + ":" + minute
+  },
+
+  isDuplicate(time, historyData) {
+    var timestamp = util.formatTime(time, date)
+    for (let i = 0; i < historyData.length;i++) {
+      if (Math.abs(timestamp - historyData[i].timestamp)<=3*60*60*1000)
+        return true;
+    }
+    return false;
+  },
+
+  query(e) {
+    // console.log(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: '../match/match?userTime=' + e.currentTarget.dataset.time +
+        '&userSrc=' + e.currentTarget.dataset.source + '&userDst=' + e.currentTarget.dataset.destination + '&userNum=' + e.currentTarget.dataset.num,
+      success: function (res) {
+        console.log(res)
+      }
+    })
+  }
 })
 
 

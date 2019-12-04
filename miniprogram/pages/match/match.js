@@ -184,4 +184,10 @@ getMatchData: function () {
     })
   },
 
+  copy: function (e) {
+    var that = this;
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.content,
+    });
+  },
 })

@@ -26,7 +26,7 @@
             <image class="img" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
             {{item.num}}
           </view>
-          <view class="btn">
+          <view class="cancel">
             <button class='button' bindtap='deleteTheMessage' type='default' size='mini' round style="border-radius: 10px;" data-theid="{{item._id}}">取消行程</button>
           </view>
         </view>

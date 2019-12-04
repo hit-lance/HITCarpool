@@ -85,19 +85,23 @@ align-items: center;
 width:40%;
   
 }
+
 .img{
   margin-right:20rpx;
 }
+
 .img_time{
   margin-right: 10rpx;
 }
+
 .time{
   display: flex;
   flex-direction: row;
   align-items: center;
 
 }
-.btn {
+
+.cancel {
   display: flex;
   flex-direction: row;
   align-items: center;

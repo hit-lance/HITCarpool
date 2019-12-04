@@ -1,10 +1,7 @@
 <!--index.wxml-->
 <van-notice-bar wx:if="{{!hasUserInfo||!registered||!authorized}}" text=" Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！">
-  Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！
 </van-notice-bar>
-<!-- <view class="tips" wx:if="{{!hasUserInfo||!registered||!authorized}}">
-  <text class="tip">Tip: 您还没有设置联系方式/通过学生认证，暂无法使用该功能，请前往个人中心登录！</text>
-</view> -->
+
 <view>
   <form bindsubmit="formSubmit">
     <!--设置拼车信息-->
@@ -30,8 +27,6 @@
           </view>
         </picker>
       </view>
-      <!-- <image class="imgpoint"src="../../icon/picker_icon_index_point3.png" style="width:11rpx;height:69rpx;">
-  </image> -->
 
       <!-- 设置出发时间 -->
       <view class="timePeople">
@@ -56,10 +51,36 @@
       </view>
     </view>
 
-    <view class="btn-area">
       <button class="btn" size="small" color="#48a417" round style="border-radius: 10px;" disabled="{{disable||!hasUserInfo||!registered}}" formType="submit">
         发布行程
       </button>
-    </view>
   </form>
 </view>
+
+
+<block wx:if="{{historyData.length}}">
+  <text>已发布</text>
+    <view class="card" wx:for="{{historyData}}" wx:key="this">
+
+    <button bindtap="query" data-source='{{item.source}}' data-destination='{{item.destination}}' data-time='{{item.timestamp}}' data-num='{{item.num}}'>
+      <view class="content_my">
+        <image class="img1" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
+        {{item.source}}
+        <image class="imgpoint_head" src="../../icon/picker_icon_index_point3.png" style="width:34rpx;height:11rpx;">
+        </image>
+        <image class="img1" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
+        {{item.destination}}
+      </view>
+      <view class="time_num">
+        <view class="time">
+          <image class="img1" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+          {{item.time}}
+        </view>
+        <view class="num">
+          <image class="img1" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+          {{item.num}}
+        </view>
+  </view>
+    </button>
+  </view>
+</block>
