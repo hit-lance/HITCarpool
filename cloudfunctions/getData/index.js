@@ -20,8 +20,6 @@ exports.main = async (event, context) => {
     const promise = db.collection(setName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).where({
       num: _.lte(4 - event.userNum),
       time: _.and(_.gte(event.userTime - 3 * 60 * 60 * 1000), _.lte(event.userTime + 3 * 60 * 60 * 1000)),
-      destination: event.userDst,
-      source: event.userSrc,
       _openid: _.neq(event.openId)
     }).get()
     tasks.push(promise)
