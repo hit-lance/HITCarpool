@@ -3,7 +3,7 @@
   <block wx:if="{{!hasUserInfo && canIUse}}">
     <view class="login">
       <image class="userinfo-avatar" src="../../icon/user-unlogin.png" mode="cover"></image>
-      <button class="log" open-type="getUserInfo" bindgetuserinfo="getUserInfo" round size="mini"> 请先登录 </button>
+      <button class="log" open-type="getUserInfo" bindgetuserinfo="getUserInfo" round size="mini"> 微信登录 </button>
     </view>
   </block>
 

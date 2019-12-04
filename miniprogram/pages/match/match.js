@@ -216,7 +216,6 @@ getMatchData: function () {
    * 生命周期函数--监听页面安装
    */
   onLoad: function (e) {
-    console.log(e)
     this.setData({
       userTime: Number(e.userTime),
       userSrc: e.userSrc,
@@ -241,7 +240,6 @@ getMatchData: function () {
     const db = wx.cloud.database();
     console.log(app.globalData.carpool_id)
     db.collection('carpool').doc(app.globalData.carpool_id ).remove().then(res => {
-      console.log(res)
       wx.hideLoading()
       wx.showToast({
         title: '取消成功',

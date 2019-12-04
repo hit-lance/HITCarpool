@@ -53,7 +53,6 @@ Page({
   },
 
   test: function () {
-
     this.setData({
       registered: app.globalData.registered,
       authorized: app.globalData.authorized
@@ -75,39 +74,24 @@ Page({
         openId: app.globalData.openId
       },
       success: res => {
-        this.setData({
-          historyData: ""
-        })
         if (res.result && res.result.data.length) {
-          var data = res.result.data, historyData = [];
-          wx.cloud.callFunction({
-            name: 'getInfo',
-            data: {
-              cloudSet: "info",
-              openId: app.globalData.openId
-            },
-            success: res => {
-              for (var idx in data) {
-                historyData.push(data[idx]);
-                historyData[idx].timestamp = historyData[idx].time
-                historyData[idx].time = this.transTime(historyData[idx].time);    
-                historyData[idx].wechat = res.result.data[0].wechat
-                historyData[idx].qq = res.result.data[0].qq
-                historyData[idx].cellphone = res.result.data[0].cellphone
-                historyData[idx].nickName = res.result.data[0].userInfo.nickName
-                historyData[idx].gender = res.result.data[0].userInfo.gender
-                historyData[idx].avatarUrl = res.result.data[0].userInfo.avatarUrl
-              }
-              this.setData({
-                historyData: historyData
-              })
-              wx.hideLoading()
-            },
-            fail: e => {
-              console.error(e);
-              wx.hideLoading()
-            }
+          var historyData = res.result.data;
+          for(let i =0;i<historyData.length;i++) {
+            historyData[i].formatTime = this.transTime(historyData[i].time, date)
+          }
+
+          var index = historyData.filter(function (element) {
+            return element.time < date.getTime();
           })
+
+          for (let i = 0; i < index.length;i++) {
+            historyData.splice(index[i], 1)
+          }
+          this.setData({
+            historyData: historyData
+          })
+
+          wx.hideLoading()
         } else {
           wx.hideLoading()
         }
@@ -409,7 +393,6 @@ Page({
     })
     var temp = this.data.historyData
     var _id = event.currentTarget.dataset.theid;
-    console.log(event)
     const db = wx.cloud.database();
     db.collection('carpool').doc(_id).remove().then(res => {
       var index = temp.findIndex(function (element) {

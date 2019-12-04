@@ -59,25 +59,25 @@
 
 
 <block wx:if="{{historyData.length}}">
-  <text>您发布的行程</text>
-    <view class="card" wx:for="{{historyData}}" wx:key="this">
-
-    <button bindtap="query" data-source='{{item.source}}' data-destination='{{item.destination}}' data-time='{{item.timestamp}}' data-num='{{item.num}}' data-id='{{item._id}}'>
-      <view class="content_my">
-        <image class="img1" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
+  <text class="publish">您发布的行程</text>
+    <view class="btngroup" wx:for="{{historyData}}" wx:key="this">
+    <button class="card"  bindtap="query" data-source='{{item.source}}' data-destination='{{item.destination}}' data-time='{{item.time}}' data-num='{{item.num}}' data-id='{{item._id}}'>
+      <view class="content">
+        <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
         {{item.source}}
-        <image class="imgpoint_head" src="../../icon/picker_icon_index_point3.png" style="width:34rpx;height:11rpx;">
+        <image class="imgpoint_head" src="../../icon/picker_icon_index_point2.png" style="width:34rpx;height:11rpx;">
         </image>
-        <image class="img1" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
+        <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
         {{item.destination}}
       </view>
+
       <view class="time_num">
         <view class="time">
-          <image class="img1" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
-          {{item.time}}
+          <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+          {{item.formatTime}}
         </view>
-        <view class="num">
-          <image class="img1" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+        <view class="num_my">
+          <image class="img" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
           {{item.num}}
         </view>
   </view>

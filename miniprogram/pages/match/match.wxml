@@ -1,38 +1,42 @@
   <view class='title'>
-  <text>您的行程</text>
-  <button bindtap='deleteTheMessage'>取消</button>
+  <view></view>
+  <view>
+  <button size='mini' bindtap='deleteTheMessage'>取消行程</button>
   </view>
-  <view class="container">
+  </view>
+
     <view class="card">
       <view class="content">
         <image class="img" src="../../icon/picker_icon_index_src.png" style="width:30rpx;height:30rpx;"></image>
         {{userSrc}}
         <!-- </view> -->
-        <image class="imgpoint_head" src="../../icon/picker_icon_index_point3.png" style="width:34rpx;height:11rpx;">
+        <image class="imgpoint_head" src="../../icon/picker_icon_index_point2.png" style="width:34rpx;height:11rpx;">
         </image>
-        <!-- <view class="content"> -->
+
         <image class="img" src="../../icon/picker_icon_index_dst.png" style="width:30rpx;height:30rpx;"></image>
         {{userDst}}
       </view>
+
       <view class="time_num">
         <view class="time">
-          <image class="img" src="../../icon/img_icon_time.png" style="width:40rpx;height:40rpx;"></image>
+          <image class="img" src="../../icon/img_icon_time.png" style="width:30rpx;height:30rpx;">
+          </image>
           {{time}}
         </view>
+
         <view class="num">
-          <image class="img" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
+          <image class="img2" src="../../icon/img_icon_num.png" style="width:40rpx;height:40rpx;"></image>
           {{userNum}}
         </view>
       </view>
     </view>
-  </view>
 
 
 <block wx:if="{{!matchResult.length}}">
   <text class="center"> 好像没有合适的行程呢... </text>
 </block>
 <block wx:else>
-  <view class="title">已为您匹配到以下行程信息</view>
+  <view style="font-size: small;margin-top: 50rpx; margin-bottom:10rpx;margin-left: 20rpx;">已为您匹配到以下行程信息</view>
   <view class="container">
     <view class="card" wx:for="{{matchResult}}" wx:key="this">
       <view class="imgs">
