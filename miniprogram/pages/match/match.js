@@ -193,7 +193,9 @@ getMatchData: function () {
           }).catch((reason) => {
             console.log("fail")
           });
-        } 
+        } else{
+          wx.hideLoading()
+        }
       }
       else{
         wx.hideLoading()
@@ -201,8 +203,10 @@ getMatchData: function () {
     },
     fail: e => {
       console.error(e);
+      wx.hideLoading()
     }
   })
+
 },
 
   /**

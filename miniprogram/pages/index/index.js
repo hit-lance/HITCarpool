@@ -38,9 +38,7 @@ Page({
   },
 
   onShow: function () {
-    wx.showLoading({
-      title: '加载中',
-    })
+
     let that = this;
     thereIsNoToday = (currentHours == 23) && (currentMinute > 50);
     if (app.globalData.registered && app.globalData.authorized) {
@@ -50,7 +48,6 @@ Page({
         that.test()
       }
     }
-    wx.hideLoading()
   },
 
   test: function () {
@@ -76,6 +73,9 @@ Page({
       },
       success: res => {
         if (res.result && res.result.data.length) {
+          wx.showLoading({
+            title: '加载中',
+          })
           var historyData = res.result.data;
           for(let i =0;i<historyData.length;i++) {
             historyData[i].formatTime = this.transTime(historyData[i].time, date)
@@ -91,7 +91,9 @@ Page({
 
           wx.hideLoading()
         } else {
-          wx.hideLoading()
+          this.setData({
+            historyData: []
+          })
         }
       },
       fail: e => {
