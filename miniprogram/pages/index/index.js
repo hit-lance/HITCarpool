@@ -50,6 +50,7 @@ Page({
         that.test()
       }
     }
+    wx.hideLoading()
   },
 
   test: function () {
@@ -98,7 +99,6 @@ Page({
         wx.hideLoading()
       }
     })
-
   },
   pickerTap: function () {
     var monthDay = [];
@@ -350,7 +350,7 @@ Page({
 
     else if (this.isDuplicate(this.data.time, this.data.historyData)) {
       wx.showToast({
-        title: '发布失败：与已经发布行程的时间太近',
+        title: '发布失败：您已发布该时间段的行程',
         icon: 'none'
       })
     }
@@ -421,11 +421,12 @@ Page({
   },
 
   isDuplicate(time, historyData) {
-    if (!historyData)
-      return false;
-    var timestamp = util.formatTime(time, date)
+    if (!historyData) return false;
+    var ts = util.formatTime(time, date)
+    console.log(ts)
+    console.log(historyData)
     for (let i = 0; i < historyData.length;i++) {
-      if (Math.abs(timestamp - historyData[i].timestamp)<=3*60*60*1000)
+      if (Math.abs(ts - historyData[i].time)<=3*60*60*1000)
         return true;
     }
     return false;
