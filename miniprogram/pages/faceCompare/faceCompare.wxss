@@ -5,4 +5,5 @@
   justify-content: center;
   margin-top: 50%;
   font-size: 30rpx;
+  font-weight: 600;
 }

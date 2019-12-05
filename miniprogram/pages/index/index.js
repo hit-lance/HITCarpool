@@ -3,6 +3,7 @@
 const app = getApp()
 var isFilled = [false, false, false, false];
 var date = new Date();
+var timestamp = date.getTime();
 var currentMonth = date.getMonth();
 var currentDay = date.getDay();
 var currentHours = date.getHours();
@@ -32,7 +33,6 @@ Page({
     dst: '目的地',
     time: '出发时间',
     num: '人数',
-    timestamp: null,
     historyData: null,
     modalHidden: true,
   },
@@ -79,14 +79,11 @@ Page({
           for(let i =0;i<historyData.length;i++) {
             historyData[i].formatTime = this.transTime(historyData[i].time, date)
           }
-
-          var index = historyData.filter(function (element) {
-            return element.time < date.getTime();
+          historyData.sort(function (a, b) { return a.time - b.time })
+          historyData = historyData.filter(function (element) {
+            return element.time > timestamp - 3 * 60 * 60 * 1000 ;
           })
 
-          for (let i = 0; i < index.length;i++) {
-            historyData.splice(index[i], 1)
-          }
           this.setData({
             historyData: historyData
           })
@@ -424,6 +421,8 @@ Page({
   },
 
   isDuplicate(time, historyData) {
+    if (!historyData)
+      return false;
     var timestamp = util.formatTime(time, date)
     for (let i = 0; i < historyData.length;i++) {
       if (Math.abs(timestamp - historyData[i].timestamp)<=3*60*60*1000)

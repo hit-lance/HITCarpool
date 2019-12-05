@@ -13,7 +13,7 @@ Page({
     userSrc: "",
     userDst: "",
     userNum: 0,
-    carpool_id: null,
+
     wximgurl: '../../icon/icon_wx.png',
     qqimgurl: '../../icon/icon_qq.png',
     phimgurl: '../../icon/icon_phone.png',
@@ -222,7 +222,6 @@ getMatchData: function () {
       userDst: e.userDst,
       userNum: Number(e.userNum),
       time : this.transTime(Number(e.userTime)),
-      carpool_id: e.carpool_id
     })
   },
 
@@ -234,23 +233,30 @@ getMatchData: function () {
   },
 
   deleteTheMessage: function (event) {
-    wx.showLoading({
-      title: '正在取消',
+    wx.showModal({
+      title: '提示',
+      content: '您确认取消本次行程吗？',
+      confirmText: '确认',
+      success: function (res) {
+        if (!res.cancel) {
+          wx.showLoading({
+            title: '正在取消',
+          })
+          const db = wx.cloud.database();
+          db.collection('carpool').doc(app.globalData.carpool_id).remove().then(res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '取消成功',
+              icon: 'success',
+              duration: 3000
+            })
+            wx.switchTab({
+              url: '../index/index',
+            })
+          }).catch()
+        }
+      }
     })
-    const db = wx.cloud.database();
-    console.log(app.globalData.carpool_id)
-    db.collection('carpool').doc(app.globalData.carpool_id ).remove().then(res => {
-      wx.hideLoading()
-      wx.showToast({
-        title: '取消成功',
-        icon: 'success',
-        duration: 1000
-      })
-
-      wx.switchTab({
-        url: '../index/index',
-      })
-    }).catch()
   },
 
 })

@@ -151,4 +151,23 @@ padding-inline-start: 0rpx;
   font-size: small;
   font-weight:400;
   color:#7c7c7c;
+  margin-right: 30rpx; 
+}
+
+.contact{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left:5rpx;
+  margin-top: 10rpx;
+  font-size:small;
+  font-weight: 400;
+  color:rgb(0, 0, 0);
+}
+
+.contact button {
+  font-size: small;
+  font-weight:400;
+  color:#7c7c7c;
 }
