@@ -110,7 +110,7 @@ Page({
     var minute = [];
 
     // 月-日
-    for (var i = 2; i <= 14; i++) {
+    for (var i = 2; i <= 45; i++) {
       var date1 = new Date(date);
       date1.setDate(date.getDate() + i);
       var md = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
